@@ -1,0 +1,1 @@
+ let NERDTreeWinSize = 25
