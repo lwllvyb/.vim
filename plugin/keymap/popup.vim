@@ -2,7 +2,7 @@ call popup#add('file', {'name' : '文件', 'item' : [
     \['n', ":conf ene\<cr>",            '新建'],
     \['o', ":browse confirm e\<cr>",    '打开'],
     \['s', ":w\<cr>",                   '保存'],
-    \['c', ":QuitBuffer\<cr>",          '关闭'],
+    \['d', ":QuitBuffer\<cr>",          '关闭'],
     \['x', ":confirm qa\<cr>",          '退出']
     \]})
 call popup#add('view', {'name' : '视图', 'item' : [
@@ -15,7 +15,7 @@ call popup#add('window', {'name' : '窗口', 'item' : [
     \['l', ":tabn\<cr>",                '下一个标签页'],
     \['h', ":tabp\<cr>",                '上一个标签页'],
     \['x', ":tabc\<cr>",                '关闭标签页'],
-    \['c', ":winc c\<cr>",              '关闭当前窗口'],
+    \['c', "\<c-w>c",                   '关闭当前窗口'],
     \['s', {'name': 'size', 'item': [
         \['h', "\<c-w><",          '横向减小'],
         \['l', "\<c-w>>",          '横向增大'],
@@ -66,6 +66,8 @@ call popup#add('util-insert', {'name' : 'Util', 'item' : [
     \['t', "\<c-r>=strftime('%Y/%b/%d')\<cr>", '插入日期']
     \]})
 call popup#add('util-normal', {'name' : 'Util', 'item' : [
+    \['h', ":set bin|%!xxd\<cr>",       '开始Hex编辑'],
+    \['e', ":%!xxd -r\<cr>",            '结束Hex编辑'],
     \['b', ":Tabularize ",              'Tabularize对齐'],
     \['x', "\<Plug>(SoLine)",      '执行VimL'],
     \['t', ":YouDao\<cr>\<cr>",    '网页查词'],
@@ -78,6 +80,7 @@ call popup#add('util-normal', {'name' : 'Util', 'item' : [
         \]}]
     \]})
 call popup#add('util-visual', {'name' : 'Util', 'item' : [
+    \['f', "y/\<c-r>\"",            '查找选中文本'],
     \['a', {'name': '制表符', 'item': [
         \['j', {'name': '角', 'item': [ 
             \['a', 'r┌', ''],

@@ -8,6 +8,7 @@ set list lcs=eol:¬              "设置显示不可见字符
 set laststatus=2
 "set cmdheight=2                "命令行高度
 "set statusline=2
+set display=uhex                "不可打印字符显示十六进制
 set incsearch
 set hlsearch                    "高亮所有的查找结果
 set number                      "显示行号
