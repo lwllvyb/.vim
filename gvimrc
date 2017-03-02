@@ -4,7 +4,6 @@ set guioptions-=l           "禁用滚动条
 set guioptions-=L
 set guioptions-=r
 set guioptions-=R
-
 set guioptions-=m           "禁用菜单栏和工具栏
 set guioptions-=T
 "set visualbell
@@ -23,3 +22,6 @@ else
 "    set guifont=Fantasque\ Sans\ Mono\ 12
 "    set guifontwide=文泉驿微米黑\ 12
 endif
+
+set background=light
+color PaperColor

@@ -9,12 +9,16 @@ com -buffer UsePy let b:py3 = 0
 com -buffer UsePy3 let b:py3 = 1
 
 fun! s:run_ipy()
+    let h = &ch| set ch=3
     write
-    exe (b:py3?'!ipython3 -i': '!ipython -i') . ' %:p'
+    exe (b:py3?'!ipython3': '!ipython') '--no-banner --pdb -i' '%:p'
+    let &ch = h
 endf
 fun! s:run_py()
+    let h = &ch| set ch=3
     write
-    exe (b:py3?'!python3 -i': '!python -i') . ' %:p'
+    exe (b:py3?'!python3': '!python') '-i' '%:p'
+    let &ch = h
 endf
 
 nnoremap <buffer> <silent> <F5> :call <SID>run_ipy()<cr>

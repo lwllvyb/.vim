@@ -9,3 +9,6 @@ call popup#add('file',
 \]})
 
 nmap <expr><m-f> Popup('file')
+
+map  <expr><m-.>    popup#last()
+map! <expr><m-.>    popup#last()

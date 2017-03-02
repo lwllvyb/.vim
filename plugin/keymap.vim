@@ -7,13 +7,8 @@ noremap! <c-e> <end>
 noremap! <m-f> <s-right>
 noremap! <m-b> <s-left>
 
-inoremap <m-d> <c-o>dw
-inoremap <expr><c-k> getline('.')==''?'<del>':'<c-o>C'
-inoremap <m-j> <down>
-inoremap <m-k> <up>
-
-map  <expr><m-.>    popup#last()
-map! <expr><m-.>    popup#last()
+inoremap <m-d> <c-o>diw
+inoremap <expr><c-k> getline('.')?'<del>':'<c-o>C'
 
 "nnoremap + <c-a>
 "nnoremap - <c-x>
@@ -22,9 +17,6 @@ nnoremap <m-k> <c-w>k
 nnoremap <m-j> <c-w>j
 nnoremap <m-h> <c-w>h
 nnoremap <m-l> <c-w>l
-"Quickfix
-nnoremap <silent> <m-J> :cn<cr>
-nnoremap <silent> <m-K> :cp<cr>
 
 vnoremap * y/\V\<<c-r>"\>
 vnoremap # y?\V\<<c-r>"\>

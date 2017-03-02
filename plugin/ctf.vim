@@ -1,95 +1,47 @@
 " =============================================================================
 " Filename:     plugin/ctf.vim
 " Author:       luzhlon
-" Function:     CTF解题过程中常用功能的实现
+" Function:     
 " Last Change:  2017/1/30
 " =============================================================================
+
+" TODO:
+"       Encode Decode 命令
+"       Encode Decode 命令的参数提示
 
 if !has('python3')|finish|endif
 
 py3 << EOF
-import urllib.request as request
-import base64, re
-morse_code_table = {
-    'A': '.-',     'B': '-...',   'C': '-.-.',
-    'D': '-..',    'E': '.',      'F': '..-.',
-    'G': '--.',    'H': '....',   'I': '..',
-    'J': '.---',   'K': '-.-',    'L': '.-..',
-    'M': '--',     'N': '-.',     'O': '---',
-    'P': '.--.',   'Q': '--.-',   'R': '.-.',
-    'S': '...',    'T': '-',      'U': '..-',
-    'V': '...-',   'W': '.--',    'X': '-..-',
-    'Y': '-.--',   'Z': '--..',
-
-    '0': '-----',  '1': '.----',  '2': '..---',
-    '3': '...--',  '4': '....-',  '5': '.....',
-    '6': '-....',  '7': '--...',  '8': '---..',
-    '9': '----.'
-}
-t = {}
-for k in morse_code_table:
-    t[morse_code_table[k]] = k
-morse_code_table.update(t)
-
-def bufcont():
-    return vim.eval('@u')
-def morse_decode():
-    list = re.split('[^\.-]+', bufcont())
-    ret = []
-    for i in list:
-        ret.append(morse_code_table[i])
-    return ''.join(ret)
-
-def morse_encode():
-    ret = []
-    ss = bufcont().upper()
-    for k in ss:
-        ret.append(morse_code_table[k])
-    print(ret)
-    return ' '.join(ret)
+import sys
+sys.path.append(vim.eval("expand('<sfile>:p:h')"))
+import ctf
 EOF
-
-com! MorseEncode call <SID>MorseEncode()
-com! MorseDecode call <SID>MorseDecode()
-com! Base64Encode call <SID>Base64Encode()
-com! Base64Decode call <SID>Base64Decode()
-com! UrlEncode    call <SID>UrlEncode()
-com! UrlDecode    call <SID>UrlDecode()
-
-com! UnicodeDecode s/u\(\x\+\)/\=nr2char('0x'.submatch(1)+0)/g
-
-fun! s:del2reg()
-    norm! gg0vG$"ud
+fun! s:filter(l, k)
+    let l = []
+    for i in a:l
+        if i =~ a:k
+            call add(l, i)
+        endif
+    endfor
+    return l
 endf
-fun! s:paste(str)
-    let @u = a:str
-    norm "uP
+fun! s:en_com(a, c, p)
+    return s:filter(['base64', 'url', 'morse'], a:a)
+endf
+fun! s:de_com(a, c, p)
+    return s:filter(['rot13', 'base64', 'unicode', 'url', 'morse', 'bacon', 'fence'], a:a)
 endf
 
-let s:morse_0 = '.'
-let s:morse_1 = '_'
+fun! s:encode(t)
+    try
+        call ctf#en#{a:t}()
+    endt
+endf
+fun! s:decode(t)
+    try
+        call ctf#de#{a:t}()
+    endt
+endf
 
-fun! s:MorseEncode()
-    call s:del2reg()
-    call s:paste(py3eval('morse_encode()'))
-endf
-fun! s:MorseDecode()
-    call s:del2reg()
-    call s:paste(py3eval('morse_decode()'))
-endf
-fun! s:UrlEncode()
-    call s:del2reg()
-    call s:paste(py3eval('request.quote(bufcont())'))
-endf
-fun! s:UrlDecode()
-    call s:del2reg()
-    call s:paste(py3eval('request.unquote(bufcont())'))
-endf
-fun! s:Base64Encode()
-    call s:del2reg()
-    call s:paste(py3eval('base64.b64encode(bufcont().encode())'))
-endf
-fun! s:Base64Decode()
-    call s:del2reg()
-    call s:paste(py3eval('base64.b64decode(bufcont().encode())'))
-endf
+com! -complete=customlist,<SID>en_com -nargs=+ Encode call <SID>encode(<f-args>)
+com! -complete=customlist,<SID>de_com -nargs=+ Decode call <SID>decode(<f-args>)

@@ -54,9 +54,9 @@ if !exists('g:AutoPairsMultilineClose')
 endif
 
 " Work with Fly Mode, insert pair where jumped
-if !exists('g:AutoPairsShortcutBackInsert')
-  let g:AutoPairsShortcutBackInsert = '<M-b>'
-endif
+"if !exists('g:AutoPairsShortcutBackInsert')
+"  let g:AutoPairsShortcutBackInsert = '<M-b>'
+"endif
 
 if !exists('g:AutoPairsSmartQuotes')
   let g:AutoPairsSmartQuotes = 1
@@ -452,9 +452,9 @@ function! AutoPairsInit()
 "    execute 'inoremap <buffer> <silent> '.g:AutoPairsShortcutFastWrap.' <C-R>=AutoPairsFastWrap()<CR>'
 "  end
 
-  if g:AutoPairsShortcutBackInsert != ''
-    execute 'inoremap <buffer> <silent> '.g:AutoPairsShortcutBackInsert.' <C-R>=AutoPairsBackInsert()<CR>'
-  end
+"  if g:AutoPairsShortcutBackInsert != ''
+"    execute 'inoremap <buffer> <silent> '.g:AutoPairsShortcutBackInsert.' <C-R>=AutoPairsBackInsert()<CR>'
+"  end
 
 "  if g:AutoPairsShortcutJump != ''
 "    execute 'inoremap <buffer> <silent> ' . g:AutoPairsShortcutJump. ' <ESC>:call AutoPairsJump()<CR>a'

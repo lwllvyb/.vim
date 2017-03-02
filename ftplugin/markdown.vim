@@ -9,34 +9,43 @@ nnoremap <buffer> k gk
 nnoremap <buffer> 0 g0
 nnoremap <buffer> $ g$
 
-nmap <buffer> <silent> <F3> :Toc<cr>
-nmap <buffer> <silent> <F4> :TableFormat<cr>
+call popup#add('markdown-j', {'name': '跳转到', 'item': [
+    \['n', '下一个标题  ' , "\<Plug>Markdown_MoveToNextHeader"],
+    \['p', '上一个标题  ' , "\<Plug>Markdown_MoveToPreviousHeader"],
+    \['.', '当前标题    ' , "\<Plug>Markdown_MoveToCurHeader"],
+    \['a', '父级标题    ' , "\<Plug>Markdown_MoveToParentHeader"],
+    \['j', '下一同级标题' , "\<Plug>Markdown_MoveToNextSiblingHeader"],
+    \['k', '上一同级标题' , "\<Plug>Markdown_MoveToPreviousSiblingHeader"]
+\]})
+call popup#add('markdown-n', {'name': 'Markdown', 'item': [
+    \['d', '生成Docx',  "w|!pandoc -f markdown -t docx %:p -o %:p:r.docx"],
+    \['h', '生成Html',  "w|!pandoc -f markdown -t html %:p -o %:p:r.html"],
+    \['o', '显示Toc ' , ":Toc\<cr>"],
+    \['m', '表格对齐' , ":TableFormat\<cr>"],
+    \['f', '跳转到锚' , "yiw/<span id=\"\<c-r>\"\">"]
+\]})
+call popup#add('markdown-v', {'name': 'Markdown', 'item': [
+    \['q', '引用' , "I> \<esc>"],
+    \['l', '列表' , "I* \<esc>"],
+    \['b', '粗体' , "s****\<esc>2hp"],
+    \['i', '斜体' , "s**\<left>\<esc>p"]
+\]})
+call popup#add('markdown-i', {'name': 'Markdown', 'item': [
+    \['1', '一级标题' , "# "],
+    \['2', '二级标题' , "## "],
+    \['3', '三级标题' , "### "],
+    \['4', '四级标题' , "#### "],
+    \['5', '五级标题' , "##### "],
+    \['6', '六级标题' , "###### "],
+    \['/', '插入注释' , "<!---->\<esc>2h"],
+    \['i', '插入锚  ' , "[](#)\<left>"],
+    \['m', '插入标记' , "<span id=\"\">\<esc>2h"]
+\]})
 
-call popup#add('markdown-jump', {'name': '跳转', 'item': [
-    \['n', "\<Plug>Markdown_MoveToNextHeader",              '下一个标题'],
-    \['p', "\<Plug>Markdown_MoveToPreviousHeader",          '上一个标题'],
-    \['.', "\<Plug>Markdown_MoveToCurHeader",               '当前标题'],
-    \['a', "\<Plug>Markdown_MoveToParentHeader",            '父级标题'],
-    \['j', "\<Plug>Markdown_MoveToNextSiblingHeader",       '下一个同级标题'],
-    \['k', "\<Plug>Markdown_MoveToPreviousSiblingHeader",   '上一个同级标题'],
-    \]})
-
-nmap <buffer><expr><m-m> popup#popup('markdown-jump')
-
-"indent
-noremap <buffer> <m-i>> I><space><esc>
-noremap <buffer> <m-i>- I-<space><esc>
-noremap <buffer> <m-i>+ I+<space><esc>
-noremap <buffer> <m-i>* I*<space><esc>
-
-inoremap <buffer> <m-;> <!----><c-o>2h
-inoremap <buffer> <m-l> [](#)<left>
-inoremap <buffer> <m-i> <span id=""><Left><Left>
-nnoremap <buffer><silent> <m-i> "tye/<span id="t"><cr>
-
-for i in range(1, 6)
-    exe printf('inoremap <buffer> <m-%d> <home>%s<space>', i, repeat('#', i))
-endfor
+nmap <buffer><expr><m-,> Popup('markdown-j')
+nmap <buffer><expr><m-;> Popup('markdown-n')
+vmap <buffer><expr><m-;>  Popup('markdown-v')
+imap <buffer><expr><m-;> Popup('markdown-i')
 
 fun! s:tab()
     return (getline('.') =~ '^\s*|' ? "\<ESC>:TableTab\<CR>" : "\t")
@@ -44,5 +53,3 @@ endf
 imap <buffer><expr><tab> <SID>tab()
 
 com! -buffer TableTab call mdutil#formatTable()
-com! -buffer GeneDocx write|!pandoc -f markdown -t docx %:p -o %:p:r.docx
-com! -buffer GeneHtml write|!pandoc -f markdown -t html %:p -o %:p:r.html
