@@ -29,3 +29,46 @@ fun! lib#setbuf(dat)
     let @- = a:dat
     norm! ggVG"-p
 endf
+"保存选项
+fun! lib#storeopt(...)
+    if !a:0| return {}| endif
+    let opt = {}
+    for k in a:000
+        let opt[k] = eval('&g:'.k)
+    endfor
+    return opt
+endf
+"恢复选项
+fun! lib#restoreopt(opt)
+    for k in keys(a:opt)
+        let _ = a:opt[k]
+        exe 'let &g:'.k '= _'
+    endfor
+endf
+
+" =======================================================
+let s:deep = 0          "递归的深度
+fun! s:echopre(...)
+    echon repeat('  ', s:deep)
+    if a:0|echon join(a:000)|endif
+endf
+"格式化输出列表和字典
+fun! lib#putlist(d)
+    let _t = type(a:d)
+    if _t == v:t_dict
+        echon "{\n"     |let s:deep += 1
+        for i in keys(a:d)
+            let v = a:d[i]
+            call s:echopre(i, ":\t")
+            call lib#putlist(v)|echon ",\n"
+        endfo
+        let s:deep -= 1 |call s:echopre()|echon "}"
+    elseif _t == v:t_list
+        echon "[\n"     |let s:deep += 1
+        for i in a:d
+            call s:echopre()
+            call lib#putlist(i)|echon ",\n"
+        endfo
+        let s:deep -= 1 |call s:echopre()|echon "]"
+    else    |echon a:d  |endif
+endf

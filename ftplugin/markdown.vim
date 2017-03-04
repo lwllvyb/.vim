@@ -25,31 +25,42 @@ call popup#add('markdown-n', {'name': 'Markdown', 'item': [
     \['f', '跳转到锚' , "yiw/<span id=\"\<c-r>\"\">"]
 \]})
 call popup#add('markdown-v', {'name': 'Markdown', 'item': [
-    \['q', '引用' , "I> \<esc>"],
-    \['l', '列表' , "I* \<esc>"],
+    \['h', '标题' , {'item': [
+        \['1', '一级', '# '],
+        \['2', '二级', '## '],
+        \['3', '三级', '### '],
+        \['4', '四级', '#### '],
+        \['5', '五级', '##### '],
+        \['6', '六级', '###### '],
+    \]}],
+    \['q', '引用' , ":s/.*/> &\<cr>"],
+    \['l', '列表' , ":s/.*/* &\<cr>"],
     \['b', '粗体' , "s****\<esc>2hp"],
     \['i', '斜体' , "s**\<left>\<esc>p"]
 \]})
 call popup#add('markdown-i', {'name': 'Markdown', 'item': [
-    \['1', '一级标题' , "# "],
-    \['2', '二级标题' , "## "],
-    \['3', '三级标题' , "### "],
-    \['4', '四级标题' , "#### "],
-    \['5', '五级标题' , "##### "],
-    \['6', '六级标题' , "###### "],
+    \['b', '插入粗体' , "****\<left>\<left>"],
+    \['i', '插入斜体' , "**\<left>"],
     \['/', '插入注释' , "<!---->\<esc>2h"],
-    \['i', '插入锚  ' , "[](#)\<left>"],
-    \['m', '插入标记' , "<span id=\"\">\<esc>2h"]
+    \['l', '插入链接' , "[]()\<left>"],
+    \['a', '插入锚点' , "<span id=\"\">\<esc>2h"]
 \]})
 
 nmap <buffer><expr><m-,> Popup('markdown-j')
 nmap <buffer><expr><m-;> Popup('markdown-n')
-vmap <buffer><expr><m-;>  Popup('markdown-v')
+vmap <buffer><expr><m-;> Popup('markdown-v')
 imap <buffer><expr><m-;> Popup('markdown-i')
 
+imap <buffer> <m-1> #<space>
+imap <buffer> <m-2> ##<space>
+imap <buffer> <m-3> ###<space>
+imap <buffer> <m-4> ####<space>
+imap <buffer> <m-5> #####<space>
+imap <buffer> <m-6> ######<space>
+
+"imap <buffer><expr><tab> <SID>tab()
 fun! s:tab()
     return (getline('.') =~ '^\s*|' ? "\<ESC>:TableTab\<CR>" : "\t")
 endf
-imap <buffer><expr><tab> <SID>tab()
 
 com! -buffer TableTab call mdutil#formatTable()

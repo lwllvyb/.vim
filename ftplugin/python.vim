@@ -8,16 +8,21 @@ let b:py3 = getline(1) =~ 'python$' ? 0: 1
 com -buffer UsePy let b:py3 = 0
 com -buffer UsePy3 let b:py3 = 1
 
+fun! s:cmd(pycmd)
+    return '!'.join([has('win32') ? 'start': '',
+                   \ a:pycmd . (b:py3 ? '3': '')])
+endf
+
 fun! s:run_ipy()
     let h = &ch| set ch=3
-    write
-    exe (b:py3?'!ipython3': '!ipython') '--no-banner --pdb -i' '%:p'
+    update
+    exe s:cmd('ipython') '--no-banner --pdb -i' '%:p'
     let &ch = h
 endf
 fun! s:run_py()
     let h = &ch| set ch=3
-    write
-    exe (b:py3?'!python3': '!python') '-i' '%:p'
+    update
+    exe s:cmd('python') '%:p'
     let &ch = h
 endf
 

@@ -12,7 +12,7 @@ let g:airline_extensions = ['tabline']
 
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#left_sep = '|'
-let g:airline#extensions#tabline#show_tabs = 0          "不显示标签页
+let g:airline#extensions#tabline#show_tabs = 1          "显示标签页
 let g:airline#extensions#tabline#show_tab_nr = 0
 let g:airline#extensions#tabline#buffer_idx_mode = 1
 let g:airline#extensions#tabline#buffer_idx_format = {

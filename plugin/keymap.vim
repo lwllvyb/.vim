@@ -1,3 +1,10 @@
+" =============================================================================
+" Filename:     plugin/keymap.vim
+" Author:       luzhlon
+" Function:     
+" Last Change:  2017/3/03
+" =============================================================================
+
 " Line edit
 noremap! <c-b> <left>
 noremap! <c-f> <right>
@@ -9,6 +16,9 @@ noremap! <m-b> <s-left>
 
 inoremap <m-d> <c-o>diw
 inoremap <expr><c-k> getline('.')?'<del>':'<c-o>C'
+
+nmap <m-N> :cn<cr>
+nmap <m-P> :cp<cr>
 
 "nnoremap + <c-a>
 "nnoremap - <c-x>

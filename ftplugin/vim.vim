@@ -6,4 +6,4 @@ let b:did_myftplugin = 1
 "nnoremap <buffer><silent> <space>x :call execute(getline(line('.')))<cr>
 nnoremap <buffer><silent> <F5> :w<cr>:so %<cr>
 
-nnoremap <buffer> <F6> :breakadd here<cr>
+nnoremap <buffer> <F9> :breakadd here<cr>

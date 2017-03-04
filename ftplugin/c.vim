@@ -1,18 +1,33 @@
 if exists("b:did_myftplugin")|finish|endif
 let b:did_myftplugin = 1
 
-func! s:run_c()
-    let h = &ch
-    set ch=3
-    write
-    if has('win32')
-        !clang % -o a.exe && a.exe
-        !del a.exe
-    else
-        !gcc -o a.out %:p && ./a.out
-        !rm a.out
+fun! s:WinRun()
+    make -o _a.exe
+    if !v:shell_error
+        !_a.exe
+        !del _a.exe
     endif
-    let &ch = h
 endf
 
-nnoremap <buffer> <C-F5> :call <SID>run_c()<cr>
+fun! s:NixRun()
+    make -o _a.out
+    if !v:shell_error
+        !./_a.out
+        !rm _a.out
+    endif
+endf
+
+fun! s:Run()
+    let opt = lib#storeopt('mp', 'ch')
+    set ch=3
+    write
+    set mp=gcc
+    if has('win32')
+        call s:WinRun()
+    else
+        call s:NixRun()
+    endif
+    call lib#restoreopt(opt)
+endf
+
+com! -buffer Run call <SID>Run()

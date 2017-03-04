@@ -6,6 +6,7 @@
 " =============================================================================
 
 so <sfile>:h/option.vim
+so <sfile>:h/env.vim
 "Load specifitic plugin
 fun! s:LoadPlugin(p, ...)
     call plug#(a:p)
