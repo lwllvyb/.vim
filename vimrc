@@ -8,27 +8,20 @@
 so <sfile>:h/option.vim
 so <sfile>:h/env.vim
 "Load specifitic plugin
-fun! s:LoadPlugin(p, ...)
+fun! LoadPlugin(p, ...)
     call plug#(a:p)
     if a:0|exe 'ru' 'config/'.a:1.'.vim'|endif
 endf
-fun! s:LocalPlugin(p, ...)
-    exe 'set rtp+=' . a:p
-    if a:0|exe 'ru' 'config/'.a:1.'.vim'|endif
-endf
 "load configuration file from current directory
-fun! LoadCwd()
-    let f = getcwd().'/.rc.vim'
-    if filereadable(f)|exe 'so' f|endif
+fun! LoadCurDir()
+    call lib#so(getcwd().'/.rc.vim')
 endf
 
-call plug#begin('~/.vim/.plug')
-com! -nargs=1 PlugLoad call <SID>LoadPlugin(<args>)
-com! -nargs=1 LocaLoad call <SID>LocalPlugin(<args>)
+call plug#begin('~/.vim/.plugs')
+com! -nargs=1 PlugLoad call LoadPlugin(<args>)
 
     PlugLoad   'Lokaltog/vim-easymotion' , 'easymotion'
     PlugLoad   'Shougo/deoplete.nvim'    , 'deoplete'
-    PlugLoad   'Tagbar'
     PlugLoad   'drmingdrmer/xptemplate'  , 'xptemplate'
     PlugLoad   'junegunn/vim-easy-align' , 'easyalign'
     PlugLoad   'scrooloose/nerdtree'     , 'nerdtree'
@@ -38,13 +31,13 @@ com! -nargs=1 LocaLoad call <SID>LocalPlugin(<args>)
     PlugLoad   'luzhlon/popup.vim'
     PlugLoad   'luzhlon/util.vim'
     PlugLoad   'luzhlon/vim-markdown'    , 'markdown'
-    PlugLoad   'chrisbra/csv.vim'
     PlugLoad   'Rip-Rip/clang_complete'  , 'clang'
+    "PlugLoad   'Tagbar'
+    " PlugLoad   'chrisbra/csv.vim'
 
-    call LoadCwd()
+    call LoadCurDir()
 
 delc PlugLoad
-delc LocaLoad
 call plug#end()
 
 syntax on

@@ -80,3 +80,6 @@ fun! lib#letg(d)
         endif
     endfo
 endf
+fun! lib#so(file)
+    try|exe 'so' a:file|catch|endt
+endf

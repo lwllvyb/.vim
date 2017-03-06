@@ -5,17 +5,8 @@
 " Last Change:  2017/1/30
 " =============================================================================
 
-" TODO:
-"       Encode Decode 命令
-"       Encode Decode 命令的参数提示
+py3 import ctf
 
-if !has('python3')|finish|endif
-
-py3 << EOF
-import sys
-sys.path.append(vim.eval("expand('<sfile>:p:h')"))
-import ctf
-EOF
 fun! s:filter(l, k)
     let l = []
     for i in a:l

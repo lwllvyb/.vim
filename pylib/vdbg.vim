@@ -5,13 +5,16 @@
 " Last Change:  2017/3/6
 " =============================================================================
 
-let s:path = expand('<sfile>:h')
-py3 import sys; sys.path.append(vim.eval('s:path'))
-py3 from process import Process
+"TODO:
+"   在Vim退出时先结束子进程
+"   关掉view buffer时结束调试器
+"   设置view的statusline为debug
+"
+py3 from vdbg import CDB, GDB
 if has('win32')
-    py3 from vdbg import CDB; VDbg = CDB
+    py3 VDbg = CDB
 else
-    py3 from vdbg import GDB; VDbg = GDB
+    py3 VDbg = GDB
 endif
 
 let g:vdbg_bps = {}
@@ -34,15 +37,6 @@ endf
 "取消高亮某行
 fun! s:unhiLine(n)
     exe 'syn' 'clear' 'bp_'.a:n
-endf
-fun! s:bpadd(n)
-endf
-fun! s:bpclear(n)
-endf
-
-fun! s:loadMap()
-endf
-fun! s:unloadMap()
 endf
 
 com! VDbgBpToggle   call vdbg#BpToggle()
