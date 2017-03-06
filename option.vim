@@ -7,6 +7,7 @@ set list lcs=eol:¬              "设置显示不可见字符
 set laststatus=1
 set incsearch
 set lazyredraw
+set complete+=k                 "默认补全里加上字典补全
 set hlsearch                    "高亮所有的查找结果
 set number                      "显示行号
 set nobackup                    "不使用备份文件

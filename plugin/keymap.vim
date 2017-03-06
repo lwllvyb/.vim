@@ -17,8 +17,9 @@ noremap! <m-b> <s-left>
 inoremap <m-d> <c-o>diw
 inoremap <expr><c-k> getline('.')?'<del>':'<c-o>C'
 
-nmap <m-N> :cn<cr>
-nmap <m-P> :cp<cr>
+nmap <m-n> :cn<cr>
+nmap <m-N> :cp<cr>
+nmap <m-a> :call ListBuffer()<cr>
 
 "nnoremap + <c-a>
 "nnoremap - <c-x>

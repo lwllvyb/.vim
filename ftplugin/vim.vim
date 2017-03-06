@@ -1,4 +1,4 @@
-"if exists("b:did_myftplugin")|finish|endif
+if exists("b:did_myftplugin")|finish|endif
 let b:did_myftplugin = 1
 
 "setl foldmethod=marker
@@ -7,3 +7,5 @@ let b:did_myftplugin = 1
 nnoremap <buffer><silent> <F5> :w<cr>:so %<cr>
 
 nnoremap <buffer> <F9> :breakadd here<cr>
+
+call util#AddBufferDict('viml', 'vimc')

@@ -72,3 +72,11 @@ fun! lib#putlist(d)
         let s:deep -= 1 |call s:echopre()|echon "]"
     else    |echon a:d  |endif
 endf
+"设置全局默认值
+fun! lib#letg(d)
+    for [k, v] in items(a:d)
+        if !has_key(g:, k)
+            let g:[k] = v
+        endif
+    endfo
+endf

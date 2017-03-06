@@ -106,3 +106,39 @@ fun! s:setcurh(h)
 endf
 
 call s:setcurh(s:h.unkown)
+
+
+
+fun! vdbg#BpToggle()
+    if !exists('b:bps')
+        let b:bps = {}
+    endif
+
+    let l = line('.')
+    let f = bufname('%')
+    let n = bufnr('%')
+
+    if has_key(b:bps, l)
+        call s:unhiLine(l)
+        unlet b:bps[l]
+        "...
+    else
+        let b:bps[l] = 1
+        call s:hiLine(l)
+        "...
+    endif
+endf
+fun! vdbg#Start()
+    com! VDbgGoOn
+    com! VDbgNext
+    com! VDbgStep
+    com! VDbgQuit
+
+    call s:loadMap()
+
+"...
+
+    call s:unloadMap()
+endf
+fun! vdbg#Quit()
+endf

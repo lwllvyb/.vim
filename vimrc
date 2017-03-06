@@ -22,10 +22,10 @@ fun! LoadCwd()
     if filereadable(f)|exe 'so' f|endif
 endf
 
+call plug#begin('~/.vim/.plug')
 com! -nargs=1 PlugLoad call <SID>LoadPlugin(<args>)
 com! -nargs=1 LocaLoad call <SID>LocalPlugin(<args>)
 
-call plug#begin('~/.vim/.plug')
     PlugLoad   'Lokaltog/vim-easymotion' , 'easymotion'
     PlugLoad   'Shougo/deoplete.nvim'    , 'deoplete'
     PlugLoad   'Tagbar'
@@ -34,11 +34,17 @@ call plug#begin('~/.vim/.plug')
     PlugLoad   'scrooloose/nerdtree'     , 'nerdtree'
     PlugLoad   'tpope/vim-surround'      , 'surround'
     PlugLoad   'vim-airline/vim-airline' , 'airline'
+    PlugLoad   'davidhalter/jedi-vim'    , 'jedi'
     PlugLoad   'luzhlon/popup.vim'
     PlugLoad   'luzhlon/util.vim'
     PlugLoad   'luzhlon/vim-markdown'    , 'markdown'
+    PlugLoad   'chrisbra/csv.vim'
+    PlugLoad   'Rip-Rip/clang_complete'  , 'clang'
 
     call LoadCwd()
+
+delc PlugLoad
+delc LocaLoad
 call plug#end()
 
 syntax on
