@@ -18,6 +18,7 @@ call popup#add('util-n', 'Util',
     \['e', '结束Hex编辑' , ":%!xxd -r\<cr>"])
 if has('win32')
     call popup#extend('util-n',
+        \['r', '重启GVim   ' , ":sil !gvim\<cr>:conf qa\<cr>"],
         \['p', '打开命令行 ' , ":!start cmd\<cr>"],
         \['o', '打开文件夹 ' , ":!start explorer %:h\<cr>"])
 endif

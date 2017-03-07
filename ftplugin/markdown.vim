@@ -1,8 +1,7 @@
 if exists("b:did_myftplugin")|finish|endif
 let b:did_myftplugin = 1
 
-setl conceallevel=0
-setl shiftwidth=2
+setl cole=0 sw=2 fdl=3
 
 nnoremap <buffer> j gj
 nnoremap <buffer> k gk

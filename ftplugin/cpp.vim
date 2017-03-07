@@ -14,5 +14,3 @@ func! s:run_cpp()
     endif
     let &ch = h
 endf
-
-nnoremap <buffer> <C-F5> :call <SID>run_cpp()<cr>
