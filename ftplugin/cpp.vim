@@ -14,3 +14,5 @@ func! s:run_cpp()
     endif
     let &ch = h
 endf
+
+call dict#addl('c', 'cpp')

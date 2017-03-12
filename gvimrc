@@ -12,8 +12,7 @@ if has('win32')
     set linespace=0         "行间距
     set columns=128         "宽度
     set lines=32            "高度
-    set guifont=Fantasque_Sans_Mono:h12:cANSI
-    set guifontwide=新宋体:h11:cANSI:qDRAFT
+    set guifont=新宋体:h10:cANSI:qDRAFT
 "    set guifont=DejaVu_Sans_Mono_for_Powerline:h12:cANSI:qDRAFT
 "    set renderoptions=type:directx,renmode:5,taamode:1
     so     $VIMRUNTIME/delmenu.vim
@@ -24,4 +23,3 @@ else
 endif
 
 set background=light
-color PaperColor

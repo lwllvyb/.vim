@@ -28,3 +28,5 @@ endf
 
 nnoremap <buffer> <silent> <F5> :call <SID>run_ipy()<cr>
 nnoremap <buffer> <silent> <F6> :call <SID>run_py()<cr>
+
+call dict#addl('python')

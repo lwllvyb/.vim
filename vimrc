@@ -34,7 +34,7 @@ com! -nargs=1 PlugLoad call LoadPlugin(<args>)
     PlugLoad   'tpope/vim-surround'      , 'surround'
 "    PlugLoad   'vim-airline/vim-airline' , 'airline'
     PlugLoad   'davidhalter/jedi-vim'    , 'jedi'
-    PlugLoad   'luzhlon/hack.vim'
+    PlugLoad   'luzhlon/hack.vim'        , 'hack'
     PlugLoad   'luzhlon/vim-markdown'    , 'markdown'
     PlugLoad   'Rip-Rip/clang_complete'  , 'clang'
     "PlugLoad   'Tagbar'

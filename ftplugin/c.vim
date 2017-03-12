@@ -31,3 +31,5 @@ fun! s:Run()
 endf
 
 com! -buffer Run call <SID>Run()
+
+call dict#addl('c')
