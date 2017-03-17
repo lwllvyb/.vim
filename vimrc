@@ -27,16 +27,20 @@ call plug#begin('~/.vim/.plugs')
 com! -nargs=1 PlugLoad call LoadPlugin(<args>)
 
     PlugLoad   'Lokaltog/vim-easymotion' , 'easymotion'
-    PlugLoad   'Shougo/deoplete.nvim'    , 'deoplete'
     PlugLoad   'drmingdrmer/xptemplate'  , 'xptemplate'
     PlugLoad   'junegunn/vim-easy-align' , 'easyalign'
     PlugLoad   'scrooloose/nerdtree'     , 'nerdtree'
     PlugLoad   'tpope/vim-surround'      , 'surround'
-"    PlugLoad   'vim-airline/vim-airline' , 'airline'
     PlugLoad   'davidhalter/jedi-vim'    , 'jedi'
     PlugLoad   'luzhlon/hack.vim'        , 'hack'
     PlugLoad   'luzhlon/vim-markdown'    , 'markdown'
     PlugLoad   'Rip-Rip/clang_complete'  , 'clang'
+    PlugLoad   'vim-scripts/L9'
+    PlugLoad   'othree/vim-autocomplpop'
+"    PlugLoad   'Shougo/deoplete.nvim'    , 'deoplete'
+"    PlugLoad   'vim-airline/vim-airline' , 'airline'
+"    PlugLoad   'Shougo/vimfiler.vim'
+"    PlugLoad   'Shougo/unite.vim'
     "PlugLoad   'Tagbar'
     " PlugLoad   'chrisbra/csv.vim'
 
@@ -47,3 +51,7 @@ call plug#end()
 
 syntax on
 filetype plugin indent on
+
+if has('nvim')
+    so <sfile>:h/gvimrc
+endif

@@ -6,7 +6,7 @@ set wildmenu                    "命令行补全提示
 set list lcs=eol:¬              "设置显示不可见字符
 set laststatus=1
 set incsearch
-"set hlsearch                    "高亮所有的查找结果
+set hlsearch                    "高亮所有的查找结果
 set complete+=k                 "默认补全里加上字典补全
 set number                      "显示行号
 set nobackup noswapfile         "不使用备份、交换文件
@@ -21,7 +21,7 @@ set backspace=indent,eol,start  "<BS>键的功能
 set clipboard=unnamed           "系统剪贴板对应默认的寄存器
 set expandtab                   "扩展tab制表符为空格
 set tabstop=4 softtabstop=4 sw=4
-set statusline=\ %t\ [%{&mod?'✘':'✔'}]\ .%Y\ %h\ %r\ %=%L:%l:%c\ [%{&fenc}:%{&ff}]\ 
+set statusline=\ %t%{&mod?'*':''}\ .%Y\ %h\ %r\ %=%L:%l:%c\ [%{&fenc}:%{&ff}]\ 
 "set lazyredraw
 "set foldmethod=syntax foldlevel=3
 "启动vim时恢复上次关闭的buffer
@@ -38,9 +38,9 @@ set statusline=\ %t\ [%{&mod?'✘':'✔'}]\ .%Y\ %h\ %r\ %=%L:%l:%c\ [%{&fenc}:%
 "set nofoldenable
 "set history=128
 
-if has('gui_running')
+if has('gui_running') || has('nvim') && has('win32')
     color PaperColor
     au! GUIEnter * hi StatusLine guifg=DarkGray
-else
+elseif 
     color molokai
 endif
