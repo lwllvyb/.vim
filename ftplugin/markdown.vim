@@ -1,7 +1,9 @@
+set wrap cole=0 fdl=3
+
 if exists("b:did_myftplugin")|finish|endif
 let b:did_myftplugin = 1
 
-setl cole=0 sw=2 fdl=3
+setl sw=2
 
 nnoremap <buffer> j gj
 nnoremap <buffer> k gk

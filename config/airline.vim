@@ -2,16 +2,16 @@ let g:airline_theme = has('gui_running') ? 'solarized' : 'badwolf'
 "加载列表里的扩展
 let g:airline_extensions = ['tabline']
 
-"let g:airline_left_sep = ''
-"let g:airline_left_alt_sep = ''
-"let g:airline_right_sep = ''
-"let g:airline_right_alt_sep = ''
-"let g:airline_symbols_branch = ''
-"let g:airline_symbols_readonly = ''
-"let g:airline_symbols_linenr = ''
+let g:airline_left_sep = ''
+let g:airline_left_alt_sep = ''
+let g:airline_right_sep = ''
+let g:airline_right_alt_sep = ''
+let g:airline_symbols_branch = ''
+let g:airline_symbols_readonly = ''
+let g:airline_symbols_linenr = ''
 
 let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#tabline#left_sep = '|'
+let g:airline#extensions#tabline#left_sep = ''
 let g:airline#extensions#tabline#show_tabs = 1          "显示标签页
 let g:airline#extensions#tabline#show_tab_nr = 0
 let g:airline#extensions#tabline#buffer_idx_mode = 1

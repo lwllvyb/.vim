@@ -21,7 +21,7 @@ if has('win32')
     call extend(util, [
         \['r', '重启GVim   ' , ":sil !gvim\<cr>:conf qa\<cr>"],
         \['p', '打开命令行 ' , ":!start cmd\<cr>"],
-        \['o', '当前文件夹 ' , ":!start explorer %:h\<cr>"]])
+        \['o', '当前文件夹 ' , ":!start explorer \"%:p:h\"\<cr>"]])
 endif
 call popup#add('util', 'Util', util)
 call popup#add('util-v', 'Util',

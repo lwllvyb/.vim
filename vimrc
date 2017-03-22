@@ -6,7 +6,6 @@
 " =============================================================================
 
 so <sfile>:h/option.vim
-so <sfile>:h/env.vim
 
 let s:path = expand('<sfile>:p:h')
 let s:confpath = s:path . '/config/'
@@ -34,15 +33,18 @@ com! -nargs=1 PlugLoad call LoadPlugin(<args>)
     PlugLoad   'davidhalter/jedi-vim'    , 'jedi'
     PlugLoad   'luzhlon/hack.vim'        , 'hack'
     PlugLoad   'luzhlon/vim-markdown'    , 'markdown'
-    PlugLoad   'Rip-Rip/clang_complete'  , 'clang'
-    PlugLoad   'vim-scripts/L9'
     PlugLoad   'othree/vim-autocomplpop'
-"    PlugLoad   'Shougo/deoplete.nvim'    , 'deoplete'
+    PlugLoad   'vim-scripts/L9'
+    PlugLoad   'Rip-Rip/clang_complete'  , 'clang'
+    PlugLoad   'ryanoasis/vim-devicons'  , 'devicons'
+    PlugLoad   'itchyny/lightline.vim'   , 'lightline'
 "    PlugLoad   'vim-airline/vim-airline' , 'airline'
+"    PlugLoad   'Valloric/YouCompleteMe'
+"    PlugLoad   'Shougo/deoplete.nvim'    , 'deoplete'
 "    PlugLoad   'Shougo/vimfiler.vim'
 "    PlugLoad   'Shougo/unite.vim'
-    "PlugLoad   'Tagbar'
-    " PlugLoad   'chrisbra/csv.vim'
+"    PlugLoad   'Tagbar'
+"    PlugLoad   'chrisbra/csv.vim'
 
     call LoadCurDir()
 

@@ -5,6 +5,6 @@ call popup#add('file', '文件',
     \['d', '关闭', ":QuitBuffer\<cr>"],
     \['x', '退出', ":confirm qa\<cr>"])
 
-nmap <expr><m-f> Popup('file')
-map  <expr><m-.> popup#last()
-map! <expr><m-.> popup#last()
+nmap <expr><silent><m-f> Popup('file')
+map  <expr><silent><m-.> popup#last()
+map! <expr><silent><m-.> popup#last()
