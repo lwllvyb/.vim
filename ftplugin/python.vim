@@ -1,8 +1,8 @@
 if exists("b:did_myftplugin")|finish|endif
 let b:did_myftplugin = 1
 
-"setl foldmethod=indent
-"
+set tabstop=4 "setl foldmethod=indent
+
 let b:py3 = getline(1) =~ 'python$' ? 0: 1
 
 com -buffer UsePy let b:py3 = 0
@@ -28,5 +28,7 @@ endf
 
 nnoremap <buffer> <silent> <F5> :call <SID>run_ipy()<cr>
 nnoremap <buffer> <silent> <F6> :call <SID>run_py()<cr>
+imap <buffer> <F5> <esc><F5>
+imap <buffer> <F6> <esc><F6>
 
 call dict#addl('python')

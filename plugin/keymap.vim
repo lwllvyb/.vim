@@ -10,7 +10,8 @@ noremap! <c-b> <left>
 noremap! <c-f> <right>
 noremap! <c-d> <del>
 noremap! <c-a> <home>
-noremap! <c-e> <end>
+cnoremap <c-e> <end>
+inoremap <expr><c-e> (pumvisible()?"\<c-e>":"\<end>")
 noremap! <m-f> <s-right>
 noremap! <m-b> <s-left>
 
@@ -23,15 +24,10 @@ nmap <silent> <m-a> :call ListBuffer()<cr>
 
 cmap <c-cr> <cr>:noh<cr>
 
-nnoremap <silent><m-1> 1gt
-nnoremap <silent><m-2> 2gt
-nnoremap <silent><m-3> 3gt
-nnoremap <silent><m-4> 4gt
-nnoremap <silent><m-5> 5gt
-nnoremap <silent><m-6> 6gt
-nnoremap <silent><m-7> 7gt
-nnoremap <silent><m-8> 8gt
-nnoremap <silent><m-9> 9gt
+inoremap <c-cr> <c-o>o
+inoremap <s-cr> <c-o>O
+imap <expr><tab> (pumvisible()?"\<c-n>":"\<tab>")
+imap <expr><s-tab> (pumvisible()?"\<c-p>":"\<s-tab>")
 
 "nnoremap + <c-a>
 "nnoremap - <c-x>
@@ -41,8 +37,10 @@ nnoremap <silent> <m-j> <c-w>j
 nnoremap <silent> <m-h> <c-w>h
 nnoremap <silent> <m-l> <c-w>l
 
-vnoremap * y/\V\<<c-r>"\>
-vnoremap # y?\V\<<c-r>"\>
+vmap * y/\V\<<c-r>"\>
+vmap # y?\V\<<c-r>"\>
+vmap / y/\V<C-R>"
+vmap ? y?\V<C-R>"
 
 if has('nvim')
     tnoremap <c-s> <c-\><c-n>

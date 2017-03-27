@@ -20,6 +20,7 @@ let util = [
 if has('win32')
     call extend(util, [
         \['r', '重启GVim   ' , ":sil !gvim\<cr>:conf qa\<cr>"],
+        \['.', '重新打开   ' , ":!start gvim \"%:p\"\<cr>:conf qa\<cr>"],
         \['p', '打开命令行 ' , ":!start cmd\<cr>"],
         \['o', '当前文件夹 ' , ":!start explorer \"%:p:h\"\<cr>"]])
 endif

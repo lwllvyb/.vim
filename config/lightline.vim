@@ -22,3 +22,7 @@ let g:lightline = {
       \ 'separator': { 'left': '', 'right': '' },
       \ 'subseparator': { 'left': '', 'right': '' }
       \ }
+let g:lightline.enable = {
+    \ 'statusline': 1,
+    \ 'tabline': 0
+    \ }

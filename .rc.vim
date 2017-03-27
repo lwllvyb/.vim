@@ -1,2 +1,2 @@
-au! VimEnter * NERDTree | winc p
+au! GUIEnter * NERDTree
 set title titlestring=Vim配置
