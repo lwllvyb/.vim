@@ -5,6 +5,7 @@ fun! s:CR()
         return b =~ '^}' ?
         \ "\<cr>\<esc>O" : "\<cr>}\<esc>O"
     endif
+    return "\<cr>"
 endf
 
 fun! s:TAB()
@@ -14,9 +15,8 @@ fun! s:TAB()
     elseif f =~ '\.$'
         return "\<bs>->"
     endif
+    return "\<tab>"
 endf
 
 imap <expr><cr> <SID>CR()
 imap <expr><tab> <SID>TAB()
-
-nnoremap <buffer><F4> :call util#ToggleHeader()<cr>

@@ -6,4 +6,4 @@ let b:did_myftplugin = 1
 
 call dict#addl('c')
 
-so <sfile>:h/c-like.vim
+so <sfile>:h/cxx.vim

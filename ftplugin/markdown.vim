@@ -17,9 +17,24 @@ imap <buffer> <m-4> ####<space>
 imap <buffer> <m-5> #####<space>
 imap <buffer> <m-6> ######<space>
 
-"imap <buffer><expr><tab> <SID>tab()
-fun! s:tab()
-    return (getline('.') =~ '^\s*|' ? "\<ESC>:TableTab\<CR>" : "\t")
+fun! s:hyphenCount() 
+    let prevline = getline(line('.') - 1)
+    if !empty(prevline)
+        let n = match(prevline, '-[^-]*$')
+        return n < 0 ? 0: n - col('.') + 2
+    endif
+    return 0
+endf
+fun! s:TAB()
+    let l = lib#curstr()
+    if l =~ '-$'            " 和上一行的----对齐
+        let n = s:hyphenCount()
+        return n ? repeat('-', n) : "\<tab>"
+    else
+        return "\<tab>"
+    endif
+    "return (getline('.') =~ '^\s*|' ? "\<ESC>:TableTab\<CR>" : "\t")
 endf
 
+imap <buffer><expr><tab> <SID>TAB()
 com! -buffer TableTab call mdutil#formatTable()

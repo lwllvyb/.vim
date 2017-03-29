@@ -41,6 +41,7 @@ set statusline=\ %t%{&mod?'*':''}\ %h\ %r\ %=%L:%l:%c\ [%{&fenc}:%{&ff}]\
 
 if has('gui_running') || has('nvim') && has('win32')
     color PaperColor
+    set bg=light
 else
     color molokai
 endif

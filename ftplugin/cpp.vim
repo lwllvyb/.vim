@@ -8,4 +8,4 @@ set complete=.,w,b,u,U,k,s,i,d
 
 call dict#addl('c', 'cpp')
 
-so <sfile>:h/c-like.vim
+so <sfile>:h/cxx.vim
