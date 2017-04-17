@@ -1,10 +1,10 @@
 " =============================================================================
 " Filename:     autoload/mdutil.vim
 " Author:       luzhlon
-" Function:     Popup a menu with a user-defined keymap
+" Function:     Complete table of markdown
 " Last Change:  2017/1/19
 " =============================================================================
-
+scripte utf-8
 "获取str里pat的数量
 fun! s:str_count(str, pat, ...)
     let b = a:0 ? a:1: 0

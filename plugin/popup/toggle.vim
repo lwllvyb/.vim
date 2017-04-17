@@ -1,3 +1,4 @@
+scripte utf-8
 call popup#add('toggle', '切换',
     \['r', '相对行号        ' , ":set rnu!\<cr>"],
     \['l', '显示空白符      ' , ":set list!\<cr>"],
@@ -10,4 +11,4 @@ call popup#add('toggle', '切换',
     \['b', '背景风格        ' , ":let &bg=&bg=='dark'?'light':'dark'\<cr>"],
     \['g', 'Tagbar          ' , ":TagbarToggle\<cr>"])
 
-nmap <expr><leader> Popup('toggle')
+nmap <expr><m-\> Popup('toggle')

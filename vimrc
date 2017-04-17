@@ -5,7 +5,8 @@
 " Last Change:  2017/2/20
 " =============================================================================
 
-so <sfile>:h/option.vim
+com! -nargs=+ Source so <sfile>:h/<args>
+Source option.vim
 
 let s:path = expand('<sfile>:p:h')
 let s:confpath = s:path . '/config/'
@@ -22,41 +23,18 @@ fun! LoadCurDir()
     try|exe 'so' file|catch|endt
 endf
 
-call plug#begin('~/.vim/.plugs')
+call plug#begin(s:path . '/.plugs')
 com! -nargs=1 PlugLoad call LoadPlugin(<args>)
-
-    PlugLoad   'Lokaltog/vim-easymotion' , 'easymotion'
-    PlugLoad   'drmingdrmer/xptemplate'  , 'xptemplate'
-    PlugLoad   'junegunn/vim-easy-align' , 'easyalign'
-    PlugLoad   'scrooloose/nerdtree'     , 'nerdtree'
-    PlugLoad   'tpope/vim-surround'      , 'surround'
-    PlugLoad   'luzhlon/hack.vim'        , 'hack'
-    PlugLoad   'luzhlon/vim-markdown'    , 'markdown'
-    PlugLoad   'tpope/vim-commentary'
-    PlugLoad   'gko/vim-coloresque'
-    PlugLoad   'mattn/emmet-vim'         , 'emmet'
-    PlugLoad   'davidhalter/jedi-vim'    , 'jedi'
-    PlugLoad   'Rip-Rip/clang_complete'  , 'clang'
-    PlugLoad   'vim-scripts/L9'
-    PlugLoad   'othree/vim-autocomplpop'
-"    PlugLoad   'Valloric/YouCompleteMe'  , 'ycm'
-"    PlugLoad   'itchyny/lightline.vim'   , 'lightline'
-"    PlugLoad   'ryanoasis/vim-devicons'  , 'devicons'
-"    PlugLoad   'vim-airline/vim-airline' , 'airline'
-"    PlugLoad   'Shougo/deoplete.nvim'    , 'deoplete'
-"    PlugLoad   'Shougo/vimfiler.vim'
-"    PlugLoad   'Shougo/unite.vim'
-"    PlugLoad   'Tagbar'
-"    PlugLoad   'chrisbra/csv.vim'
-
+    Source plugs.vim
     call LoadCurDir()
-
 delc PlugLoad
 call plug#end()
 
 syntax on
 filetype plugin indent on
 
-if has('nvim')
-    so <sfile>:h/gvimrc
+if has('gui_running') || (has('nvim') && has('win32'))
+    Source gvim.vim
+else
+    color molokai
 endif

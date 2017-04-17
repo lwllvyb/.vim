@@ -1,13 +1,13 @@
 let g:clang_complete_auto     = 1
 let g:clang_close_preview     = 1
 let g:clang_auto_select       = 1
-let g:clang_complete_copen    = 1    "在quickfix里显示错误
+let g:clang_complete_copen    = 1    " Show errors in quickfix
 let g:clang_hl_errors         = 1
 let g:clang_periodic_quickfix = 0
 let g:clang_library_path      = $CLANG_PATH . '/bin'
 let g:clang_complete_macros   = 1
 let g:clang_complete_patterns = 0
-let g:clang_complete_auto     = 0    "自动弹出补全菜单在. ::符号后
+let g:clang_complete_auto     = 0    " Auto popup complete-menu after :: or .
 "let g:clang_conceal_snippets  = 0
 "let g:clang_snippets          = 1
 "let g:clang_user_options=""

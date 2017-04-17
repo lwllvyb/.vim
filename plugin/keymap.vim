@@ -6,41 +6,39 @@
 " =============================================================================
 
 " Line edit
-noremap! <c-b> <left>
-noremap! <c-f> <right>
-noremap! <c-d> <del>
-noremap! <c-a> <home>
-cnoremap <c-e> <end>
-inoremap <expr><c-e> (pumvisible()?"\<c-e>":"\<end>")
-noremap! <m-f> <s-right>
-noremap! <m-b> <s-left>
+map! <c-b> <left>
+map! <c-f> <right>
+map! <c-d> <del>
+map! <c-a> <home>
+map! <c-e> <end>
+map! <m-f> <s-right>
+map! <m-b> <s-left>
 
-inoremap <m-d> <c-o>diw
-inoremap <expr><c-k> getline('.')?'<del>':'<c-o>C'
+imap <m-n> <down>
+imap <m-p> <up>
+imap <m-j> <PageDown>
+imap <m-k> <PageUp>
+imap <m-d> <c-o>cw
+imap <expr><c-k> (col('.')==col('$'))?"\<del>":"\<c-o>D"
+imap <m-o> <esc>
+imap <c-cr> <c-o>o
+imap <s-cr> <c-o>O
 
-nmap <silent> <m-n> :cn<cr>
-nmap <silent> <m-N> :cp<cr>
+nmap <silent> <m-J> :cn<cr>
+nmap <silent> <m-K> :cp<cr>
 nmap <silent> <m-a> :call ListBuffer()<cr>
-
-cmap <c-cr> <cr>:noh<cr>
-
-inoremap <c-cr> <c-o>o
-inoremap <s-cr> <c-o>O
-imap <expr><tab> (pumvisible()?"\<c-n>":"\<tab>")
-imap <expr><s-tab> (pumvisible()?"\<c-p>":"\<s-tab>")
+nmap <m-k> <c-w>k
+nmap <m-j> <c-w>j
+nmap <m-h> <c-w>h
+nmap <m-l> <c-w>l
 
 "nnoremap + <c-a>
 "nnoremap - <c-x>
-"Tabpage and window
-nnoremap <silent> <m-k> <c-w>k
-nnoremap <silent> <m-j> <c-w>j
-nnoremap <silent> <m-h> <c-w>h
-nnoremap <silent> <m-l> <c-w>l
 
 vmap * y/\V\<<c-r>"\>
 vmap # y?\V\<<c-r>"\>
-vmap / y/\V<C-R>"
-vmap ? y?\V<C-R>"
+vmap g* y/\V<C-R>"
+vmap g# y?\V<C-R>"
 
 if has('nvim')
     tnoremap <c-s> <c-\><c-n>

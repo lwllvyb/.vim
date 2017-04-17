@@ -1,3 +1,4 @@
+scripte utf-8
 call popup#add('insert', '插入', 
     \['t', '插入日期', "\<c-r>=strftime('%Y/%b/%d')\<cr>"],
     \['m', '插入模式行', "vim: set "])

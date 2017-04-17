@@ -1,3 +1,4 @@
+scripte utf-8
 let comment = ['/', '注释' , ":Commentary\<cr>"]
 call popup#add('edit', '编辑',
     \['i', '折叠' , "zc"],

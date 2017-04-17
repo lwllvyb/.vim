@@ -1,3 +1,4 @@
+scripte utf-8
 let sub = [['x', '斜杠反斜杠', [
               \['x', '反斜杠转义    ' , ':s/\\/\\\\/g'."\<cr>"],
               \['c', '反斜杠消除    ' , ':s/\\\\/\\/g'."\<cr>"],
@@ -6,21 +7,25 @@ let sub = [['x', '斜杠反斜杠', [
           \['c', '中文标点  ', [
               \['m', '冒号', ":s:/：/:/g\<cr>"],
               \['q', '括号', ":s:/（/(/g\<cr>:s/）/)/g\<cr>"]]],
+          \['a', '个数替换  ', ":s/\<c-r>//\\=repeat('-', len(submatch(0)))"],
           \['s', '空白字符  ', [
               \['i', '制表符 → 空格 ' , ":s/\t/\\=repeat(' ',\&ts)/g\<cr>"],
               \['l', '消除空行      ' , ":g/^$/del\<cr>"],
               \['s', '消除行尾空白  ' , ':s/\s\+$'."\<cr>"],
               \['m', '消除行尾回车符' , ":s/\<c-v>\<c-m>$/\<cr>"]]],
           \[';', '行末加分号' , ':g! /\(\(\/\/.\{-}\)\|[{};]\|\(else\)\)$/norm A;'."\<cr>"]]
+let align = [['=', '等号对齐', ":Tabularize /=\<cr>"],
+            \['e', '其他对齐', ":Tabularize /"]]
 let hex = [['b', '开始编辑' , ":set bin|%!xxd\<cr>"],
           \['e', '结束编辑' , ":%!xxd -r\<cr>"]]
 let util = [
         \['l', '打开链接   ' , 'gx'],
         \['s', '常用替换   ' , sub],
+        \['a', '常用对齐   ' , align],
         \['h', 'Hex编辑    ' , hex]]
 if has('win32')
     call extend(util, [
-        \['r', '重启GVim   ' , ":sil !gvim\<cr>:conf qa\<cr>"],
+        \['r', '重启GVim   ' , ":sil !start gvim\<cr>:conf qa\<cr>"],
         \['.', '重新打开   ' , ":!start gvim \"%:p\"\<cr>:conf qa\<cr>"],
         \['p', '打开命令行 ' , ":!start cmd\<cr>"],
         \['o', '当前文件夹 ' , ":!start explorer \"%:p:h\"\<cr>"]])
@@ -33,6 +38,7 @@ call popup#add('util-v', 'Util',
     \['t', '有道词典' , "y:YouDao \<c-r>\"\<cr>"],
     \['b', '百度搜索' , "y:Baidu \<c-r>\"\<cr>"],
     \['x', '执行VimL' , "y:exe @\"\<cr>"],
+    \['a', '常用对齐' , align],
     \['s', '常用替换' , sub])
 
 call popup#addl('markdown', 'util',

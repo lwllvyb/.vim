@@ -1,3 +1,4 @@
+scripte utf-8
 call popup#add('window', '窗口',
     \['o', '新建标签页',    ":tabe\<cr>"],
     \['w', '关闭缓冲区',    ":conf bw\<cr>"],

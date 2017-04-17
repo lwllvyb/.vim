@@ -2,7 +2,7 @@ XPTemplate priority=personal+
 
 XPTvar $SParg ''
 
-XPT myf " fun! ...
+XPT fu " fun! ...
 fun! `FOO^(`ARGS^)
     `BODY^
 endf
