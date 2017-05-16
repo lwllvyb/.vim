@@ -1,4 +1,5 @@
-" 生成防止头文件重包含的预处理语句
+setl complete=.,w,b,u,U,k,s,i,d
+
 fun! s:GenHeaders()
     let h = toupper(expand('%:t'))
     let h = substitute(h, '[^A-Z0-9]', '_', 'g')
@@ -10,10 +11,14 @@ fun! s:GenHeaders()
     call setline('$', '#endif /* ' . h . ' */')
 endf
 
-so <sfile>:h/c-like.vim
 nnoremap <buffer><expr><F2> (getline('.')=~'^\s*#include'?
             \ ":YcmCompleter GoToInclude\<cr>": ":YcmCompleter GoToDeclaration\<cr>")
-nnoremap <buffer><F3> :YcmCompleter GoToDefinition<cr>
-nnoremap <buffer><F4> :call util#ToggleHeader()<cr>
+nnoremap <buffer><silent><F3> :YcmCompleter GoToDefinition<cr>
+nnoremap <buffer><silent><F4> :call util#ToggleHeader()<cr>
+nnoremap <buffer><silent><F5> :call qrun#cxx()<cr>
+nnoremap <buffer><silent><m-o> :call qrun#cxx()<cr>
+
+imap <buffer><F5> <esc><F5>
+imap <buffer><F4> <esc><F4>
 
 com! -buffer GenHeaders call <SID>GenHeaders()

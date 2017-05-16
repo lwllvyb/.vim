@@ -31,6 +31,9 @@ nmap <m-k> <c-w>k
 nmap <m-j> <c-w>j
 nmap <m-h> <c-w>h
 nmap <m-l> <c-w>l
+nmap <silent><c-tab> :b!#<cr>
+
+nmap <silent> g. :echo synIDattr(synID(line('.'), col('.'), 1), 'name')<cr>
 
 "nnoremap + <c-a>
 "nnoremap - <c-x>
@@ -39,11 +42,14 @@ vmap * y/\V\<<c-r>"\>
 vmap # y?\V\<<c-r>"\>
 vmap g* y/\V<C-R>"
 vmap g# y?\V<C-R>"
+vmap P p:let @"=@0<cr>
+vmap <tab> >gv
+vmap <s-tab> <gv
 
 if has('nvim')
     tnoremap <c-s> <c-\><c-n>
-    tnoremap <a-left> <c-\><c-n><c-w>h
-    tnoremap <a-right> <c-\><c-n><c-w>l
-    tnoremap <a-down> <c-\><c-n><c-w>j
-    tnoremap <a-up> <c-\><c-n><c-w>k
+    tnoremap <a-h> <c-\><c-n><c-w>h
+    tnoremap <a-l> <c-\><c-n><c-w>l
+    tnoremap <a-j> <c-\><c-n><c-w>j
+    tnoremap <a-k> <c-\><c-n><c-w>k
 endif

@@ -1,34 +1,32 @@
 if exists("b:did_myftplugin")|finish|endif
 let b:did_myftplugin = 1
 
-set tabstop=4 "setl foldmethod=indent
+set sw=4 ts=4 fdm=indent
 
 let b:py3 = getline(1) =~ 'python$' ? 0: 1
+let b:pyw = 0
+let b:ipy = 1
 
-com -buffer UsePy let b:py3 = 0
-com -buffer UsePy3 let b:py3 = 1
+com -buffer Py3Toggle let b:py3 = !b:py3
+com -buffer PywToggle let b:pyw = !b:pyw
+com -buffer IPyToggle let b:ipy = !b:ipy
 
-fun! s:cmd(pycmd)
-    return '!'.join([has('win32') ? 'start': '',
-                   \ a:pycmd . (b:py3 ? '3': '')])
+fun! s:getcmd()
+    let prog = b:pyw ? 'pythonw': (b:ipy ? 'ipython': 'python')
+    let opt = prog =~ 'n$' ?
+            \ (prog =~ '^i' ? '--no-banner --pdb -i': '-i') : ''
+    if b:py3 && prog =~ 'n$' | let prog .= '3' | endif
+    return join([prog, opt, '%'])
 endf
 
-fun! s:run_ipy()
-    let h = &ch| set ch=3
+call popup#addl('goto', '跳转', ['f', '函数        ', "\<Plug>(GoToPyDef)"])
+
+fun! s:run()
     update
-    exe s:cmd('ipython') '--no-banner --pdb -i' '%:p'
-    let &ch = h
-endf
-fun! s:run_py()
-    let h = &ch| set ch=3
-    update
-    exe s:cmd('python') '%:p'
-    let &ch = h
+    exe 'Sh' s:getcmd()
 endf
 
-nnoremap <buffer> <silent> <F5> :call <SID>run_ipy()<cr>
-nnoremap <buffer> <silent> <F6> :call <SID>run_py()<cr>
+nmap <buffer><silent> <F5> :call <SID>run()<cr>
 imap <buffer> <F5> <esc><F5>
-imap <buffer> <F6> <esc><F6>
 
 call dict#addl('python')

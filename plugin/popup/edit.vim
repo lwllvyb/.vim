@@ -1,5 +1,6 @@
 scripte utf-8
 let comment = ['/', '注释' , ":Commentary\<cr>"]
+
 call popup#add('edit', '编辑',
     \['i', '折叠' , "zc"],
     \['o', '展开' , "zo"],
@@ -12,6 +13,9 @@ call popup#add('edit-v', '编辑',
     \['t', '剪切' , "\"+d"],
     \['p', '粘贴' , "\"+p"],
     \comment)
+call popup#add('edit-i', '编辑',
+    \['p', '粘贴', {->@+}])
 
 nmap <expr><m-e> Popup('edit')
 vmap <expr><m-e> Popup('edit-v')
+imap <expr><m-e> Popup('edit-i')

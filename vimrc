@@ -9,6 +9,7 @@ com! -nargs=+ Source so <sfile>:h/<args>
 Source option.vim
 
 let s:path = expand('<sfile>:p:h')
+exe 'set rtp+=' . s:path
 let s:confpath = s:path . '/config/'
 "Load plugin and it's configuration
 fun! LoadPlugin(p, ...)
@@ -33,8 +34,6 @@ call plug#end()
 syntax on
 filetype plugin indent on
 
-if has('gui_running') || (has('nvim') && has('win32'))
+if has('gui_running')
     Source gvim.vim
-else
-    color molokai
 endif
