@@ -21,8 +21,7 @@ imap <m-k> <PageUp>
 imap <m-d> <c-o>cw
 imap <expr><c-k> (col('.')==col('$'))?"\<del>":"\<c-o>D"
 imap <m-o> <esc>
-imap <c-cr> <c-o>o
-imap <s-cr> <c-o>O
+imap <c-cr> <c-o>O
 
 nmap <silent> <m-J> :cn<cr>
 nmap <silent> <m-K> :cp<cr>

@@ -42,17 +42,5 @@ nmap <buffer><expr><m-,> Popup('mdutil')
 nmap <buffer><F5> :Preview<cr>
 imap <buffer><F5> <esc><F5>
 
-fun! s:tasklist()
-    let l = matchlist(getline('.'), '^\s*[\*-+]\s\+\[\(.\{-}\)\]')
-    if empty(l)
-        sil! s/^\s*[\*+-]/& [ ]
-    elseif l[1] == 'x'
-        s/^\s*[\*-+]\s\+\[\zs.\ze\]/ /
-    else
-        s/^\s*[\*-+]\s\+\[\zs.\ze\]/x/
-    endif
-endf
-
-com! -buffer TableTab call mdutil#formatTable()
 com! -buffer Preview MarkdownPreview
-com! -buffer TaskList call <sid>tasklist()
+com! -buffer TaskList call mdplus#togtask()

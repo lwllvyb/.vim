@@ -24,7 +24,7 @@ let PlugList = {
     \'tagbar'     : 'majutsushi/tagbar'
 \}
 
-if has('Plug2Load')
+if exists('Plug2Load')
     for i in Plug2Load
         if has_key(PlugList, i)
             call LoadPlugin(PlugList[i], i)
