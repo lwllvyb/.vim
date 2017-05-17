@@ -23,7 +23,7 @@ call popup#addl('goto', '跳转', ['f', '函数        ', "\<Plug>(GoToPyDef)"])
 
 fun! s:run()
     update
-    exe 'Sh' s:getcmd()
+    exe 'QExec' s:getcmd()
 endf
 
 nmap <buffer><silent> <F5> :call <SID>run()<cr>
