@@ -11,4 +11,4 @@ au! VimEnter * call denite#custom#map(
       \ 'noremap'
       \)
 
-nnoremap <m-a> :Denite buffer<cr>
+nnoremap <c-p> :Denite buffer<cr>

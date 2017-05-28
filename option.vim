@@ -10,7 +10,7 @@ set foldtext=getline(v:foldstart)
 set hlsearch                    "高亮所有的查找结果
 set ignorecase smartcase        "忽略大小写
 set incsearch
-set laststatus=1 showtabline=2
+set laststatus=1
 set nobackup noswapfile         "不使用备份、交换文件
 set nocompatible
 set noea                        "不自动设置窗口等宽等高
@@ -20,9 +20,10 @@ set number                      "显示行号
 set ruler                       "显示所在的行列号,相关的选项rulerformat statusline paste
 set scrolloff=2                 "滚动时保留2行
 set showcmd                     "显示命令输入过程(normal模式里)
-set statusline=\ %t%{&mod?'*':''}\ %h\ %r\ %=Line:%l\ Col:%c\ [%{&fenc}:%{&ff}]\ 
 set wildmenu                    "命令行补全提示
 set complete+=k                 "默认补全里加上字典补全
+set tabline=%!bufline#tabs()
+"set statusline=\ %t%{&mod?'*':''}\ %h\ %r\ %=Line:%l\ Col:%c\ [%{&fenc}:%{&ff}]\ 
 "set awa aw
 "set clipboard=unnamed           "系统剪贴板对应默认的寄存器
 "set ambw=double

@@ -1,14 +1,3 @@
-set tabline=%!bufline#()
-nnoremap <silent><m-1> :call bufline#(1)<cr>
-nnoremap <silent><m-2> :call bufline#(2)<cr>
-nnoremap <silent><m-3> :call bufline#(3)<cr>
-nnoremap <silent><m-4> :call bufline#(4)<cr>
-nnoremap <silent><m-5> :call bufline#(5)<cr>
-nnoremap <silent><m-6> :call bufline#(6)<cr>
-nnoremap <silent><m-7> :call bufline#(7)<cr>
-nnoremap <silent><m-8> :call bufline#(8)<cr>
-nnoremap <silent><m-9> :call bufline#(9)<cr>
-
 let s:ccr = []
 let s:ctab = [['{$','}'], "\<cr>\<esc>O",
              \'{$', "}\<left>\<cr>\<esc>O",
