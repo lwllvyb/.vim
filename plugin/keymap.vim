@@ -11,21 +11,25 @@ map! <c-f> <right>
 map! <c-d> <del>
 map! <c-a> <home>
 map! <c-e> <end>
-map! <m-f> <s-right>
-map! <m-b> <s-left>
+cmap <m-f> <s-right>
+cmap <m-b> <s-left>
 
-imap <m-n> <down>
-imap <m-p> <up>
-imap <m-j> <PageDown>
-imap <m-k> <PageUp>
+imap <m-f> <c-c>ea
+imap <m-b> <c-o>b
 imap <m-d> <c-o>cw
 imap <expr><c-k> (col('.')==col('$'))?"\<del>":"\<c-o>D"
-imap <m-o> <esc>
 imap <c-cr> <c-o>O
+imap <c-n> <down>
+imap <c-p> <up>
+
+inoremap <m-]> <c-t>
+inoremap <m-[> <c-d>
+inoremap <m-/> <c-n>
+inoremap <m-?> <c-p>
+inoremap <m-o> <esc>
 
 nmap <silent> <m-J> :cn<cr>
 nmap <silent> <m-K> :cp<cr>
-"nmap <silent> <m-a> :call ListBuffer()<cr>
 nmap <m-k> <c-w>k
 nmap <m-j> <c-w>j
 nmap <m-h> <c-w>h
@@ -34,18 +38,26 @@ nmap <silent><c-tab> :b!#<cr>
 
 nmap <silent> g. :echo synIDattr(synID(line('.'), col('.'), 1), 'name')<cr>
 
-nnoremap <silent><m-1> 1gt
-nnoremap <silent><m-2> 2gt
-nnoremap <silent><m-3> 3gt
-nnoremap <silent><m-4> 4gt
-nnoremap <silent><m-5> 5gt
-nnoremap <silent><m-6> 6gt
-nnoremap <silent><m-7> 7gt
-nnoremap <silent><m-8> 8gt
-nnoremap <silent><m-9> 9gt
+nnoremap <silent><m-1> :call bufline#(1)<cr>
+nnoremap <silent><m-2> :call bufline#(2)<cr>
+nnoremap <silent><m-3> :call bufline#(3)<cr>
+nnoremap <silent><m-4> :call bufline#(4)<cr>
+nnoremap <silent><m-5> :call bufline#(5)<cr>
+nnoremap <silent><m-6> :call bufline#(6)<cr>
+nnoremap <silent><m-7> :call bufline#(7)<cr>
+nnoremap <silent><m-8> :call bufline#(8)<cr>
+nnoremap <silent><m-9> :call bufline#(9)<cr>
 
-"nnoremap + <c-a>
-"nnoremap - <c-x>
+nnoremap + <c-a>
+nnoremap - <c-x>
+nnoremap <c-a> ggVG
+nnoremap <m-left> <c-o>
+nnoremap <m-right> <c-i>
+nnoremap <tab> zc
+nnoremap <s-tab> zo
+nnoremap <silent><c-s> :w<cr>
+nnoremap <silent><m-E> :NERDTreeToggle<cr>
+nnoremap <c-c><c-c> :conf qa<cr>
 
 vmap * y/\V\<<c-r>"\>
 vmap # y?\V\<<c-r>"\>
@@ -54,6 +66,8 @@ vmap g# y?\V<C-R>"
 vmap P p:let @"=@0<cr>
 vmap <tab> >gv
 vmap <s-tab> <gv
+vnoremap <c-x> "+d
+vnoremap <c-c> "+y
 
 if has('nvim')
     tnoremap <c-s> <c-\><c-n>

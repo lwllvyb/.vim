@@ -14,7 +14,8 @@ call popup#add('edit-v', '编辑',
     \['p', '粘贴' , "\"+p"],
     \comment)
 call popup#add('edit-i', '编辑',
-    \['p', '粘贴', {->@+}])
+    \['p', '粘贴',
+       \"\<c-o>:set paste\<cr>\<c-r>+\<c-o>:set paste!\<cr>"])
 
 nmap <expr><m-e> Popup('edit')
 vmap <expr><m-e> Popup('edit-v')

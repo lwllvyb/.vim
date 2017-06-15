@@ -8,12 +8,6 @@ let s:files = []    " files bufnrs
 
 let s:hiSel = '%#TabLineSel#'
 let s:hiNonSel = '%#TabLine#'
-" Select a buffer
-fun! s:select(n)
-    if a:n <= len(s:files)
-        exe 'b!' s:files[a:n-1]['bufnr']
-    endif
-endf
 " Get buffer list of tabpages
 fun! s:tabsbufnr()
     let list = []
@@ -37,10 +31,17 @@ fun! s:filesbufnr()
                 \ {i,v->empty(getbufvar(v['bufnr'], '&bt'))}),
                 \ {i,v->v['bufnr']})
 endf
-" set tabline=%!bufline#()
-fun! bufline#(...)
-    if a:0 | call s:select(a:1) | endif
-    return s:get(s:filesbufnr())
+" Select a buffer
+fun! bufline#(n)
+    let n = a:n - 1
+    if n < len(s:files)
+        exe s:files[n] 'b!'
+    endif
+endf
+" set tabline=%!bufline#bufs()
+fun! bufline#bufs()
+    let s:files = s:filesbufnr()
+    return s:get(s:files)
 endf
 " set tabline=%!bufline#tabs()
 fun! bufline#tabs()
@@ -50,7 +51,6 @@ endf
 fun! s:get(nrs)
     let curnr = bufnr('%')
     let i = 1 | let l = []
-    let s:files = s:filesbufnr()
     for nr in a:nrs
         call add(l, '%'.i.'T')
         call add(l, nr == curnr ? s:hiSel: s:hiNonSel)

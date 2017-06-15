@@ -32,7 +32,7 @@ delc PlugLoad
 call plug#end()
 
 syntax on
-filetype plugin indent on
+"filetype plugin indent on
 
 if has('gui_running')
     Source gvim.vim
