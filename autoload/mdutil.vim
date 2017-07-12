@@ -26,7 +26,7 @@ fun! s:findHead()
     endw
     return n + 1
 endf
-
+" Format the table in markdown
 fun! mdutil#formatTable()
     "find table head
     let curline = getline('.')
@@ -59,4 +59,67 @@ fun! mdutil#formatTable()
         endif
     endif
     startinsert
+endf
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+fun! s:settableline(edge, mt, lt, rt)
+    let n = line('.')
+    let up = getline(n - 1)
+    let down = getline(n + 1)
+
+    let size = strchars(up)
+    let shortn = n + 1
+    let sub = strdisplaywidth(up) - strdisplaywidth(down)
+    if sub < 0
+        let shortn = n - 1
+        let size = strchars(down)
+    endif
+    let origin_short_line = getline(shortn)
+    call setline(shortn, origin_short_line . repeat(' ', abs(sub)))
+    call setline(n, repeat('─', size))
+    norm 0
+    let first = 1
+    let lastflag = ''
+    let lastcol = 0
+    let i = 0
+    while i < size
+        let curcol = i + 1
+        let curpos = getpos('.')
+        norm! k"ayl
+        call setpos('.', curpos)
+        norm! j"byl
+        call setpos('.', curpos)
+        let flag = (@a == a:edge ? 'u': '') . (@b == a:edge ? 'd': '')
+        if flag != '' && first
+            let first = 0
+            exe 'norm!' 'r' . a:lt[flag]
+        else
+            let lastflag = a:mt[flag]
+            let lastcol = getpos('.')
+            exe 'norm!' 'r' . lastflag
+        endif
+        norm! l
+        let i += 1
+        echo flag
+        redraw
+    endw
+    if !empty(lastflag)
+        call setpos('.', lastcol)
+        exe 'norm!' 'r' . a:rt[flag]
+    endif
+    call setline(shortn, origin_short_line)
+endf
+" Set the table line according the line up and down(WideChar)
+fun! mdutil#setTableLineW()
+    call s:settableline('│',
+        \ {'': '─', 'u': '┴', 'd': '┬', 'ud': '┼'},
+        \ {'': '─', 'ud': '├', 'u': '└', 'd': '┌'},
+        \ {'': '─', 'ud': '┤', 'u': '┘', 'd': '┐'})
+endf
+" Set the table line according the line up and down
+fun! mdutil#setTableLine()
+    call s:settableline('|',
+        \ {'': '-', 'ud': '+', 'u': '+', 'd': '+'},
+        \ {'': '-', 'ud': '+', 'u': '+', 'd': '+'},
+        \ {'': '-', 'ud': '+', 'u': '+', 'd': '+'})
 endf

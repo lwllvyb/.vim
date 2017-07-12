@@ -1,45 +1,64 @@
-let PlugList = {
-    \'easymotion' : 'Lokaltog/vim-easymotion',
-    \'xptemplate' : 'drmingdrmer/xptemplate',
-    \'tabular'    : 'godlygeek/tabular',
-    \'nerdtree'   : 'scrooloose/nerdtree',
-    \'surround'   : 'tpope/vim-surround',
-    \'mix'        : 'luzhlon/mix.vim',
-    \'job'        : 'luzhlon/job.vim',
-    \'qrun'       : 'luzhlon/qrun.vim',
-    \'popup'      : 'luzhlon/popup.vim',
-    \'markdown'   : 'luzhlon/vim-markdown',
-    \'mdpreview'  : 'iamcco/markdown-preview.vim',
-    \'emmet'      : 'mattn/emmet-vim',
-    \'indent'     : 'nathanaelkane/vim-indent-guides',
-    \'gtags'      : 'aceofall/gtags.vim',
-    \'completor'  : 'maralla/completor.vim',
-    \'jedi'       : 'davidhalter/jedi-vim',
-    \'clang'      : 'Rip-Rip/clang_complete',
-    \'ycm'        : 'Valloric/YouCompleteMe',
-    \'lightline'  : 'itchyny/lightline.vim',
-    \'devicons'   : 'ryanoasis/vim-devicons',
-    \'airline'    : 'vim-airline/vim-airline',
-    \'graphviz'   : 'wannesm/wmgraphviz.vim',
-    \'denite'     : 'Shougo/denite.nvim',
-    \'deoplete'   : 'Shougo/deoplete.nvim',
-    \'comment'    : 'tpope/vim-commentary',
-    \'colors'     : 'gko/vim-coloresque',
-    \'tagbar'     : 'majutsushi/tagbar'
-\}
+com! -nargs=+ DeinAdd call dein#add(<args>)
+com! -nargs=* DeinInstall call dein#install(<args>)
+com! -nargs=* DeinReinstall call dein#reinstall(<args>)
+com! -nargs=* DeinUpdate call dein#update(<args>)
+com! -nargs=+ DeinConfig call dein#config(<args>)
+com! -nargs=+ DeinLocal call dein#local(<args>)
+com! DeinStateClean call dein#clear_state()
 
-if !exists('Plug2Load')
-    let Plug2Load = [
-        \'easymotion', 'xptemplate', 'tabular', 'colors',
-        \'denite', 'job', 'qrun', 'popup', 'lightline',
-        \'nerdtree', 'comment', 'surround', 'mix', 'markdown',
-        \'mdpreview', 'graphviz', 'emmet', 'indent', 'jedi']
-    if has('nvim')
-        let Plug2Load += ['deoplete']
-    endif
+let s:confdir = expand('<sfile>:h') . '/config/'
+fun! ConfigHook()
+    for p in keys(dein#get())
+        let f = s:confdir . p
+        if f !~ '.vim$' | let f .= '.vim' | endif
+        if filereadable(f)
+            call dein#set_hook(p, 'hook_source', 'so ' . f)
+        elseif isdirectory(f)
+            let fs = glob(f . '/*.vim', 0, 1)
+            fun! T() closure
+                for f in fs|exe 'so' f|endfo
+            endf
+            call dein#set_hook(p, 'hook_source', funcref('T'))
+        endif
+    endfo
+endf
+
+let g:deindir = '~/.cache/dein'
+if dein#load_state(g:deindir)
+    let LOG.load_state = 1
+    call dein#begin(g:deindir)
+    DeinLocal('~/vimplugs')
+    DeinConfig 'vim-markdown', {'on_ft': 'markdown'}
+    DeinConfig 'xmake.vim', {'depends': ['job.vim', 'qrun.vim']}
+
+    DeinAdd 'Lokaltog/vim-easymotion', {'name': 'easymotion'}
+    DeinAdd 'drmingdrmer/xptemplate'
+    DeinAdd 'godlygeek/tabular'
+    DeinAdd 'scrooloose/nerdtree', {'name': 'nerdtree'}
+    DeinAdd 'tpope/vim-surround'
+    DeinAdd 'iamcco/mathjax-support-for-mkdp'
+    DeinAdd 'iamcco/markdown-preview.vim', {'on_ft': 'markdown'}
+    DeinAdd 'mattn/emmet-vim', {'name': 'emmet', 'on_ft': 'html'}
+    DeinAdd 'maralla/completor.vim'
+    DeinAdd 'davidhalter/jedi-vim', {'name': 'jedi', 'on_ft': 'python'}
+    DeinAdd 'Rip-Rip/clang_complete', {'name': 'clang', 'on_ft': ['c', 'cpp']}
+    DeinAdd 'itchyny/lightline.vim'
+    " DeinAdd 'nathanaelkane/vim-indent-guides'
+    " DeinAdd 'Valloric/YouCompleteMe'
+    " DeinAdd 'ryanoasis/vim-devicons'
+    " DeinAdd 'vim-airline/vim-airline'
+    DeinAdd 'wannesm/wmgraphviz.vim', {'on_ft': 'dot'}
+    DeinAdd 'Shougo/denite.nvim'
+    DeinAdd 'Shougo/deoplete.nvim', {'if': 'has("nvim")'}
+    DeinAdd 'tpope/vim-commentary', {'name': 'commentary'}
+    DeinAdd 'gko/vim-coloresque', {'name': 'coloresque', 'on_ft': ['css', 'html', 'markdown']}
+    DeinAdd 'morhetz/gruvbox'
+    DeinAdd 'majutsushi/tagbar'
+
+    call ConfigHook()
+    call dein#end()
+    call dein#call_hook('source')
+    " call dein#save_state()
 endif
-for i in Plug2Load
-    if has_key(PlugList, i)
-        call LoadPlugin(PlugList[i], i)
-    endif
-endfo
+
+" autocmd VimEnter * call dein#call_hook('post_source')

@@ -7,32 +7,24 @@
 
 com! -nargs=+ Source so <sfile>:h/<args>
 Source option.vim
+let LOG = {}
 
-let s:path = expand('<sfile>:p:h')
-exe 'set rtp+=' . s:path
-let s:confpath = s:path . '/config/'
-"Load plugin and it's configuration
-fun! LoadPlugin(p, ...)
-    call plug#(a:p)
-    if a:0 | try
-        exe 'so' s:confpath.(a:1.'.vim')
-    catch | endt | endif
-endf
+let $CONFROOT = expand('<sfile>:h')
+exe 'set rtp+=' . $CONFROOT
 "load configuration file from current directory
-fun! LoadCurDir()
-    let file = getcwd() . '/.rc.vim'
-    try|exe 'so' file|catch|endt
-endf
+" fun! LoadCurDir()
+"     let file = getcwd() . '/.rc.vim'
+"     try|exe 'so' file|catch|endt
+" endf
 
-call plug#begin(s:path . '/.plugs')
-com! -nargs=1 PlugLoad call LoadPlugin(<args>)
-    Source plugs.vim
-    call LoadCurDir()
-delc PlugLoad
+call plug#begin($CONFROOT . '/.plugs')
+call plug#('Shougo/dein.vim')
 call plug#end()
 
+Source plugs.vim
+
 syntax on
-"filetype plugin indent on
+filetype plugin indent on
 
 if has('gui_running')
     Source gvim.vim

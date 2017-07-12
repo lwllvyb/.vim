@@ -25,6 +25,7 @@ let util = [
         \['l', '打开链接' , 'gx'],
         \['s', '常用替换' , sub],
         \['a', '常用对齐' , align],
+        \['c', '复制文件名' , ":let @+ = expand('%')\<cr>"],
         \['h', '十六进制' , hex]]
 if has('win32')
     call extend(util, [

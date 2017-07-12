@@ -10,18 +10,18 @@ nnoremap <buffer> k gk
 nnoremap <buffer> 0 g0
 nnoremap <buffer> $ g$
 
-imap <buffer> <m-1> #<space>
-imap <buffer> <m-2> ##<space>
-imap <buffer> <m-3> ###<space>
-imap <buffer> <m-4> ####<space>
-imap <buffer> <m-5> #####<space>
-imap <buffer> <m-6> ######<space>
+inoremap <buffer> <m-2> ##<space>
+inoremap <buffer> <m-3> ###<space>
+inoremap <buffer> <m-4> ####<space>
+inoremap <buffer> <m-5> #####<space>
+inoremap <buffer> <m-6> ######<space>
+imap <buffer> · `
 
-vmap <buffer><silent>   <m-q> :s/.*/> &<cr>:noh<cr>
-vmap <buffer><silent>   <m-l> :s/.*/* &<cr>:noh<cr>
-vmap <buffer><silent>   <m-b> s****<esc>hP
-vmap <buffer><expr>     <m-c> mode()==#'V'? "s```\<cr>```\<esc>P": "s``\<esc>P"
-vmap <buffer><silent>   <m-i> s__<esc>P
+noremap <buffer><silent>   <m-q> :s/.*/> &<cr>:noh<cr>
+noremap <buffer><silent>   <m-l> :s/.*/* &<cr>:noh<cr>
+noremap <buffer><silent>   <m-b> s****<esc>hP
+noremap <buffer><expr>     <m-c> mode()==#'V'? "s```\<cr>```\<esc>P": "s``\<esc>P"
+noremap <buffer><silent>   <m-i> s__<esc>P
 
 call popup#addl('goto', '跳转',
     \['n', '下一个标题  ' , "\<Plug>Markdown_MoveToNextHeader"],
@@ -37,6 +37,14 @@ call popup#addl('mdutil', 'Util4Markdown',
     \['m', '表格对齐' , ":TableFormat\<cr>"],
     \[',', '任务列表' , ":TaskList\<cr>"],
     \['f', '跳转到锚' , "yiw/<span id=\"\<c-r>\"\">"])
+call popup#addl('insert', '插入',
+    \['b', '插入粗体' , "****\<left>\<left>"],
+    \['i', '插入斜体' , "**\<left>"],
+    \['s', '插入Task' , "* []\<left>"],
+    \['/', '插入注释' , "<!---->\<esc>2h"],
+    \['l', '插入链接' , "[]()\<left>"],
+    \['a', '插入锚点' , "<span id=\"\">\<esc>2h"])
+
 nmap <buffer><expr><m-,> Popup('mdutil')
 
 nmap <buffer><F5> :Preview<cr>

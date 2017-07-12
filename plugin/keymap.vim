@@ -58,6 +58,11 @@ nnoremap <s-tab> zo
 nnoremap <silent><c-s> :w<cr>
 nnoremap <silent><m-E> :NERDTreeToggle<cr>
 nnoremap <c-c><c-c> :conf qa<cr>
+noremap <silent><m-/> :Commentary<cr>
+noremap <silent><c-f4> :<c-u>QuitBuffer<cr>
+noremap <m-$> :norm A
+noremap <m-$>: :norm A:<cr>
+noremap <m-I> :<c-u>let i=1<cr>gv:g/.*/exe 'norm I'.i.'.'\|let i+=1<cr>
 
 vmap * y/\V\<<c-r>"\>
 vmap # y?\V\<<c-r>"\>
