@@ -5,9 +5,13 @@
 " Last Change:  2017/7/10
 " =============================================================================
 
+" About python interepter
 set pythonthreedll=python36.dll
+" About clang_complete
 let g:clang_library_path = ''
-
+" About dein plugin manager
+let g:dein_dir = ''
+" About c/c++ compiler
 let s:incdirs = ['C:/Program Files (x86)/Microsoft Visual Studio/2017/Community/VC/Tools/MSVC/14.10.25017/include']
 let s:sdkdir = 'C:/Program Files (x86)/Windows Kits/10'
 call extend(s:incdirs, glob(s:sdkdir . '/Include/*/*/',0,1))
@@ -27,11 +31,11 @@ let $LD_LIBRARY_PATH = $LIBRARY_PATH
 " set shellcmdflag=-c
 " set shellpipe=>
 " set shellredir=>
-
+" Source the init file
 so <sfile>:h/vimfiles/vimrc
+" Apparence
 set lines=35 columns=112
-
 set bg=light
 colorscheme gruvbox
-
+" Utils
 au FocusLost * let @+ = @"

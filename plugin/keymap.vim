@@ -36,7 +36,7 @@ nmap <m-h> <c-w>h
 nmap <m-l> <c-w>l
 nmap <silent><c-tab> :b!#<cr>
 
-nmap <silent> g. :echo synIDattr(synID(line('.'), col('.'), 1), 'name')<cr>
+nnoremap <silent> g. :echo synIDattr(synID(line('.'), col('.'), 1), 'name')<cr>
 
 nnoremap <silent><m-1> :call bufline#(1)<cr>
 nnoremap <silent><m-2> :call bufline#(2)<cr>

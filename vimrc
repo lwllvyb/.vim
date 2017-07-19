@@ -11,11 +11,6 @@ let LOG = {}
 
 let $CONFROOT = expand('<sfile>:h')
 exe 'set rtp+=' . $CONFROOT
-"load configuration file from current directory
-" fun! LoadCurDir()
-"     let file = getcwd() . '/.rc.vim'
-"     try|exe 'so' file|catch|endt
-" endf
 
 call plug#begin($CONFROOT . '/.plugs')
 call plug#('Shougo/dein.vim')

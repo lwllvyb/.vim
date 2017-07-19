@@ -10,7 +10,7 @@ let s:confdir = expand('<sfile>:h') . '/config/'
 fun! ConfigHook()
     for p in keys(dein#get())
         let f = s:confdir . p
-        if f !~ '.vim$' | let f .= '.vim' | endif
+        let f = substitute(f, '\.n\?vim$', '.vim', '')
         if filereadable(f)
             call dein#set_hook(p, 'hook_source', 'so ' . f)
         elseif isdirectory(f)
@@ -23,10 +23,9 @@ fun! ConfigHook()
     endfo
 endf
 
-let g:deindir = '~/.cache/dein'
-if dein#load_state(g:deindir)
+if dein#load_state(g:dein_dir)
     let LOG.load_state = 1
-    call dein#begin(g:deindir)
+    call dein#begin(g:dein_dir)
     DeinLocal('~/vimplugs')
     DeinConfig 'vim-markdown', {'on_ft': 'markdown'}
     DeinConfig 'xmake.vim', {'depends': ['job.vim', 'qrun.vim']}
@@ -39,7 +38,6 @@ if dein#load_state(g:deindir)
     DeinAdd 'iamcco/mathjax-support-for-mkdp'
     DeinAdd 'iamcco/markdown-preview.vim', {'on_ft': 'markdown'}
     DeinAdd 'mattn/emmet-vim', {'name': 'emmet', 'on_ft': 'html'}
-    DeinAdd 'maralla/completor.vim'
     DeinAdd 'davidhalter/jedi-vim', {'name': 'jedi', 'on_ft': 'python'}
     DeinAdd 'Rip-Rip/clang_complete', {'name': 'clang', 'on_ft': ['c', 'cpp']}
     DeinAdd 'itchyny/lightline.vim'
@@ -47,6 +45,7 @@ if dein#load_state(g:deindir)
     " DeinAdd 'Valloric/YouCompleteMe'
     " DeinAdd 'ryanoasis/vim-devicons'
     " DeinAdd 'vim-airline/vim-airline'
+    " DeinAdd 'maralla/completor.vim'
     DeinAdd 'wannesm/wmgraphviz.vim', {'on_ft': 'dot'}
     DeinAdd 'Shougo/denite.nvim'
     DeinAdd 'Shougo/deoplete.nvim', {'if': 'has("nvim")'}

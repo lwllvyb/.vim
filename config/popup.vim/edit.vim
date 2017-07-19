@@ -2,17 +2,19 @@ scripte utf-8
 let comment = ['/', '注释' , ":Commentary\<cr>"]
 
 call popup#add('edit', '编辑',
+    \['f', '行尾', [
+         \['d', 'DOS', ":set ff=dos\<cr>"],
+         \['u', 'UNIX', ":set ff=unix\<cr>"],
+         \['m', 'MAC', ":set ff=mac\<cr>"]]],
     \['i', '折叠' , "zc"],
     \['o', '展开' , "zo"],
     \['p', '粘贴' , "\"+p"],
-    \['a', '全选' , "ggVG"],
-    \comment)
+    \['a', '全选' , "ggVG"], comment)
 
 call popup#add('edit-v', '编辑',
     \['c', '复制' , "\"+y"],
     \['t', '剪切' , "\"+d"],
-    \['p', '粘贴' , "\"+p"],
-    \comment)
+    \['p', '粘贴' , "\"+p"], comment)
 call popup#add('edit-i', '编辑',
     \['p', '粘贴',
        \"\<c-o>:set paste\<cr>\<c-r>+\<c-o>:set paste!\<cr>"])

@@ -17,3 +17,5 @@ endf
 func! EnableMaximize(b)
     call libcallnr('vimtweak64.dll', 'EnableMaximize', a:b)
 endf
+
+com! -nargs=1 SetAlpha call SetAlpha(<args>)
