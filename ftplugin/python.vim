@@ -30,5 +30,6 @@ endf
 
 nmap <buffer><silent> <F5> :call <SID>run()<cr>
 imap <buffer> <F5> <esc><F5>
+vnoremap <buffer><m-o> yoprint()<esc>P
 
 call dict#addl('python')

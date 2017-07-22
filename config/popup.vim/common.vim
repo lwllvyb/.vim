@@ -40,8 +40,8 @@ call popup#add('goto', '跳转',
     \['p', '上个函数    ', "[["],
     \['n', '下个函数    ', "]]"])
 
-call popup#add('insert', '插入', 
-    \['t', '日期', "\<c-r>=strftime('%Y/%b/%d')\<cr>"],
+call popup#add('insert', '插入',
+    \['t', '日期', {->strftime('%Y/%b/%d')}],
     \['f', '文件名', {->expand('%')}],
     \['m', '模式行', "vim: set "])
 

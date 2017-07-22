@@ -28,6 +28,9 @@ inoremap <m-/> <c-n>
 inoremap <m-?> <c-p>
 inoremap <m-o> <esc>
 
+nnoremap <expr><c-l> (winline()<=&so+1?'zz':'zt')
+imap <c-l> <c-o><c-l>
+
 nmap <silent> <m-J> :cn<cr>
 nmap <silent> <m-K> :cp<cr>
 nmap <m-k> <c-w>k
@@ -48,13 +51,12 @@ nnoremap <silent><m-7> :call bufline#(7)<cr>
 nnoremap <silent><m-8> :call bufline#(8)<cr>
 nnoremap <silent><m-9> :call bufline#(9)<cr>
 
+nnoremap <c-j> za
 nnoremap + <c-a>
 nnoremap - <c-x>
 nnoremap <c-a> ggVG
 nnoremap <m-left> <c-o>
 nnoremap <m-right> <c-i>
-nnoremap <tab> zc
-nnoremap <s-tab> zo
 nnoremap <silent><c-s> :w<cr>
 nnoremap <silent><m-E> :NERDTreeToggle<cr>
 nnoremap <c-c><c-c> :conf qa<cr>
@@ -73,6 +75,12 @@ vmap <tab> >gv
 vmap <s-tab> <gv
 vnoremap <c-x> "+d
 vnoremap <c-c> "+y
+
+vnoremap <m-'> s''<esc>P
+vnoremap <m-"> s""<esc>P
+vnoremap <m-(> s()<esc>P
+vnoremap <m-<> s<><esc>P
+vnoremap <m-[> s[]<esc>P
 
 if has('nvim')
     tnoremap <c-s> <c-\><c-n>

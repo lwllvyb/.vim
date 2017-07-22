@@ -9,6 +9,8 @@ nnoremap <buffer><silent> <F5> :w<cr>:so %<cr>
 nnoremap <buffer> <F9> :breakadd here<cr>
 imap <buffer><F5> <esc><F5>
 
+vnoremap <buffer><m-o> yoechom <c-r>"<cr>call getchar()<esc>
+
 call popup#addl('goto', '跳转',
     \['f', '函数        ', "\<Plug>(GoToVimFun)"],
     \['d', '定义        ', "\<Plug>(GoToVimLet)"])
