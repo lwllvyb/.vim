@@ -1,23 +1,45 @@
-scripte utf-8
-let comment = ['/', '注释' , ":Commentary\<cr>"]
 
-call popup#add('edit', '编辑',
-    \['f', '行尾', [
+if has('win32')
+    com! EditHosts e ++ff=dos C:\Windows\System32\drivers\etc\hosts
+else
+    com! EditHosts e /etc/hosts
+endif
+
+let comment = ['/', 'Comment' , ":Commentary\<cr>"]
+call popup#add('edit', 'Edit',
+    \['e', 'File ...', [
+         \['v', 'VIMRC', ":e $MYVIMRC\<cr>"],
+         \['h', 'HOST', "EditHosts\<cr>"]]],
+    \['l', 'Line-format', [
          \['d', 'DOS', ":set ff=dos\<cr>"],
          \['u', 'UNIX', ":set ff=unix\<cr>"],
          \['m', 'MAC', ":set ff=mac\<cr>"]]],
-    \['i', '折叠' , "zc"],
-    \['o', '展开' , "zo"],
-    \['p', '粘贴' , "\"+p"],
-    \['a', '全选' , "ggVG"], comment)
+    \['f', 'Fold-state' , [
+         \['g', 'Toggle', 'za'],
+         \['r', 'Toggle -r', 'zA'],
+         \['m', 'Fold all', 'zM'],
+         \['a', 'Unfold all', 'zR']]],
+     \['h', 'HEX EDIT', [
+        \['b', 'Start' , ":set bin|%!xxd\<cr>"],
+        \['e', 'End' , ":%!xxd -r\<cr>"]]],
+    \'---------------------',
+    \['p', 'Paste' , "\"+p"],
+    \['a', 'Select all' , "ggVG"], comment)
 
-call popup#add('edit-v', '编辑',
-    \['c', '复制' , "\"+y"],
-    \['t', '剪切' , "\"+d"],
-    \['p', '粘贴' , "\"+p"], comment)
-call popup#add('edit-i', '编辑',
-    \['p', '粘贴',
-       \"\<c-o>:set paste\<cr>\<c-r>+\<c-o>:set paste!\<cr>"])
+call popup#add('edit-v', 'Edit',
+    \['c', 'Copy' , "\"+y"],
+    \['t', 'Cut' , "\"+d"],
+    \['p', 'Paste' , "\"+p"],
+    \'---------------------',
+    \['r', 'Replace' , 'y:%s/\V\<'."\<c-r>".'"\>/'],
+    \['f', 'Find' , 'y/\V'."\<c-r>\""],
+    \['w', 'Find' , 'y/\V\<'."\<c-r>".'"\>'],
+    \'---------------------',
+    \['f', 'Fold' , 'zf'], comment)
+
+call popup#add('edit-i', 'Edit',
+    \['c', 'Copy a line', "\<esc>yypA"],
+    \['p', 'Paste', "\<c-o>:set paste\<cr>\<c-r>+\<c-o>:set paste!\<cr>"])
 
 nmap <expr><m-e> Popup('edit')
 vmap <expr><m-e> Popup('edit-v')

@@ -11,6 +11,8 @@ imap <buffer><F5> <esc><F5>
 
 vnoremap <buffer><m-o> yoechom <c-r>"<cr>call getchar()<esc>
 
-call popup#addl('goto', '跳转',
-    \['f', '函数        ', "\<Plug>(GoToVimFun)"],
-    \['d', '定义        ', "\<Plug>(GoToVimLet)"])
+if exists('g:popup_loaded')
+    call popup#addl('goto', '跳转',
+            \['f', '函数', "\<Plug>(GoToVimFun)"],
+            \['d', '定义', "\<Plug>(GoToVimLet)"])
+endif

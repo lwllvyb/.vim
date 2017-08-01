@@ -1,10 +1,12 @@
 com! -nargs=+ DeinAdd call dein#add(<args>)
-com! -nargs=* DeinInstall call dein#install(<args>)
-com! -nargs=* DeinReinstall call dein#reinstall(<args>)
-com! -nargs=* DeinUpdate call dein#update(<args>)
+com! -nargs=* DeinInstall call dein#install(<f-args>)
+com! -nargs=* DeinReinstall call dein#reinstall(<f-args>)
+com! -nargs=* DeinUpdate call dein#update(<f-args>)
 com! -nargs=+ DeinConfig call dein#config(<args>)
-com! -nargs=+ DeinLocal call dein#local(<args>)
+com! -nargs=+ DeinSource call dein#source(<f-args>)
+com! DeinCheckInstall call dein#check_install()
 com! DeinStateClean call dein#clear_state()
+com! DeinRecache call dein#recache_runtimepath()
 
 let s:confdir = expand('<sfile>:h') . '/config/'
 fun! ConfigHook()
@@ -27,7 +29,7 @@ if dein#load_state(g:dein_dir)
     let LOG.load_state = 1
     call dein#begin(g:dein_dir)
 
-    DeinLocal '~/vimplugs'
+    call dein#local('~/vimplugs')
 
     DeinConfig 'vim-markdown', {'on_ft': 'markdown'}
     DeinConfig 'xmake.vim', {'depends': ['job.vim', 'qrun.vim']}
@@ -49,6 +51,7 @@ if dein#load_state(g:dein_dir)
     " DeinAdd 'ryanoasis/vim-devicons'
     " DeinAdd 'vim-airline/vim-airline'
     " DeinAdd 'maralla/completor.vim'
+    " DeinAdd 'xsunsmile/showmarks'
     DeinAdd 'wannesm/wmgraphviz.vim', {'on_ft': 'dot'}
     DeinAdd 'Shougo/denite.nvim'
     DeinAdd 'Shougo/deoplete.nvim', {'if': 'has("nvim")'}
@@ -56,6 +59,7 @@ if dein#load_state(g:dein_dir)
     DeinAdd 'gko/vim-coloresque', {'name': 'coloresque', 'on_ft': ['css', 'html', 'markdown']}
     DeinAdd 'morhetz/gruvbox'
     DeinAdd 'majutsushi/tagbar'
+    DeinAdd 'python-mode/python-mode'
 
     call ConfigHook()
     call dein#end()

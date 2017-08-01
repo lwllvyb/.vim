@@ -3,7 +3,7 @@ set fdl=6
 if exists("b:did_myftplugin")|finish|endif
 let b:did_myftplugin = 1
 
-set sw=4 ts=4 fdm=indent
+set sw=4 ts=4
 
 let b:py3 = getline(1) =~ 'python$' ? 0: 1
 let b:pyw = 0
@@ -21,7 +21,10 @@ fun! s:getcmd()
     return join([prog, opt, '%'])
 endf
 
-call popup#addl('goto', '跳转', ['f', '函数        ', "\<Plug>(GoToPyDef)"])
+if exists('g:popup_loaded')
+    call popup#addl('goto', '跳转', ['f', '函数', "\<Plug>(GoToPyDef)"])
+    " call popup#addl('util', 'Util', ['b', '断点', ])
+endif
 
 fun! s:run()
     update

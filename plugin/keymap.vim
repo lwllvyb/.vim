@@ -9,35 +9,30 @@
 map! <c-b> <left>
 map! <c-f> <right>
 map! <c-d> <del>
-map! <c-a> <home>
 map! <c-e> <end>
 cmap <m-f> <s-right>
 cmap <m-b> <s-left>
+cmap <c-a> <home>
 
-imap <m-f> <c-c>ea
+imap <m-f> <esc>ea
 imap <m-b> <c-o>b
 imap <m-d> <c-o>cw
-imap <expr><c-k> (col('.')==col('$'))?"\<del>":"\<c-o>D"
 imap <c-cr> <c-o>O
 imap <c-n> <down>
 imap <c-p> <up>
+imap <expr><c-k> (col('.')==col('$'))?"\<del>":"\<c-o>D"
 
 inoremap <m-]> <c-t>
 inoremap <m-[> <c-d>
 inoremap <m-/> <c-n>
 inoremap <m-?> <c-p>
 inoremap <m-o> <esc>
+inoremap <expr><c-a> (col('.')==1?"\<c-o>I":"\<home>")
+" inoremap <expr><c-c> (pumvisible()?"\<c-e>":"\<c-c>")
 
+nnoremap <expr>0 (col('.')==1?"^":"0")
 nnoremap <expr><c-l> (winline()<=&so+1?'zz':'zt')
 imap <c-l> <c-o><c-l>
-
-nmap <silent> <m-J> :cn<cr>
-nmap <silent> <m-K> :cp<cr>
-nmap <m-k> <c-w>k
-nmap <m-j> <c-w>j
-nmap <m-h> <c-w>h
-nmap <m-l> <c-w>l
-nmap <silent><c-tab> :b!#<cr>
 
 nnoremap <silent> g. :echo synIDattr(synID(line('.'), col('.'), 1), 'name')<cr>
 
@@ -55,8 +50,6 @@ nnoremap <c-j> za
 nnoremap + <c-a>
 nnoremap - <c-x>
 nnoremap <c-a> ggVG
-nnoremap <m-left> <c-o>
-nnoremap <m-right> <c-i>
 nnoremap <silent><c-s> :w<cr>
 nnoremap <silent><m-E> :NERDTreeToggle<cr>
 nnoremap <c-c><c-c> :conf qa<cr>
