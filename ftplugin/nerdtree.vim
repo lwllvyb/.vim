@@ -60,7 +60,8 @@ fun! s:paste()
 endf
 
 call popup#addl('util', 'Util', ['e', 'EXPLORER', funcref('s:open')])
-call popup#addl('edit', '编辑-NERDTREE',
-            \['c', '复制', funcref('s:copy')],
-            \['x', '剪切', funcref('s:cut')],
-            \['p', '粘贴', funcref('s:paste')])
+call popup#addl('edit', 'Edit-NERDTREE',
+            \['c', 'Copy', funcref('s:copy')],
+            \['x', 'Cut', funcref('s:cut')],
+            \['p', 'Paste', funcref('s:paste')],
+            \'---------------------------------')
