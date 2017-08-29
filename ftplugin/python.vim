@@ -4,6 +4,7 @@ if exists("b:did_myftplugin")|finish|endif
 let b:did_myftplugin = 1
 
 set sw=4 ts=4
+set isk&
 
 let b:py3 = getline(1) =~ 'python$' ? 0: 1
 let b:pyw = 0

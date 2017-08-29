@@ -12,4 +12,4 @@ call popup#add('toggle', 'Toggle',
     \['a', 'Pairs completion', ":call AutoPairsToggle()\<cr>"],
     \['g', 'TAGBAR ...', ":TagbarToggle\<cr>"])
 
-nmap <expr><m-;> Popup('toggle')
+nmap <expr><m-\> Popup('toggle')

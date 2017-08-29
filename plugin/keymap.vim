@@ -1,15 +1,15 @@
 " =============================================================================
-" Filename:     plugin/keymap.vim
-" Author:       luzhlon
-" Function:     
-" Last Change:  2017/3/03
+" Filename:    plugin/keymap.vim
+" Author:      luzhlon
+" Date:        2017-08-27
+" Description: ...
 " =============================================================================
-
 " Line edit
 map! <c-b> <left>
 map! <c-f> <right>
 map! <c-d> <del>
 map! <c-e> <end>
+map! <c-bs> <c-w>
 cmap <m-f> <s-right>
 cmap <m-b> <s-left>
 cmap <c-a> <home>
@@ -34,8 +34,6 @@ nnoremap <expr>0 (col('.')==1?"^":"0")
 nnoremap <expr><c-l> (winline()<=&so+1?'zz':'zt')
 imap <c-l> <c-o><c-l>
 
-nnoremap <silent> g. :echo synIDattr(synID(line('.'), col('.'), 1), 'name')<cr>
-
 nnoremap <silent><m-1> :call bufline#(1)<cr>
 nnoremap <silent><m-2> :call bufline#(2)<cr>
 nnoremap <silent><m-3> :call bufline#(3)<cr>
@@ -46,6 +44,14 @@ nnoremap <silent><m-7> :call bufline#(7)<cr>
 nnoremap <silent><m-8> :call bufline#(8)<cr>
 nnoremap <silent><m-9> :call bufline#(9)<cr>
 
+nnoremap <m-j> <c-w>j
+nnoremap <m-k> <c-w>k
+nnoremap <m-h> <c-w>h
+nnoremap <m-l> <c-w>l
+nnoremap <m-J> :cn<cr>
+nnoremap <m-K> :cp<cr>
+nnoremap Q gQ
+nnoremap <c-@> :vs<cr>
 nnoremap <c-j> za
 nnoremap + <c-a>
 nnoremap - <c-x>
@@ -64,10 +70,12 @@ vmap # y?\V\<<c-r>"\>
 vmap g* y/\V<C-R>"
 vmap g# y?\V<C-R>"
 vmap P p:let @"=@0<cr>
-vmap <tab> >gv
-vmap <s-tab> <gv
+vnoremap < <gv
+vnoremap > >gv
 vnoremap <c-x> "+d
 vnoremap <c-c> "+y
+snoremap <c-x> <c-g>"+d
+snoremap <c-c> <c-g>"+y
 
 vnoremap <m-'> s''<esc>P
 vnoremap <m-"> s""<esc>P

@@ -1,13 +1,21 @@
+fun! s:CloseWindow()
+    if &bt=='nofile' && 2 == confirm('Not a file, close ???', "&Yes\n&No", 2, "Warning")
+        return
+    endif
+    conf bw
+endf
+com! CloseWindow call <SID>CloseWindow()
+
 call popup#add('window', 'Window&Buffer',
     \['t', 'Tabpage', [
         \['o', 'New', ":tabe\<cr>"],
         \['x', 'Close', ":tabc\<cr>"],
         \['p', 'Previous', "gT"],
         \['n', 'Next', "gt"]]],
-    \['p', 'Previous File', ":PrevFile\<cr>"],
-    \['n', 'Next File', ":NextFile\<cr>"],
-    \['v', 'Split',   ":vert sb! "],
-    \['w', 'Wipe buffer', ":conf bw\<cr>"],
+    \['p', 'Previous', ":PrevFile\<cr>"],
+    \['n', 'Next', ":NextFile\<cr>"],
+    \['v', 'Split', ":vert sb! "],
+    \['w', 'Close', ":CloseWindow\<cr>"],
     \['p', 'Copy buffer', "ggVGy:bot sp ene!\<cr>Vp"],
     \['s', 'Resize',  [
         \['h', '<=> ++', "\<c-w><"],

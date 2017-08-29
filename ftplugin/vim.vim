@@ -2,7 +2,7 @@ set sw=4 sts=4 ts=4
 if exists("b:did_myftplugin")|finish|endif
 let b:did_myftplugin = 1
 
-"setl foldmethod=marker
+setl foldmethod=marker
 "vnoremap <buffer><silent> <space>x "ty:call execute(@t)<cr>
 "nnoremap <buffer><silent> <space>x :call execute(getline(line('.')))<cr>
 nnoremap <buffer><silent> <F5> :w<cr>:so %<cr>
@@ -12,7 +12,7 @@ imap <buffer><F5> <esc><F5>
 vnoremap <buffer><m-o> yoechom <c-r>"<cr>call getchar()<esc>
 
 if exists('g:popup_loaded')
-    call popup#addl('goto', '跳转',
-            \['f', '函数', "\<Plug>(GoToVimFun)"],
-            \['d', '定义', "\<Plug>(GoToVimLet)"])
+    call popup#addl('goto', 'Goto',
+            \['f', 'Function', "\<Plug>(GoToVimFun)"],
+            \['d', 'Definition', "\<Plug>(GoToVimLet)"])
 endif

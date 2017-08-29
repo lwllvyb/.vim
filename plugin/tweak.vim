@@ -1,11 +1,4 @@
-if has('win32')
-"    au GUIEnter * call SetAlpha(230)
-    com! Maximize call EnableMaximize(1)
-else
-    finish
-endif
-
-func! SetAlpha(n)
+func! s:SetAlpha(n)
     call libcallnr('vimtweak64.dll', 'SetAlpha', a:n)
 endf
 func! EnableCaption(b)
@@ -18,4 +11,5 @@ func! EnableMaximize(b)
     call libcallnr('vimtweak64.dll', 'EnableMaximize', a:b)
 endf
 
-com! -nargs=1 SetAlpha call SetAlpha(<args>)
+com! -nargs=1 SetAlpha call <SID>SetAlpha(<args>)
+com! Maximize call EnableMaximize(1)

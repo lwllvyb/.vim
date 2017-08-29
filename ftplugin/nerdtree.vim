@@ -65,3 +65,5 @@ call popup#addl('edit', 'Edit-NERDTREE',
             \['x', 'Cut', funcref('s:cut')],
             \['p', 'Paste', funcref('s:paste')],
             \'---------------------------------')
+
+nmap <buffer> dd md

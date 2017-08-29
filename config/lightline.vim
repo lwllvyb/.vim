@@ -5,8 +5,7 @@ let all = {
     \            [ 'percent' ],
     \            [ 'fileformat', 'fileencoding', 'filetype' ] ] }
 
-let g:lightline = {
-    \ 'colorscheme': 'solarized',
+let g:lightline = { 'colorscheme': 'one',
     \ 'active': all,
     \ 'inactive': all,
     \ 'component': {

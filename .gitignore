@@ -1,1 +1,4 @@
 .plugs/
+dein.vim/
+.*/
+.*

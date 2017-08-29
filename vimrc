@@ -7,19 +7,24 @@
 
 com! -nargs=+ Source so <sfile>:h/<args>
 Source option.vim
-let LOG = {}
 
 let $CONFROOT = expand('<sfile>:h')
-exe 'set rtp+=' . $CONFROOT
+let &rtp .= ',' . $CONFROOT
 
-call plug#begin($CONFROOT . '/.plugs')
-call plug#('Shougo/dein.vim')
-call plug#end()
+let lconf = glob('~/.config/local.vim')
+if filereadable(lconf)
+    exe 'so' lconf
+else
+    au VimEnter * echo 'Please config your local config' lconf
+endif
+
+fun! GuiRunning()
+    return has('gui_running') || has('nvim') && exists('GuiFont')
+endf
 
 Source plugs.vim
-
-syntax on
 filetype plugin indent on
+syntax enable
 
 if has('gui_running')
     Source gvim.vim
