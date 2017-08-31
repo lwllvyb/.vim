@@ -58,14 +58,23 @@ com! -buffer TaskList call mdplus#togtask()
 com! -buffer GenDocx up | !pandoc -f markdown -t docx %:p -o %:p:r.docx
 com! -buffer GenHtml up | !pandoc -f markdown -t html %:p -o %:p:r.html
 
-let b:tab_map = {
-    \ 'tab': ['^\s*|', "\<c-o>:call mdplus#tab()\<cr>",
-              \['', '^\s*|'], "\<c-r>=mdplus#tab()\<cr>",
-              \'-$', "\<c-r>=align#('-')\<cr>"],
-    \ 'stab': ['^\s*|', "\<c-r>=mdplus#stab()\<cr>",
-              \['', '^\s*|'], "\<c-o>:call mdplus#tab()\<cr>"],
-    \ 'cr': ['^\s*|', "\<c-r>=mdplus#cr()\<cr>"],
-    \ 'scr': ['^\s*|', "\<c-r>=mdplus#scr()\<cr>"]}
+let s:tab_cond = {->getline('.')=~'^\s*|' && g:mdm#tab#enable}
+
+call imap#("<tab>", {
+    \ 'match': s:tab_cond, 'rhs': "\<c-r>=mdmtab#jump('l')\<cr>"
+    \ })
+call imap#("<s-tab>", {
+    \ 'match': s:tab_cond, 'rhs': "\<c-r>=mdmtab#jump('h')\<cr>"
+    \ })
+call imap#("<cr>", {
+    \ 'match': s:tab_cond, 'rhs': "\<c-r>=mdmtab#jump('j')\<cr>"
+    \ })
+call imap#("<s-cr>", {
+    \ 'match': s:tab_cond, 'rhs': "\<c-r>=mdmtab#jump('k')\<cr>"
+    \ })
+call imap#("<tab>", {
+    \ 'match': '-$', 'rhs': "\<c-r>=align#('-')\<cr>"
+    \ })
 
 if has('gui_running')
     menu .1 ]MDPopUp.Toc(&t)<tab>:Toc :Toc<cr>

@@ -27,19 +27,19 @@ fun! s:Echo(d, ...)
     if _t == v:t_dict
         echon "{\n"     |let s:deep += 1
         for i in keys(a:d)
-            let v = a:d[i]
+            let V = a:d[i]
             call s:EchoIndent(i, ":\t")
-            call s:Echo(v)|echon ",\n"
+            call s:Echo(V)|echon ",\n"
         endfo
         let s:deep -= 1 |call s:EchoIndent()|echon "}"
     elseif _t == v:t_list
         echon "[\n"     |let s:deep += 1
-        for i in a:d
+        for I in a:d
             call s:EchoIndent()
-            call s:Echo(i)|echon ",\n"
+            call s:Echo(I)|echon ",\n"
         endfo
         let s:deep -= 1 |call s:EchoIndent()|echon "]"
-    else | echon string(a:d) | endif
+    else | echon strtrans(string(a:d)) | endif
 endf
 " }}} Echo functions "
 

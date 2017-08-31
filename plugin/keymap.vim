@@ -22,13 +22,15 @@ imap <c-n> <down>
 imap <c-p> <up>
 imap <expr><c-k> (col('.')==col('$'))?"\<del>":"\<c-o>D"
 
+inoremap <expr><tab> (pumvisible()?"\<c-n>":"\<tab>")
+inoremap <expr><s-tab> (pumvisible()?"\<c-p>":"\<s-tab>")
+inoremap <expr><c-c> (pumvisible()?"\<c-e>":"\<c-c>")
 inoremap <m-]> <c-t>
 inoremap <m-[> <c-d>
 inoremap <m-/> <c-n>
 inoremap <m-?> <c-p>
 inoremap <m-o> <esc>
 inoremap <expr><c-a> (col('.')==1?"\<c-o>I":"\<home>")
-" inoremap <expr><c-c> (pumvisible()?"\<c-e>":"\<c-c>")
 
 nnoremap <expr>0 (col('.')==1?"^":"0")
 nnoremap <expr><c-l> (winline()<=&so+1?'zz':'zt')
@@ -59,29 +61,22 @@ nnoremap <c-a> ggVG
 nnoremap <silent><c-s> :w<cr>
 nnoremap <silent><m-E> :NERDTreeToggle<cr>
 nnoremap <c-c><c-c> :conf qa<cr>
+
+noremap <m-$> :norm A
+noremap <m-I> :norm I
 noremap <silent><m-/> :Commentary<cr>
 noremap <silent><c-f4> :<c-u>QuitBuffer<cr>
-noremap <m-$> :norm A
-noremap <m-$>: :norm A:<cr>
-noremap <m-I> :<c-u>let i=1<cr>gv:g/.*/exe 'norm I'.i.'.'\|let i+=1<cr>
 
 vmap * y/\V\<<c-r>"\>
 vmap # y?\V\<<c-r>"\>
 vmap g* y/\V<C-R>"
 vmap g# y?\V<C-R>"
-vmap P p:let @"=@0<cr>
-vnoremap < <gv
-vnoremap > >gv
+xnoremap <tab> >gv
+xnoremap <s-tab> <gv
 vnoremap <c-x> "+d
 vnoremap <c-c> "+y
-snoremap <c-x> <c-g>"+d
-snoremap <c-c> <c-g>"+y
-
-vnoremap <m-'> s''<esc>P
-vnoremap <m-"> s""<esc>P
-vnoremap <m-(> s()<esc>P
-vnoremap <m-<> s<><esc>P
-vnoremap <m-[> s[]<esc>P
+smap <c-x> <c-g><c-x>
+smap <c-c> <c-g><c-c>
 
 if has('nvim')
     tnoremap <c-s> <c-\><c-n>

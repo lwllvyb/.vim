@@ -1,16 +1,9 @@
 
-snippet quickgen "Generate the file quickly" b
+snippet incom "common includes" b
 #include <iostream>
 #include <string>
 #include <cstdio>
 #include <vector>
-${1:}
-using namespace std;
-
-int main(int argc, char **argv) {
-	${2:// code it}
-	return 0;
-}
 endsnippet
 
 snippet fdoc "Generate the document for file" b
@@ -22,10 +15,37 @@ snippet fdoc "Generate the document for file" b
  ***************************************************************************/
 endsnippet
 
-snippet ustd "using namespace std;" b
-using namespace std;
+snippet using "using namespace ...;" b
+using namespace ${1:std};
 endsnippet
 
 snippet ind "#include ..." b
 #include "${1:...}"
+endsnippet
+
+snippet sma "std::max()"
+std::max(${1:}, ${2:})
+endsnippet
+
+snippet smi "std::mix()"
+std::min(${1:}, ${2:})
+endsnippet
+
+snippet main "int main(...)"
+int main(int argc, char *argv[]) {
+	${1:// code}
+	return 0;
+}
+endsnippet
+
+snippet fori "for int loop (fori)"
+for (${1:int} ${2:i} = 0; $2 < ${3:count}; ${4:++$2}) {
+	${VISUAL}$0
+}
+endsnippet
+
+snippet ford "for int loop (fori)"
+for (${1:int} ${2:i} = ${3:count}; $2 >= ${4:0}; ${5:--$2}) {
+	${VISUAL}$0
+}
 endsnippet
