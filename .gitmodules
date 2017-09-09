@@ -19,3 +19,6 @@
 [submodule "myplugs/mdm.vim"]
 	path = myplugs/mdm.vim
 	url = git@github.com:luzhlon/mdm.vim
+[submodule "dein.vim"]
+	path = dein.vim
+	url = https://github.com/Shougo/dein.vim
