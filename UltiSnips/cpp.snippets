@@ -4,6 +4,7 @@ snippet incom "common includes" b
 #include <string>
 #include <cstdio>
 #include <vector>
+#include <algorithm>
 endsnippet
 
 snippet fdoc "Generate the document for file" b
@@ -33,18 +34,18 @@ endsnippet
 
 snippet main "int main(...)"
 int main(int argc, char *argv[]) {
-	${1:// code}
+	${VISUAL}$0
 	return 0;
 }
 endsnippet
 
-snippet fori "for int loop (fori)"
-for (${1:int} ${2:i} = 0; $2 < ${3:count}; ${4:++$2}) {
+snippet fori "for loop ++"
+for (${1:int} ${2:i} = ${3:0}; $2 < ${4:count}; ${5:++$2}) {
 	${VISUAL}$0
 }
 endsnippet
 
-snippet ford "for int loop (fori)"
+snippet ford "for loop --"
 for (${1:int} ${2:i} = ${3:count}; $2 >= ${4:0}; ${5:--$2}) {
 	${VISUAL}$0
 }

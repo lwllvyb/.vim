@@ -8,9 +8,7 @@
 com! SynAttr echo synIDattr(synID(line('.'), col('.'), 1), 'name')
 " Echo a dict or list with human readable
 com! -nargs=+ -complete=expression Echo call <SID>Echo(<args>, 1)
-" Clang integration
-com! GenClangFormat call <SID>GenClangFormat()
-com! -range ClangFormat call <SID>ClangFormat(<line1>, <line2>, <count>)
+com! EchoRtp call <SID>Echo(split(&rtp, ','), 1)
 
 let s:path = expand('<sfile>:p:h')
 " Echo functions {{{ "
@@ -42,19 +40,3 @@ fun! s:Echo(d, ...)
     else | echon strtrans(string(a:d)) | endif
 endf
 " }}} Echo functions "
-
-" Clang functions {{{
-fun! s:GenClangFormat()
-    let cont = readfile(s:path . '/.clang-format')
-    call writefile(cont, '.clang-format')
-endf
-
-fun! s:ClangFormat(b, e, count)
-    if !exists('g:clang_format_py')
-        echoerr 'Please specifies the path of clang-format.py g:clang_format_py'
-        return
-    endif
-    let l:lines = a:count < 0 ? 'all' : (a:b . ':' . a:e)
-    exe 'py3f' g:clang_format_py
-endf
-" }}} Clang functions

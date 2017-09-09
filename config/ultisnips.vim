@@ -29,6 +29,10 @@ endf
 
 let s:maps = []
 
+augroup MyUltiSnip
+    au InsertLeave * call <SID>RestoreMap()
+augroup end
+
 fun! s:DoMaps()
     call add(s:maps, maparg('<tab>', 'i', 0, 1))
     call add(s:maps, maparg('<s-tab>', 'i', 0, 1))
@@ -38,9 +42,6 @@ fun! s:DoMaps()
     inoremap <buffer><s-tab> <c-r>=MyUltiSnipJumpBackward()<cr>
     vnoremap <buffer><tab> <esc>a<c-r>=MyUltiSnipJumpForward()<cr>
     vnoremap <buffer><s-tab> <esc>a<c-r>=MyUltiSnipJumpBackward()<cr>
-    " augroup MyUltiSnip
-    "     au InsertLeave * call <SID>RestoreMap()
-    " augroup end
 endf
 
 fun! s:RestoreMap()
@@ -53,7 +54,7 @@ fun! s:RestoreMap()
     for opt in s:maps
         call s:map(opt) | endfo
     let s:maps = []
-    " augroup! MyUltiSnip
+    au! MyUltiSnip InsertLeave
 endf
 
 fun! s:map(opt)

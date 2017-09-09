@@ -67,3 +67,5 @@ call popup#addl('edit', 'Edit-NERDTREE',
             \'---------------------------------')
 
 nmap <buffer> dd md
+nmap <buffer> <DEL> md
+nmap <buffer> <F2> mm

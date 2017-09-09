@@ -6,8 +6,20 @@
 " =============================================================================
 let s:files = []    " files bufnrs
 
-let s:hiSel = '%#TabLineSel#'
-let s:hiNonSel = '%#TabLine#'
+let s:hiSel = '%#MyTabLineSel#'
+let s:hiNonSel = '%#MyTabLine#'
+let s:hiFill = '%#TabLineFill#'
+
+fun! bufline#hilight()
+    hi! link MyTabLineSel Normal
+    hi! link MyTabLine TabLineFill
+    exe 'hi' 'TabLineFill' 'guifg=' synIDattr(hlID('Normal'), 'fg')
+    " hi MyTabLineSel guifg=black hi MyTabLine guifg=black
+endf
+
+call bufline#hilight()
+au ColorScheme * call bufline#hilight()
+
 " Get buffer list of tabpages
 fun! s:tabsbufnr()
     let list = []
@@ -52,17 +64,15 @@ fun! s:get(nrs)
     let curnr = bufnr('%')
     let i = 1 | let l = []
     for nr in a:nrs
-        call add(l, '%'.i.'T')
-        call add(l, nr == curnr ? s:hiSel: s:hiNonSel)
-        call add(l, ' '.i.' ')
         let file = simplify(bufname(nr))
         let file = fnamemodify(file, ':.:gs?\(.\).\{-}[\\\/]?\1\/?')
-        call add(l, empty(file) ? '<unamed>': file)
-        call add(l, getbufvar(nr, '&mod') ? '*': '')
-        call add(l, ' ')
-        let i = i + 1
+        let l += ['%' . i . 'T',
+                \ nr == curnr ? s:hiSel: s:hiNonSel,
+                \ ' ' . i . ' ',
+                \ empty(file) ? '<unamed>': file,
+                \ getbufvar(nr, '&mod') ? '• ': ' ']
+        let i += 1
     endfor
-    call add(l, '%T%#TabLineFill#%=')
-    call add(l, tabpagenr('$') > 1 ? '%999XX' : 'X')
+    let l += ['%T', s:hiFill, '%=', tabpagenr('$') > 1 ? '%999XX' : 'X']
     return join(l, '')
 endf

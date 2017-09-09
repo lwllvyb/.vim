@@ -7,5 +7,6 @@
 
 GuiFont! Fantasque Sans Mono:h12
 call GuiWindowMaximized(1)
-set mouse=a
+
+set title
 do GUIEnter *

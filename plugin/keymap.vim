@@ -14,17 +14,18 @@ cmap <m-f> <s-right>
 cmap <m-b> <s-left>
 cmap <c-a> <home>
 
-imap <m-f> <esc>ea
-imap <m-b> <c-o>b
-imap <m-d> <c-o>cw
-imap <c-cr> <c-o>O
-imap <c-n> <down>
-imap <c-p> <up>
+inoremap <m-f> <c-c>ea
+inoremap <m-b> <c-left>
+inoremap <m-d> <c-o>dw
+inoremap <c-n> <down>
+inoremap <c-p> <up>
+inoremap <c-z> <c-o>u
+inoremap <c-y> <c-o><c-r>
 imap <expr><c-k> (col('.')==col('$'))?"\<del>":"\<c-o>D"
 
 inoremap <expr><tab> (pumvisible()?"\<c-n>":"\<tab>")
 inoremap <expr><s-tab> (pumvisible()?"\<c-p>":"\<s-tab>")
-inoremap <expr><c-c> (pumvisible()?"\<c-e>":"\<c-c>")
+inoremap <expr><c-q> (pumvisible()?"\<c-e>":"\<c-q>")
 inoremap <m-]> <c-t>
 inoremap <m-[> <c-d>
 inoremap <m-/> <c-n>

@@ -55,14 +55,16 @@ fun! s:config_hook()
     endfo
 endf
 
+let s:path = expand('<sfile>:p:h')
 if !exists('g:dein#cache_directory')
-    let g:dein#cache_directory = glob('~/.cache/dein')
+    let g:dein#cache_directory = s:path . '/dein.vim'
 endif
 
 if dein#load_state(g:dein#cache_directory)
     call dein#begin(g:dein#cache_directory)
 
-    call dein#local('~/vimplugs')
+    let mypath = s:path . '/myplugs'
+    call dein#local(mypath)
 
     call dein#config('mdplus.vim', {'on_ft': 'markdown'})
     call dein#config('xmake.vim', {'depends': ['job.vim', 'qrun.vim']})
@@ -84,10 +86,12 @@ if dein#load_state(g:dein#cache_directory)
     " ------------------ Web -------------------------
     call dein#add('mattn/emmet-vim', {'name': 'emmet', 'on_ft': 'html'})
     call dein#add('gko/vim-coloresque', {'name': 'coloresque', 'on_ft': ['css', 'html', 'markdown']})
+    call dein#add('othree/html5.vim', {'on_ft': 'html'})
     " ------------------ Markdown ---------------------
     call dein#add('plasticboy/vim-markdown', {'on_ft': 'markdown'})
-    call dein#add('iamcco/mathjax-support-for-mkdp')
+    call dein#add('iamcco/mathjax-support-for-mkdp', {'on_ft': 'markdown'})
     call dein#add('iamcco/markdown-preview.vim', {'on_ft': 'markdown'})
+    " call dein#add('suan/vim-instant-markdown', {'on_ft': 'markdown'})
     " ------------------ Completer ---------------------
     call dein#add('Rip-Rip/clang_complete', {'on_ft': ['c', 'cpp']})
     call dein#add('maralla/completor.vim', {'if': '!has("nvim")'})

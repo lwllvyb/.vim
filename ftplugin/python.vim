@@ -14,26 +14,25 @@ com -buffer Py3Toggle let b:py3 = !b:py3
 com -buffer PywToggle let b:pyw = !b:pyw
 com -buffer IPyToggle let b:ipy = !b:ipy
 
-fun! s:getcmd()
-    let prog = b:pyw ? 'pythonw': (b:ipy ? 'ipython': 'python')
-    let opt = prog =~ 'n$' ?
-            \ (prog =~ '^i' ? '--no-banner --pdb -i': '-i') : ''
-    if b:py3 && prog =~ 'n$' | let prog .= '3' | endif
-    return join([prog, opt, '%'])
-endf
-
 if exists('g:popup_loaded')
-    call popup#addl('goto', '跳转', ['f', '函数', "\<Plug>(GoToPyDef)"])
-    " call popup#addl('util', 'Util', ['b', '断点', ])
+    call popup#addl('goto', 'Goto',
+                \ ['f', '函数', "\<Plug>(GoToPyDef)"])
+    call popup#addl('util', 'Util',
+                \ ['p', 'Print', "yiwoprint()\<esc>P"],
+                \ ['b', 'BP', ''])
+    call popup#addl('util-v', 'Util',
+                \ ['p', 'Print', "yoprint()\<esc>P"])
 endif
 
 fun! s:run()
     update
-    exe 'QExec' s:getcmd()
+    let cmd = join([
+                \ b:pyw ? 'pythonw': (b:ipy ? 'ipython': 'python'),
+                \ b:pyw ? '': (b:ipy ? '--no-banner --pdb -i': '-i'),
+                \ shellescape(expand('%'))
+                \ ])
+    call qrun#exec(cmd, {'bin': cmd, 'pause': 1})
 endf
 
 nmap <buffer><silent> <F5> :call <SID>run()<cr>
 imap <buffer> <F5> <esc><F5>
-vnoremap <buffer><m-o> yoprint()<esc>P
-
-call dict#addl('python')
