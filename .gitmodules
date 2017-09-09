@@ -1,0 +1,24 @@
+[submodule "myplugs/popup.vim"]
+	path = myplugs/popup.vim
+	url = git@github.com:luzhlon/popup.vim
+[submodule "myplugs/mix.vim"]
+	path = myplugs/mix.vim
+	url = git@github.com:luzhlon/mix.vim
+[submodule "myplugs/job.vim"]
+	path = myplugs/job.vim
+	url = git@github.com:luzhlon/job.vim
+[submodule "myplugs/qrun.vim"]
+	path = myplugs/qrun.vim
+	url = git@github.com:luzhlon/qrun.vim
+[submodule "myplugs/xmake.vim"]
+	path = myplugs/xmake.vim
+	url = git@github.com:luzhlon/xmake.vim
+[submodule "myplugs/proj.vim"]
+	path = myplugs/proj.vim
+	url = git@github.com:luzhlon/proj.vim
+[submodule "myplugs/mdm.vim"]
+	path = myplugs/mdm.vim
+	url = git@github.com:luzhlon/mdm.vim
+[submodule "dein.vim"]
+	path = dein.vim
+	url = ./dein.vim/
