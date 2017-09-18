@@ -22,3 +22,6 @@
 [submodule "dein.vim"]
 	path = dein.vim
 	url = https://github.com/Shougo/dein.vim
+[submodule "myplugs/vim-markdown"]
+	path = myplugs/vim-markdown
+	url = git@github.com:luzhlon/vim-markdown

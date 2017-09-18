@@ -6,15 +6,34 @@
 " =============================================================================
 let s:files = []    " files bufnrs
 
-let s:hiSel = '%#MyTabLineSel#'
-let s:hiNonSel = '%#MyTabLine#'
-let s:hiFill = '%#TabLineFill#'
-
 fun! bufline#hilight()
     hi! link MyTabLineSel Normal
     hi! link MyTabLine TabLineFill
-    exe 'hi' 'TabLineFill' 'guifg=' synIDattr(hlID('Normal'), 'fg')
-    " hi MyTabLineSel guifg=black hi MyTabLine guifg=black
+    let normal = hlID('Normal')
+    let gui_bg = synIDattr(normal, 'bg', 'gui')
+    let cui_bg = synIDattr(normal, 'bg', 'cterm')
+    let gui_fg = synIDattr(normal, 'fg', 'gui')
+    let cui_fg = synIDattr(normal, 'fg', 'cterm')
+    let dir_fg_g = synIDattr(hlID('Directory'), 'fg', 'gui')
+    let dir_fg_c = synIDattr(hlID('Directory'), 'fg', 'cterm')
+    let fill_bg_g = synIDattr(hlID('TabLineFill'), 'bg', 'gui')
+    let fill_bg_c = synIDattr(hlID('TabLineFill'), 'bg', 'cterm')
+    let warn_fg_g = synIDattr(hlID('WarningMsg'), 'fg', 'gui')
+    let warn_fg_c = synIDattr(hlID('WarningMsg'), 'fg', 'cterm')
+    call s:hi('TabLineFill',
+        \ synIDattr(normal, 'fg', 'gui'), 0,
+        \ synIDattr(normal, 'fg', 'cterm'), 0)
+    call s:hi('MyTabLineNr', dir_fg_g, fill_bg_g, dir_fg_c, fill_bg_c)
+    call s:hi('MyTabLineCurNr', dir_fg_g, gui_bg, dir_fg_c, cui_bg)
+    call s:hi('MyTabFillWarn', warn_fg_g, fill_bg_g, warn_fg_c, fill_bg_c)
+endf
+
+fun! s:hi(group, gfg, gbg, cfg, cbg)
+    exe 'hi' a:group
+        \ empty(a:gfg) ? '': 'guifg='.a:gfg
+        \ empty(a:gbg) ? '': 'guibg='.a:gbg
+        \ empty(a:cfg) ? '': 'ctermfg='.a:cfg
+        \ empty(a:cbg) ? '': 'ctermbg='.a:cbg
 endf
 
 call bufline#hilight()
@@ -66,13 +85,14 @@ fun! s:get(nrs)
     for nr in a:nrs
         let file = simplify(bufname(nr))
         let file = fnamemodify(file, ':.:gs?\(.\).\{-}[\\\/]?\1\/?')
-        let l += ['%' . i . 'T',
-                \ nr == curnr ? s:hiSel: s:hiNonSel,
-                \ ' ' . i . ' ',
+        let l += ['%', i, 'T',
+                \ nr == curnr ? '%#MyTabLineCurNr#': '%#MyTabLineNr#', ' ',
+                \ i, ' ',
+                \ nr == curnr ? '%#MyTabLineSel#': '%#MyTabLine#',
                 \ empty(file) ? '<unamed>': file,
-                \ getbufvar(nr, '&mod') ? '• ': ' ']
+                \ getbufvar(nr, '&mod') ? (nr == curnr ? '%#WarningMsg# • ': '%#MyTabFillWarn# • '): ' ']
         let i += 1
     endfor
-    let l += ['%T', s:hiFill, '%=', tabpagenr('$') > 1 ? '%999XX' : 'X']
+    let l += ['%T', '%#TabLineFill#', '%=', tabpagenr('$') > 1 ? '%999XX' : 'X']
     return join(l, '')
 endf

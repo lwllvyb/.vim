@@ -17,10 +17,6 @@ if filereadable(lconf)
 " else | au VimEnter * echo 'Please config your local config' lconf
 endif
 
-fun! GuiRunning()
-    return has('gui_running') || has('nvim') && exists('GuiFont')
-endf
-
 if !has('nvim')
     Source alt-mapping.vim
 endif
@@ -29,6 +25,12 @@ Source plugs.vim
 filetype plugin indent on
 syntax enable
 
+" For vim
 if has('gui_running')
     Source gvim.vim
 endif
+
+" For neovim
+fun! GuiRunning()
+    return exists('g:GuiLoaded') && g:GuiLoaded == 1 || has('gui_running')
+endf

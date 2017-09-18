@@ -40,3 +40,12 @@ fun! s:Echo(d, ...)
     else | echon strtrans(string(a:d)) | endif
 endf
 " }}} Echo functions "
+
+if has('win32') && has('python3')
+    fun! EnableIME(e)
+        py3 import ctypes
+        py3 imm = ctypes.WinDLL('imm32.dll')
+        py3 print(imm.ImmAssociateContext(vim.eval('g:GuiWindowId'), 0))
+    endf
+    com! IMEDisable call EnableIME(0)
+endif

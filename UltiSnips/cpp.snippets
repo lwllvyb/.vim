@@ -8,12 +8,12 @@ snippet incom "common includes" b
 endsnippet
 
 snippet fdoc "Generate the document for file" b
-/****************************************************************************
+/************************************************************
  * Filename:    `!v expand('%')`
  * Author:      ${1:your name}
  * Date:        `!v strftime('%Y-%m-%d')`
  * Description: ${3:...}
- ***************************************************************************/
+ ************************************************************/
 endsnippet
 
 snippet using "using namespace ...;" b
@@ -48,5 +48,16 @@ endsnippet
 snippet ford "for loop --"
 for (${1:int} ${2:i} = ${3:count}; $2 >= ${4:0}; ${5:--$2}) {
 	${VISUAL}$0
+}
+endsnippet
+
+snippet outvec "cout << vector"
+template <typename T>
+ostream& operator<<(ostream& o, vector<T>& v) {
+	if (v.size())
+		o << v.front();
+	for (size_t i = 1; i < v.size(); ++i)
+		o << ' ' << v[i];
+	return o;
 }
 endsnippet

@@ -13,9 +13,8 @@ if has('win32')
     set pythonthreedll=python36.dll
 endif
 
-if has('nvim')
+if has('nvim') && has('python3')
     py3 import vim
 endif
 
-au VimEnter * colors PaperColor
-au VimEnter * set bg=light
+au VimEnter * nestd colors one | set bg=light

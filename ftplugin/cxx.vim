@@ -3,6 +3,7 @@
 vnoremap <buffer> ac ?\<class\>\\|\<struct\><cr><esc>V/{<cr>%
 nnoremap <buffer><silent><F4> :call cmode#toggleHeader()<cr>
 imap <buffer><F4> <esc><F4>
+nmap <buffer>gd <Plug>(clang_complete_goto_declaration)
 
 com! -buffer GenIncMacro call cmode#genIncMacro()
 

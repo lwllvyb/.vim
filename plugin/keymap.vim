@@ -34,7 +34,7 @@ inoremap <m-o> <esc>
 inoremap <expr><c-a> (col('.')==1?"\<c-o>I":"\<home>")
 
 nnoremap <expr>0 (col('.')==1?"^":"0")
-nnoremap <expr><c-l> (winline()<=&so+1?'zz':'zt')
+nnoremap <expr><c-l> keymap#ctrl_l()
 imap <c-l> <c-o><c-l>
 
 nnoremap <silent><m-1> :call bufline#(1)<cr>
@@ -53,6 +53,7 @@ nnoremap <m-h> <c-w>h
 nnoremap <m-l> <c-w>l
 nnoremap <m-J> :cn<cr>
 nnoremap <m-K> :cp<cr>
+nnoremap <c-c> <esc>
 nnoremap Q gQ
 nnoremap <c-@> :vs<cr>
 nnoremap <c-j> za
@@ -79,10 +80,10 @@ vnoremap <c-c> "+y
 smap <c-x> <c-g><c-x>
 smap <c-c> <c-g><c-c>
 
-if has('nvim')
+if has('nvim') || has('builtin_terms')
     tnoremap <c-s> <c-\><c-n>
-    tnoremap <a-h> <c-\><c-n><c-w>h
-    tnoremap <a-l> <c-\><c-n><c-w>l
-    tnoremap <a-j> <c-\><c-n><c-w>j
-    tnoremap <a-k> <c-\><c-n><c-w>k
+    tnoremap <m-h> <c-\><c-n><c-w>h
+    tnoremap <m-l> <c-\><c-n><c-w>l
+    tnoremap <m-j> <c-\><c-n><c-w>j
+    tnoremap <m-k> <c-\><c-n><c-w>k
 endif

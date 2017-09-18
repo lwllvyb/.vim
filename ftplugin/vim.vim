@@ -9,7 +9,8 @@ nnoremap <buffer><silent> <F5> :w<cr>:so %<cr>
 nnoremap <buffer> <F9> :breakadd here<cr>
 imap <buffer><F5> <esc><F5>
 
-vnoremap <buffer><m-o> yoechom <c-r>"<cr>call getchar()<esc>
+vnoremap <buffer><m-o> yoechom <c-r>" \| call getchar()<esc>
+nmap <buffer><m-o> viw<m-o>
 
 if exists('g:popup_loaded')
     call popup#addl('goto', 'Goto',

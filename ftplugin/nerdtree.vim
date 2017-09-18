@@ -1,9 +1,7 @@
 
 fun! s:open()
     let curNode = g:NERDTreeFileNode.GetSelected()
-    exe 'sil'
-        \ (has('win32') ? '!start': '!xdg-open')
-        \ curNode.path.str()
+    call open#(curNode.path.str())
     return ''
 endf
 

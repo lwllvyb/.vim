@@ -3,6 +3,7 @@ let s:path = expand('<sfile>:p:h')
 
 " Clang integration
 com! GenClangFormat call <SID>GenClangFormat()
+com! GenClangComplete call <SID>GenClangComplete()
 com! -range ClangFormat call <SID>ClangFormat(<line1>, <line2>, <count>)
 com! ClangRename call <SID>ClangRename()
 
@@ -40,3 +41,14 @@ fun! s:ClangRename()
     exe 'pyf' g:clang_rename_py
 endf
 " }}} Clang functions
+
+" ClangComplete {{{
+fun! s:GenClangComplete()
+    let cont = ['-DDEBUG']
+    if exists('$INCLUDE')
+        let incs = split($INCLUDE, ';')
+        let cont += map(incs, {i,v->'-I' . shellescape(v)})
+        call writefile(cont, '.clang_complete')
+    endif
+endf
+" }}} ClangComplete

@@ -56,4 +56,4 @@ fun! s:DoColor()
     endif
 endf
 
-au ColorScheme PaperColor call <SID>DoColor()
+" au ColorScheme PaperColor call <SID>DoColor()

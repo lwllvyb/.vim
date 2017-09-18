@@ -3,6 +3,7 @@ scripte utf-8
 call popup#add('file', 'File',
     \['n', 'New', ":conf ene\<cr>"],
     \['o', 'Open', ":browse confirm e\<cr>"],
+    \['f', 'Common', ":Denite menu:myfiles\<cr>"],
     \['e', 'Temp', ":conf e \<c-r>=$TEMP\<cr>/"],
     \'-----------------------------------------',
     \['s', 'Save', ":w\<cr>"],

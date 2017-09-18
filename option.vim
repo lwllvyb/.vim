@@ -8,12 +8,15 @@ set et sw=4 ts=4                " 扩展tab制表符为空格
 set hlsearch                    " 高亮所有的查找结果
 set ignorecase smartcase        " 忽略大小写
 set incsearch
+set confirm
 set laststatus=1
 set nobackup noswapfile         " 不使用备份、交换文件
 set nocompatible
+set hidden
 set noea                        " 不自动设置窗口等宽等高
 set nosol                       " 不跳转到行首
 set nowrap
+set noshowmode
 set number                      " 显示行号
 set ruler                       " 显示所在的行列号,相关的选项rulerformat statusline paste
 set scrolloff=2                 " 滚动时保留2行

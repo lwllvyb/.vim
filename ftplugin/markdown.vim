@@ -24,7 +24,7 @@ vnoremap <buffer><expr> <m-2> mdm#bold()
 nnoremap <buffer><expr> # (getline('.')[col('.')-1]=='#'?"I#\<esc>":'#')
 
 if exists('g:popup_loaded')
-    call popup#addl('goto', '跳转',
+    call popup#addl('goto', 'Goto',
         \['n', '下一个标题'   , "\<Plug>Markdown_MoveToNextHeader"],
         \['p', '上一个标题'   , "\<Plug>Markdown_MoveToPreviousHeader"],
         \['.', '当前标题'     , "\<Plug>Markdown_MoveToCurHeader"],
@@ -40,7 +40,7 @@ if exists('g:popup_loaded')
         \[',', 'Task', ":TaskList\<cr>"], b, c,
         \['f', 'Anchor', "yiw/<span id=\"\<c-r>\"\">"])
     call popup#addl('mdutil-v', 'Util4Markdown', l, q, b, c)
-    call popup#addl('insert', '插入',
+    call popup#addl('insert', 'Insert',
         \['b', '粗体' , "****\<left>\<left>"],
         \['i', '斜体' , "**\<left>"],
         \['s', 'Task' , "* []\<left>"],
