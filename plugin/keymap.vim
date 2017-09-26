@@ -32,6 +32,11 @@ inoremap <m-/> <c-n>
 inoremap <m-?> <c-p>
 inoremap <m-o> <esc>
 inoremap <expr><c-a> (col('.')==1?"\<c-o>I":"\<home>")
+inoremap <expr><c-g><c-v> ("\<c-o>" . (col('.')==col('$')?'"+gp':'"+gP'))
+inoremap <m-s-up> <esc>ddkPA
+inoremap <m-s-down> <esc>ddpA
+inoremap <c-t> <c-o><c-e>
+inoremap <c-y> <c-o><c-y>
 
 nnoremap <expr>0 (col('.')==1?"^":"0")
 nnoremap <expr><c-l> keymap#ctrl_l()
@@ -57,6 +62,7 @@ nnoremap <c-c> <esc>
 nnoremap Q gQ
 nnoremap <c-@> :vs<cr>
 nnoremap <c-j> za
+vnoremap <c-j> zf
 nnoremap + <c-a>
 nnoremap - <c-x>
 nnoremap <c-a> ggVG

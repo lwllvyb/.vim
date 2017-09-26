@@ -38,8 +38,8 @@ call popup#add('edit-v', 'Edit',
     \['f', 'Fold' , 'zf'], comment)
 
 call popup#add('edit-i', 'Edit',
-    \['c', 'Copy a line', "\<esc>yypA"],
-    \['p', 'Paste', "\<c-o>:set paste\<cr>\<c-r>+\<c-o>:set paste!\<cr>"])
+    \['l', 'Dump Line', "\<esc>yypA"],
+    \['p', 'Paste', {->"\<c-o>".(col('.')==col('$')?'"+gp': '"+gP')}])
 
 nmap <expr><m-e> Popup('edit')
 vmap <expr><m-e> Popup('edit-v')

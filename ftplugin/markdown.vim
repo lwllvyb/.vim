@@ -1,7 +1,9 @@
-set wrap bri cole=0 fdl=3
+set wrap bri fdl=3
 
 if exists("b:did_myftplugin")|finish|endif
 let b:did_myftplugin = 1
+
+scripte utf-8
 
 setl sw=2 ts=2
 setl isk=@,48-57,_,128-167,224-235,-
@@ -25,28 +27,30 @@ nnoremap <buffer><expr> # (getline('.')[col('.')-1]=='#'?"I#\<esc>":'#')
 
 if exists('g:popup_loaded')
     call popup#addl('goto', 'Goto',
-        \['n', '下一个标题'   , "\<Plug>Markdown_MoveToNextHeader"],
-        \['p', '上一个标题'   , "\<Plug>Markdown_MoveToPreviousHeader"],
-        \['.', '当前标题'     , "\<Plug>Markdown_MoveToCurHeader"],
-        \['a', '父级标题'     , "\<Plug>Markdown_MoveToParentHeader"],
-        \['j', '下一同级标题' , "\<Plug>Markdown_MoveToNextSiblingHeader"],
-        \['k', '上一同级标题' , "\<Plug>Markdown_MoveToPreviousSiblingHeader"])
+        \['n', 'Next Header', "\<Plug>Markdown_MoveToNextHeader"],
+        \['p', 'Prev Header', "\<Plug>Markdown_MoveToPreviousHeader"],
+        \['.', 'Current Header', "\<Plug>Markdown_MoveToCurHeader"],
+        \['a', 'Parent Header', "\<Plug>Markdown_MoveToParentHeader"],
+        \['j', 'Next Sibling', "\<Plug>Markdown_MoveToNextSiblingHeader"],
+        \['k', 'Prev Sibling', "\<Plug>Markdown_MoveToPreviousSiblingHeader"])
     let l = ['l', 'List', function('mdm#list')]
     let q = ['q', 'Quote', function('mdm#quote')]
     let b = ['b', 'Bold', function('mdm#bold')]
     let c = ['c', 'Code', function('mdm#code')]
-    call popup#addl('mdutil', 'Util4Markdown', l, q,
+    call popup#addl('mdutil', 'Markdown', l, q,
         \['o', 'Toc' , ":Toc\<cr>"],
         \[',', 'Task', ":TaskList\<cr>"], b, c,
         \['f', 'Anchor', "yiw/<span id=\"\<c-r>\"\">"])
-    call popup#addl('mdutil-v', 'Util4Markdown', l, q, b, c)
+    call popup#addl('mdutil-v', 'Markdown', l, q, b, c)
     call popup#addl('insert', 'Insert',
-        \['b', '粗体' , "****\<left>\<left>"],
-        \['i', '斜体' , "**\<left>"],
-        \['s', 'Task' , "* []\<left>"],
-        \['/', '注释' , "<!---->\<esc>2h"],
-        \['l', '链接' , "[]()\<left>"],
-        \['a', '锚点' , "<span id=\"\">\<esc>2h"])
+        \['b', 'Bold', "****\<left>\<left>"],
+        \['i', 'Italic', "**\<left>"],
+        \['s', 'Task', "* []\<left>"],
+        \['/', 'Comment', "<!---->\<esc>2h"],
+        \['l', 'Link', "[]()\<left>"],
+        \['a', 'Anchor', "<span id=\"\">\<esc>2h"])
+
+    imap <buffer><expr><m-i> Popup('insert')
     nmap <buffer><expr><m-m> Popup('mdutil')
     vmap <buffer><expr><m-m> Popup('mdutil-v')
 endif

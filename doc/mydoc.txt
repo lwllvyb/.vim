@@ -1,0 +1,16 @@
+*mydoc.txt*	For Vim/nvim	Last change: 2017-09-26 13:26
+
+==============================================================================
+1. Variables
+				*COLORSCHEME*
+
+
+                *g:deoplete#sources#clang#libclang_path*
+
+                *g:deoplete#sources#clang#clang_header*
+
+==============================================================================
+2. Tools
+
+
+ vim:tw=78:ts=8:ft=help:norl:

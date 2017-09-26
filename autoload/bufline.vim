@@ -93,6 +93,25 @@ fun! s:get(nrs)
                 \ getbufvar(nr, '&mod') ? (nr == curnr ? '%#WarningMsg# • ': '%#MyTabFillWarn# • '): ' ']
         let i += 1
     endfor
+    " Special buffer
+    if &bt == 'nofile'
+        let n = ['%#MyTabLineSel#', get({
+                \ 'nerdtree': ' [NerdTree] ',
+                \ 'tagbar': ' [Tabbar] ',
+                \ 'startify': ' [Startify] ',
+                \ 'denite': ' [Denite] '
+                \ }, &ft, '')]
+        if winnr() == 1
+            let l = n + l
+        else
+            let l += n
+        endif
+    elseif &bt == 'help'
+        let l += ['%#MyTabLineSel#', ' [HELP:', expand('%:t'), '] ']
+    elseif &bt == 'quickfix'
+        let l += ['%#MyTabLineSel#', ' [QuickFix] ']
+    endif
+    " Tabfill
     let l += ['%T', '%#TabLineFill#', '%=', tabpagenr('$') > 1 ? '%999XX' : 'X']
     return join(l, '')
 endf

@@ -14,7 +14,6 @@ let $CONFROOT = expand('<sfile>:h')
 let lconf = glob('~/.config/local.vim')
 if filereadable(lconf)
     exe 'so' lconf
-" else | au VimEnter * echo 'Please config your local config' lconf
 endif
 
 if !has('nvim')
@@ -34,3 +33,7 @@ endif
 fun! GuiRunning()
     return exists('g:GuiLoaded') && g:GuiLoaded == 1 || has('gui_running')
 endf
+
+if exists('g:COLORSCHEME')
+    exe 'au VimEnter * nested colorscheme' g:COLORSCHEME
+endif

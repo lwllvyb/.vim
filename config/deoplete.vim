@@ -3,6 +3,15 @@ let g:deoplete#enable_at_startup = 1
 let g:deoplete#enable_profile = 1
 " Use smartcase.
 let g:deoplete#enable_smart_case = 1
+" Sources
+let cxx = ['clang', 'member', 'tag', 'around', 'file', 'buffer']
+let g:deoplete#sources = {
+    \ 'c': cxx, 'cpp': cxx,
+    \ 'vim': ['vim', 'member', 'tag', 'around', 'file', 'buffer'],
+    \ 'python': [],
+    \ 'javascript': [],
+    \ '_': ['buffer', 'around', 'file', 'tag', 'member']
+    \ }
 " let g:deoplete#keyword_patterns = 
 " let b:deoplete#keyword_patterns = 
 " let g:deoplete#omni_patterns

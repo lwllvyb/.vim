@@ -5,8 +5,12 @@
 " Description: For neovim-qt
 " =============================================================================
 
-GuiFont! Fantasque Sans Mono:h12
+try
+GuiFont! FantasqueSansMono NF:h12
 call GuiWindowMaximized(1)
+catch
+    echom v:errmsg
+endt
 
 set title
 set mouse=a

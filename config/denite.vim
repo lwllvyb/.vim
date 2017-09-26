@@ -26,24 +26,10 @@ fun! s:config()
         \ 'description': 'My commands',
         \ 'command_candidates': [
             \ ['Open cmd.exe', 'call open#cmd()'],
+            \ ['Show the runtime path', 'Echo split(&rtp, ",")'],
             \ ['Open powershell', 'call open#powershell()'],
             \ ['Open bash', 'call open#bash()'],
             \ ['Open current directory', 'call open#curdir()']
-        \ ]}
-    " My substitutes
-    let subs = {
-        \ 'description': 'My substitutes',
-        \ 'command_candidates': [
-            \ ['\ -> \\', ':s/\\/\\\\/g'],
-            \ ['\\ -> \', ':s/\\\\/\\/g'],
-            \ ['/ -> \' , ':s/\//\\/g'],
-            \ ['\ -> /' , ':s/\\/\//g'],
-            \ ['Colon', ":s:/：/:/g"],
-            \ ['Breakets', ":s:/（\\(.\\{-}\\)）/\1/g"],
-            \ ['CppComment', ':s/\/\/\s*\(.*\)/\/* \1 *\/'],
-            \ ['Tab2Space',  ":s/\t/\\=repeat(' ',\&ts)/g"],
-            \ ['Delete Emptyline',  ":g/^$/del"],
-            \ ['Delete end-spaces', printf(':s/\s*%s*$',"\<c-v>\<c-m>")]
         \ ]}
     " My files
     let files = {
@@ -55,7 +41,7 @@ fun! s:config()
         \ }
     " My files
     call denite#custom#var('menu', 'menus', {
-        \ 'mycmds': cmds, 'mysubs': subs, 'myfiles': files
+        \ 'mycmds': cmds, 'myfiles': files
         \ })
 endf
 

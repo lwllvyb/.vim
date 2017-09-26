@@ -12,7 +12,7 @@ set guioptions-=e           " 禁用GUI标签页
 
 if has('win32')
     set linespace=0         " 行间距
-    set guifont=Fantasque_Sans_Mono:h12:cANSI:qDRAFT
+    set guifont=FantasqueSansMono_NF:h12:cANSI:qDRAFT
     set guifontwide=楷体:h12:cANSI:qDRAFT
     " set renderoptions=type:directx,renmode:0,taamode:3
     " so $VIMRUNTIME/delmenu.vim
