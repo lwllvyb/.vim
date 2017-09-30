@@ -9,31 +9,25 @@ com! -nargs=+ Source so <sfile>:h/<args>
 Source option.vim
 
 let $CONFROOT = expand('<sfile>:h')
-" let &rtp .= ',' . $CONFROOT
 
-let lconf = glob('~/.config/local.vim')
-if filereadable(lconf)
-    exe 'so' lconf
-endif
-
-if !has('nvim')
-    Source alt-mapping.vim
-endif
-
+Source envs.vim
 Source plugs.vim
-filetype plugin indent on
-syntax enable
-
-" For vim
-if has('gui_running')
-    Source gvim.vim
-endif
-
-" For neovim
-fun! GuiRunning()
-    return exists('g:GuiLoaded') && g:GuiLoaded == 1 || has('gui_running')
-endf
 
 if exists('g:COLORSCHEME')
     exe 'au VimEnter * nested colorscheme' g:COLORSCHEME
 endif
+
+if has('nvim')
+    fun! GuiRunning()
+        return exists('g:GuiLoaded') && g:GuiLoaded == 1 || has('gui_running')
+    endf
+else
+    if has('gui_running')
+        Source gvim.vim
+    else
+        Source alt-mapping.vim
+    endif
+endif
+
+filetype plugin indent on
+syntax enable

@@ -8,8 +8,8 @@ let cxx = ['clang', 'member', 'tag', 'around', 'file', 'buffer']
 let g:deoplete#sources = {
     \ 'c': cxx, 'cpp': cxx,
     \ 'vim': ['vim', 'member', 'tag', 'around', 'file', 'buffer'],
-    \ 'python': [],
-    \ 'javascript': [],
+    \ 'python': ['jedi', 'member', 'tag', 'around', 'file', 'buffer'],
+    \ 'javascript': ['tern', 'member', 'tag', 'around', 'file', 'buffer'],
     \ '_': ['buffer', 'around', 'file', 'tag', 'member']
     \ }
 " let g:deoplete#keyword_patterns = 
@@ -20,7 +20,8 @@ let g:deoplete#sources = {
 " let b:deoplete#ignore_sources
 
 " <C-h>, <BS>: close popup and delete backword char.
-inoremap <expr><C-h> deoplete#smart_close_popup()."\<C-h>"
-inoremap <expr><BS>  deoplete#smart_close_popup()."\<C-h>"
+" inoremap <expr><C-h> deoplete#smart_close_popup()."\<C-h>"
+" inoremap <expr><BS>  deoplete#smart_close_popup()."\<C-h>"
+inoremap <expr><c-j> deoplete#manual_complete()
 
 autocmd CompleteDone * silent! pclose!

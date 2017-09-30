@@ -28,10 +28,11 @@ fun! open#cur_file()
 endf
 
 fun! open#bash()
+    let t = executable('open-wsl') ? 'open-wsl': 'bash'
     if s:env == 'windows'
-        sil !start cmd /c bash
+        sil exe '!start' t
     elseif s:env = 'wsl'
-        sil !cmd.exe /c start bash
+        sil exe '!cmd.exe /c start' t
     else
         sil !gnome-terminal -e bash
     endif

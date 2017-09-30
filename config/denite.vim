@@ -37,7 +37,7 @@ fun! s:config()
         \ 'file_candidates': [
             \ ['Hosts', has('win32') ?
                 \ 'C:\Windows\System32\drivers\etc\hosts': '/etc/hosts'],
-            \ ['MyVimrc', '~/.config/local.vim']]
+            \ ['MyVimrc', '~/.config/envs.vim/init.vim']]
         \ }
     " My files
     call denite#custom#var('menu', 'menus', {
