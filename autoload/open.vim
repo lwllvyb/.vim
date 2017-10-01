@@ -77,18 +77,21 @@ fun! open#reopen(...)
         let t = fnamemodify(path, ':h') . '/nvim-qt'
         if executable(path) | let path = t | endif
     endif
-    let cmd = [shellescape(path)] +
-                \ map(copy(a:000), {i,v->empty(v)?'': shellescape(v)})
+    let cmd = [path] + copy(a:000)
+    call map(cmd, {i,v->empty(v)?'': shellescape(v)})
     call s:restart_task(join(cmd))
     confirm qa
 endf
 
 fun! s:restart_task(cmd)
+    let cmd = has('win32') ? iconv(a:cmd, 'utf8', 'gbk'): a:cmd
     let pid = getpid()
     let cont = ['@echo off', 'title.', ':WAIT',
             \ printf('tasklist /FI "PID eq %d"|find "%d"', pid, pid),
-            \ 'if %ERRORLEVEL% EQU 0 goto WAIT',
-            \ a:cmd, 'exit']
+            \ 'if %ERRORLEVEL% EQU 0 goto WAIT', cmd, 'exit']
+    if has('win32')
+        call map(cont, {i,v->v . "\r"})
+    endif
     let tf = tempname() . '.cmd'
     if has('nvim') | let tf = fnamemodify(tf, ':h') . '.cmd' | endif
     call writefile(cont, tf)
@@ -96,7 +99,6 @@ fun! s:restart_task(cmd)
         let j = jobstart('cmd')
         call jobsend(j, printf("call %s\r\n", tf))
     else
-        let j = job_start(tf, {'stoponexit': ''})
+        call job_start(['cmd', '/c', 'call', tf], {'stoponexit': ''})
     endif
-    " call getchar()
 endf

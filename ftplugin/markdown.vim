@@ -1,4 +1,4 @@
-set wrap bri fdl=3
+set wrap bri fdl=3 cole=2
 
 if exists("b:did_myftplugin")|finish|endif
 let b:did_myftplugin = 1
@@ -8,10 +8,14 @@ scripte utf-8
 setl sw=2 ts=2
 setl isk=@,48-57,_,128-167,224-235,-
 
-nnoremap <buffer> j gj
-nnoremap <buffer> k gk
-nnoremap <buffer> 0 g0
-nnoremap <buffer> $ g$
+noremap <buffer> j gj
+noremap <buffer> k gk
+noremap <buffer> 0 g0
+noremap <buffer> $ g$
+noremap <buffer> gj j
+noremap <buffer> gk k
+noremap <buffer> g0 0
+noremap <buffer> g$ $
 
 inoremap <buffer> <m-2> ##<space>
 inoremap <buffer> <m-3> ###<space>

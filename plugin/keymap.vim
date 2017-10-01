@@ -52,6 +52,9 @@ nnoremap <silent><m-7> :call bufline#(7)<cr>
 nnoremap <silent><m-8> :call bufline#(8)<cr>
 nnoremap <silent><m-9> :call bufline#(9)<cr>
 
+nnoremap <silent><m-[> :PrevFile<cr>
+nnoremap <silent><m-]> :NextFile<cr>
+
 nnoremap <m-j> <c-w>j
 nnoremap <m-k> <c-w>k
 nnoremap <m-h> <c-w>h

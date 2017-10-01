@@ -1,0 +1,85 @@
+
+snippet inc
+include '${1:win32a}.inc'
+endsnippet
+
+snippet pec
+format PE console 4.0
+entry start
+endsnippet
+
+snippet pec64
+format PE64 console
+entry start
+endsnippet
+
+snippet peg
+format PE GUI 4.0
+entry start
+endsnippet
+
+snippet peg64
+format PE64 NX GUI 6.0
+entry start
+endsnippet
+
+snippet elf
+format ELF executable 3
+entry start
+endsnippet
+
+snippet elf64
+format ELF64 executable 3
+entry start
+endsnippet
+
+snippet .text
+section '.text' code readable executable
+
+  start:
+	${1:start your code}${VISUAL}
+endsnippet
+
+snippet .data
+section '.data' data readable writeable
+	${1:; define some variables}${VISUAL}
+endsnippet
+
+snippet .idata
+section '.idata' import data readable writeable
+	library kernel32,'KERNEL32.DLL', user32, 'USER32.DLL'
+	include 'api\kernel32.inc'
+	include 'api\user32.inc'
+endsnippet
+
+snippet dstr
+${1:string-name} db '${2:string}', 0
+endsnippet
+
+snippet darr
+${1:array-name} ${2:dd} ${3:10} dup(${4:?})
+endsnippet
+
+snippet struct
+struct ${1:struct-name}
+	${2:XX dd ?}${VISUAL}
+ends
+endsnippet
+
+snippet union
+union ${1:union-name}
+	${2:XX dd ?}${VISUAL}
+ends
+endsnippet
+
+snippet msgbox
+invoke MessageBoxA, NULL, ${1:content}, ${2:caption}, 0
+endsnippet
+
+snippet exit
+invoke ExitProcess, ${1:0}
+endsnippet
+
+snippet stdproc
+proc ${1:function-name} stdcall ${2:param1:type1 ...}
+endsnippet

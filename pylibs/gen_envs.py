@@ -1,10 +1,11 @@
 
-import winreg as wr
 import platform, os
+import glob, json
 from subprocess import Popen, PIPE
 
-
 def QuerySoftware(key, val = ''):
+    import winreg as wr
+
     key = ('SOFTWARE\\Wow6432Node\\'
             if platform.architecture()[0] == '64bit'
             else 'SOFTWARE\\')  + key
@@ -76,14 +77,14 @@ def gen_msvc():
     return config
 
 def gen_clang():
-    llvm = QuerySoftware('LLVM\\LLVM')
-    if not llvm:
-        return print('Can not find the directory of LLVM')
-
-    print('LLVM path:', llvm)
-
     config = {}
     if platform.system() == 'Windows':
+        llvm = QuerySoftware('LLVM\\LLVM')
+        if not llvm:
+            return print('Can not find the directory of LLVM')
+
+        print('LLVM path:', llvm)
+
         l = llvm + '\\share\\clang\\clang-format.py'
         config['clang_format_py'] = l if os.path.exists(l) else ''
         l = llvm + '\\share\\clang\\clang-rename.py'
@@ -91,17 +92,20 @@ def gen_clang():
         config['clang_library_path'] = os.path.join(llvm, 'bin')
     else:
         l = glob.glob('/usr/share/clang/clang-format-*/clang-format.py')
-        config['clang_format_py'] = l[0] if l else ''
+        if l:
+            print(l[0])
+            config['clang_format_py'] = l[0]
         l = glob.glob('/usr/share/clang/clang-rename-*/clang-rename.py')
-        config['clang_rename_py'] = l[0] if l else ''
+        if l:
+            print(l[0])
+            config['clang_rename_py'] = l[0]
 
     return config
 
 def write_conf(fname, conf):
-    import glob, json
     confdir = os.path.expanduser(os.path.join('~', '.config', 'envs.vim'))
     if not os.path.isdir(confdir):
-        os.mkdir(confdir, True)
+        os.makedirs(confdir)
     f = os.path.join(confdir, fname)
     with open(f, 'w+') as f:
         json.dump(conf, f)
@@ -110,9 +114,10 @@ def main():
     print('Operating system:', platform.system(),
             platform.architecture()[0], platform.version(), platform.node())
 
-    print()
-    print('------------------- Searching MSVC ... -------------------')
-    write_conf('msvc.json', {'envs#vs': gen_msvc()})
+    if platform.system() == 'Windows':
+        print()
+        print('------------------- Searching MSVC ... -------------------')
+        write_conf('msvc.json', {'envs#vs': gen_msvc()})
 
     print()
     print('------------------- Searching LLVM and clang ... -------------------')

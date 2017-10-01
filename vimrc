@@ -10,6 +10,10 @@ Source option.vim
 
 let $CONFROOT = expand('<sfile>:h')
 
+if has('unix') && !exists('$TEMP')
+    let $TEMP = '/tmp'
+endif
+
 Source envs.vim
 Source plugs.vim
 

@@ -2,8 +2,8 @@ scripte utf-8
 
 fun! CloseBufferOrTerminal()
     try
-        if &bt=='nofile' && 2 == confirm('Not a file, continue quit?', "&Yes\n&No", 2, "Warning")
-            return
+        if &bt=='nofile' && 2 == confirm('Not a file, continue quit?', "&Yes\ n&No", 2, "Warning")
+            return ''
         endif
         if &bt == 'terminal' && has('nvim')
             set bh=wipe
@@ -15,26 +15,29 @@ fun! CloseBufferOrTerminal()
         exe 'confirm' 'bw' curbuf
     catch
         echo v:errmsg
+    finally
+        return ''
     endt
 endf
 
 call popup#add('file', 'File',
-    \['n', 'New', ":conf ene\<cr>"],
-    \['o', 'Open ...', ":browse confirm e\<cr>"],
-    \['r', 'Recent', ":Denite file_old\<cr>"],
-    \['f', 'Common', ":Denite menu:myfiles\<cr>"],
-    \['e', 'Temp', ":conf e \<c-r>=$TEMP\<cr>/"],
-    \'-----------------------------------------',
-    \['s', 'Save', ":w\<cr>"],
-    \['d', 'Close', ":call CloseBufferOrTerminal()\<cr>"],
-    \['a', 'Save all', ":wa\<cr>"],
-    \['x', 'Exit', ":confirm qa\<cr>"])
+    \ ['n', 'New', ":conf ene\<cr>"],
+    \ ['o', 'Open ...', ":browse confirm e\<cr>"],
+    \ ['r', 'Recent', ":Denite file_old\<cr>"],
+    \ ['f', 'Common', ":Denite menu:myfiles\<cr>"],
+    \ ['e', 'Temp', ":conf e \<c-r>=$TEMP\<cr>/"],
+    \ ['p', 'Sudo', ":w !sudo tee %\<cr>"],
+    \ '-----------------------------------------',
+    \ ['s', 'Save', ":w\<cr>"],
+    \ ['d', 'Close', ":call CloseBufferOrTerminal()\<cr>"],
+    \ ['a', 'Save all', ":wa\<cr>"],
+    \ ['x', 'Exit', ":confirm qa\<cr>"])
 
 call popup#add('goto', 'Jump',
-    \['f', 'Function', ""],
-    \['d', 'Implentation', "gd"],
-    \['p', 'Previous', "[["],
-    \['n', 'Next Function', "]]"])
+    \ ['f', 'Function', ""],
+    \ ['d', 'Implentation', "gd"],
+    \ ['p', 'Previous', "[["],
+    \ ['n', 'Next Function', "]]"])
 
 nmap <expr><m-f> Popup('file')
 nmap <expr><m-g> Popup('goto')

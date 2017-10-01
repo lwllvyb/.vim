@@ -6,8 +6,8 @@
 " =============================================================================
 
 try
-GuiFont! FantasqueSansMono NF:h12
-call GuiWindowMaximized(1)
+    GuiFont! FantasqueSansMono NF:h12
+    call GuiWindowMaximized(1)
 catch
     echom v:errmsg
 endt

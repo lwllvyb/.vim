@@ -1,15 +1,13 @@
-fun! s:CloseWindow()
+fun! CloseWindow()
     let wid = win_getid()
     if &bt=='nofile' && 2 == confirm('Not a file, close ???', "&Yes\n&No", 2, "Warning")
         return
     endif
     conf bw
-    if win_getid() == wid
-        winc c
-    endif
+    if win_getid() == wid | winc c | endif
 endf
 
-fun! s:ResizeWindow()
+fun! ResizeWindow()
     let com_table = {
         \ 'h': 'winc <',
         \ 'l': 'winc >',
@@ -39,20 +37,16 @@ fun! s:ResizeWindow()
     redraw
 endf
 
-com! CloseWindow call <SID>CloseWindow()
-com! ResizeWindow call <SID>ResizeWindow()
-
-call popup#add('window', 'Window&Buffer',
-    \['t', 'Tabpage', [
-        \['o', 'New', ":tabe\<cr>"],
-        \['x', 'Close', ":tabc\<cr>"],
-        \['p', 'Previous', "gT"],
-        \['n', 'Next', "gt"]]],
-    \['p', 'Previous', ":PrevFile\<cr>"],
-    \['n', 'Next', ":NextFile\<cr>"],
-    \['v', 'Split', ":vert sb! "],
-    \['w', 'Close', ":CloseWindow\<cr>"],
-    \['p', 'Copy buffer', "ggVGy:bot sp ene!\<cr>Vp"],
-    \['s', 'Resize',  ":ResizeWindow\<cr>"])
+call popup#add('window', 'Window & Buffer',
+    \ ['o', 'New tabpage', ":tabe\<cr>"],
+    \ ['x', 'Close tabpage', ":tabc\<cr>"],
+    \ ['p', 'Prev tabpage', 'gT'],
+    \ ['n', 'Next tabpage', 'gt'],
+    \ '------------------------------',
+    \ ['v', 'Split', ":vert sb! "],
+    \ ['w', 'Close', ":call CloseWindow()\<cr>"],
+    \ ['s', 'Resize',  ":call ResizeWindow()\<cr>"],
+    \ ['u', 'Unload buffer', "bun\<cr>"],
+    \ ['c', 'Copy buffer', "ggVGy:bot sp ene!\<cr>Vp"])
 
 nmap <expr><m-w> Popup('window')
