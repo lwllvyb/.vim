@@ -29,3 +29,8 @@
 * 补全/展开**代码片段** ---- `<c-\>`
 * 缩进/反缩进 ---------- `<m-]>`/`<m-[>`
 * 使当前行在屏幕中间/屏幕上方 - `<c-l>`
+
+## ctags
+
+* Windows: `mklink %USERPROFILE%\.ctags _ctags`
+* Linux: `ln -s _ctags ~/.ctags`

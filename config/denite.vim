@@ -45,7 +45,4 @@ fun! s:config()
         \ })
 endf
 
-au VimEnter * call <SID>config()
-
-nnoremap <silent><c-p> :DeniteProjectDir file_rec<cr>
-nnoremap <silent><c-tab> :Denite buffer<cr>
+call s:config()

@@ -5,10 +5,6 @@
 " Last Change:  2017/1/14
 " =============================================================================
 
-if has('gui_running') || has('nvim')
-    finish
-endif
-
 set ttimeout
 if &ttimeoutlen == -1
   set ttimeoutlen=50

@@ -1,3 +1,8 @@
+
+if has('unix')
+    let g:clang_complete_loaded = 1
+endif
+
 let g:clang_close_preview     = 1
 let g:clang_auto_select       = 1
 let g:clang_complete_copen    = 1    " Show errors in quickfix
@@ -9,7 +14,6 @@ let g:clang_complete_auto     = 0    " Auto popup complete-menu after :: or .
 let g:clang_user_options = '-std=c++11'
 let g:clang_jumpto_declaration_key = 'gd'
 
-" let g:clang_library_path      = ''
 " let g:clang_conceal_snippets  = 0
 " let g:clang_snippets          = 1
 " let g:clang_user_options=""

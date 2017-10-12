@@ -1,14 +1,27 @@
 
 call popup#add('leader', 'Leader',
-    \ ['s', 'EasyMotion-S2', "\<Plug>(easymotion-s2)"],
-    \ ['d', 'Cdb', ":Cdb\<cr>"],
-    \ ['e', 'CdbEval', ":CdbEval\<cr>"],
-    \ ['f', 'NERDFind', ":NERDTreeFind\<cr>"],
+    \ ['a', 'All Bookmarks', "\<Plug>BookmarkShowAll"],
+    \ ['b', 'Bookmark', "\<Plug>BookmarkToggle"],
+    \ ['c', 'Codi', ":Codi\<cr>"],
+    \ ['g', 'Goyo', ":Goyo\<cr>"],
+    \ [',', 'Just for fun', [
+        \ ['m', "Matrix", ":Matrix<cr>"]
+        \ ]],
+    \ ['\', 'Toggle', [
+        \ ['r', 'Relative', ":set rnu!\<cr>"],
+        \ ['h', 'Highlist', ":set hls!\<cr>"],
+        \ ['w', 'Auto wrap', ":set wrap!\<cr>"],
+        \ ['c', 'Auco CD', ":set acd!\<cr>"],
+        \ ['l', 'List mode', ":set list!\<cr>"],
+        \ ['p', 'Paste mode', ":set paste!\<cr>"],
+        \ ['a', 'Maximum window', ":call GuiWindowMaximized(!g:GuiWindowMaximized)\<cr>"],
+        \ ['f', 'Full screen', ":call GuiWindowFullScreen(!g:GuiWindowFullScreen)\<cr>"],
+        \ ['m', 'Mouse', ":let &mouse=&mouse==''?'a':''\<cr>"],
+        \ ['v', 'Virtual edit', ":let &ve=&ve==''?'all':''\<cr>"],
+        \ ['b', 'Background', ":let &bg=&bg=='dark'?'light':'dark'\<cr>"],
+        \ ['a', 'Pairs completion', ":call AutoPairsToggle()\<cr>"],
+        \ ['g', 'TAGBAR ...', ":TagbarToggle\<cr>"],
+        \ ]]
     \ )
 
-call popup#add('leader-v', 'Leader',
-    \ ['e', 'CdbEval', "y:CdbEval \<c-r>\"\<cr>"]
-    \ )
-
-nmap <expr><leader> Popup('leader')
-vmap <expr><leader> Popup('leader-v')
+nmap <expr><silent><leader> Popup('leader')

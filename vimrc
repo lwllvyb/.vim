@@ -8,9 +8,7 @@
 com! -nargs=+ Source so <sfile>:h/<args>
 Source option.vim
 
-let $CONFROOT = expand('<sfile>:h')
-
-if has('unix') && !exists('$TEMP')
+if !exists('$TEMP') && has('unix')
     let $TEMP = '/tmp'
 endif
 

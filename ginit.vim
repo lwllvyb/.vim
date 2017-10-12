@@ -7,7 +7,8 @@
 
 try
     GuiFont! FantasqueSansMono NF:h12
-    call GuiWindowMaximized(1)
+    " GuiLinespace 2
+    " call GuiWindowMaximized(1)
 catch
     echom v:errmsg
 endt

@@ -76,33 +76,41 @@ def gen_msvc():
     config = { a: get_vs_envs(a) for a in ['x86', 'x64'] }
     return config
 
-def gen_clang():
+def Glob(d):
     config = {}
+    for k, v in d.items():
+        l = glob.glob(v)
+        if l:
+            config[k] = l[0]
+            print(k, ':', l[0])
+    return config
+
+def gen_clang():
     if platform.system() == 'Windows':
         llvm = QuerySoftware('LLVM\\LLVM')
         if not llvm:
-            return print('Can not find the directory of LLVM')
+            print('Can not find the directory of LLVM')
+            return
 
         print('LLVM path:', llvm)
 
-        l = llvm + '\\share\\clang\\clang-format.py'
-        config['clang_format_py'] = l if os.path.exists(l) else ''
-        l = llvm + '\\share\\clang\\clang-rename.py'
-        config['clang_rename_py'] = l if os.path.exists(l) else ''
-        config['clang_library_path'] = os.path.join(llvm, 'bin')
+        return Glob({
+            'clang_library_path': os.path.join(llvm, 'bin\\libclang.dll'),
+            'clang_format_py': os.path.join(llvm, 'share\\clang\\clang-format.py'),
+            'clang_rename_py': os.path.join(llvm, 'share\\clang\\clang-rename.py')
+            })
     else:
-        l = glob.glob('/usr/share/clang/clang-format-*/clang-format.py')
-        if l:
-            print(l[0])
-            config['clang_format_py'] = l[0]
-        l = glob.glob('/usr/share/clang/clang-rename-*/clang-rename.py')
-        if l:
-            print(l[0])
-            config['clang_rename_py'] = l[0]
-
-    return config
+        libclang = '/usr/lib/llvm-*/lib/libclang.so.1'
+        return Glob({
+            'clang_format_py': '/usr/share/clang/clang-format-*/clang-format.py',
+            'clang_rename_py': '/usr/share/clang/clang-rename-*/clang-rename.py',
+            # 'clang_library_path': libclang,
+            'deoplete#sources#clang#libclang_path': libclang,
+            'deoplete#sources#clang#clang_header': '/usr/include/clang/*/include'
+            })
 
 def write_conf(fname, conf):
+    if not conf: return
     confdir = os.path.expanduser(os.path.join('~', '.config', 'envs.vim'))
     if not os.path.isdir(confdir):
         os.makedirs(confdir)

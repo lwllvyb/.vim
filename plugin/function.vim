@@ -19,13 +19,19 @@ fun! ExecOutside(bin, ...)
     exe printf('sil !start cmd /Q /c "@call %s"', tf)
 endf
 
-fun! Run()
-    if exists('g:xmproj')
-        XMake run
-    elseif &ft == 'c' || &ft == 'cpp'
-        call qrun#cxx()
-    endif
+fun! ShowMonths()
+    let m = [
+        \ '一月 Jan.January ',
+        \ '二月 Feb.February ',
+        \ '三月 Mar.March ',
+        \ '四月 Apr.April ',
+        \ '五月 May.May ',
+        \ '六月 June.June ',
+        \ '七月 July.July ',
+        \ '八月 Aug.Aguest ',
+        \ '九月 Sept.September ',
+        \ '十月 Oct.October ',
+        \ '十一月 Nov.November ',
+        \ '十二月 Dec.December ']
+    echo join(m, "\n")
 endf
-
-nnoremap <silent><F5> :call Run()<cr>
-imap <silent><F5> <ESC><F5>
