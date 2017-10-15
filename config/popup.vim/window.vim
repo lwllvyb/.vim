@@ -1,11 +1,3 @@
-fun! CloseWindow()
-    let wid = win_getid()
-    if &bt=='nofile' && 2 == confirm('Not a file, close ???', "&Yes\n&No", 2, "Warning")
-        return
-    endif
-    conf bw
-    if win_getid() == wid | winc c | endif
-endf
 
 fun! ResizeWindow()
     let com_table = {
@@ -44,9 +36,9 @@ call popup#add('window', 'Window & Buffer',
     \ ['n', 'Next tabpage', 'gt'],
     \ '------------------------------',
     \ ['v', 'Split', ":Bufline 'split', 'right'\<cr>"],
-    \ ['w', 'Close', ":call CloseWindow()\<cr>"],
+    \ ['w', 'Wipe', ":setl bh=wipe | winc c\<cr>"],
     \ ['s', 'Resize',  ":call ResizeWindow()\<cr>"],
-    \ ['u', 'Unload buffer', "bun\<cr>"],
+    \ ['u', 'Unload buffer', ":bun\<cr>"],
     \ ['c', 'Copy buffer', "ggVGy:bot sp ene!\<cr>Vp"])
 
-nmap <expr><m-w> Popup('window')
+nmap <expr><silent><m-w> Popup('window')

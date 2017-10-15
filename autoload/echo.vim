@@ -1,3 +1,9 @@
+" =============================================================================
+" Filename:    autoload\echo.vim
+" Author:      luzhlon
+" Date:        2017-10-14
+" Description: Echo a viml-variable with human-readable format
+" =============================================================================
 
 let s:path = expand('<sfile>:p:h')
 " Echo functions {{{ "
@@ -29,3 +35,6 @@ fun! echo#(d, ...)
     else | echon strtrans(string(a:d)) | endif
 endf
 " }}} Echo functions "
+
+com! EchoRuntimePath call echo#(split(&rtp, ','))
+com! EchoPATH call echo#(split($PATH, has('win32')?';': ':'))

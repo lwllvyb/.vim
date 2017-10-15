@@ -25,7 +25,7 @@ let g:slime_no_mappings = 1
 " }}}
 
 " For nerdtree {{{
-let NERDTreeWinSize   = 25
+let NERDTreeWinSize   = 27
 let NERDTreeQuitOnOpen = 0
 " let g:NERDTreeDirArrowExpandable = ' '
 " let g:NERDTreeDirArrowCollapsible = ' '
@@ -38,8 +38,8 @@ let g:table_mode_disable_mappings = 1
 " }}}
 
 " For completor {{{
-let g:completor_blacklist = ['tagbar', 'qf', 'netrw', 'unite', 'vimwiki', 'help']
-let g:completor_completion_delay = 120
+let g:completor_blacklist = ['tagbar', 'qf', 'netrw', 'unite', 'vimwiki', 'help', 'markdown']
+" let g:completor_completion_delay = 120
 " }}}
 
 " For surround {{{

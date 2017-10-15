@@ -1,7 +1,7 @@
 
 import pefile
 
-file = vim.eval('bufname("%")')
+file = vim.eval('g:pefile#file')
 pe = pefile.PE(file)
 buf = vim.current.buffer
 

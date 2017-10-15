@@ -1,54 +1,53 @@
 scripte utf-8
 
-set autoindent smartindent
-set autoread                    " 自动读入外部更改过的文件
-set backspace=indent,eol,start  " 退格键能够删除到上一行
-set display=lastline            " 显示不完整的行
-set encoding=utf-8
-set et sw=4 ts=4                " 扩展tab制表符为空格
-set hlsearch                    " 高亮所有的查找结果
-set ignorecase smartcase        " 忽略大小写
-set incsearch
-set confirm                     " show confirm-dialog before quit
-set laststatus=0                " show the windows-status when there is 2+ files
-set nobackup noswapfile         " 不使用备份、交换文件
-set nocompatible
-set hidden
-set mousehide
-set noea                        " 不自动设置窗口等宽等高
-set nosol                       " 不跳转到行首
-set nowrap
-set noshowmode
-set number                      " show line number
-set ruler                       " 显示所在的行列号,相关的选项rulerformat statusline paste
-set scrolloff=2                 " 滚动时保留2行
-set showcmd                     " 显示normal模式的命令输入过程
-set wildmenu                    " 命令行补全提示
-set complete+=k                 " 默认补全里加上字典补全
-set slm=key,mouse km=startsel   " Select模式
-set mouse=a                     " use mouse in all mode
-set ww+=b,s,[,],<,>,h,l         " move cursor cross lines
-set shortmess+=c
-set tabline=%!bufline#bufs()
-set showtabline=2
-set foldtext=FoldText()
-set ffs=unix,dos,mac            " 对于空文件优先使用unix换行符
-
-fun! FoldText()
-    let start = getline(v:foldstart)
-    let end = getline(v:foldend)
-    let end = end[match(end, '\S'):]
-    return start . ' ... ' . end
-endf
-
 if has('nvim')
-    set icm=split
+    set icm=nosplit             " real-time preview for substitute-command
 else
+    set nocompatible
+    set autoread
+    set hlsearch                " hilight all the search result
+    set incsearch               " hilight the search-result in real time
+    set display=lastline        " the display option, about how to render the screen text
+    set backspace=indent,eol,start  " the backspace can delete to previous line
+
     au InsertEnter * set noimd
     au InsertLeave * set imd
     au CmdWinEnter * set noimd
     au CmdWinLeave * set imd
 endif
+
+set title                       " show the filename in caption (by default)
+set autoindent smartindent
+set encoding=utf-8              " internal encoding of vim
+set et sw=4 ts=4                " expand tab-character as spaces
+set ignorecase smartcase        " ignore the case of letter when search
+set confirm                     " show confirm-dialog before quit
+set laststatus=0                " show the windows-status on the below-window
+set nobackup noswapfile         " don't use the backup and swap file
+set hidden
+set mousehide                   " hide the cursor when typing
+set noea                        " don't set same width or height after close a window
+set nosol                       " don't goto the first column when press 'gg'
+set noshowmode                  " don't show the mode on last line
+set number                      " show line number
+set ruler                       " show 'ruler' widget, 'rulerformat' specifies the content
+set scrolloff=2                 " keep 2 lines when scrolling
+set showcmd                     " show the process of keystroke in ruler region
+set wildmenu                    " show completion in Ex-mode when type tab
+set slm=key,mouse km=startsel   " about Select-mode
+set mouse=a                     " use mouse in all mode
+set ww+=b,s,[,],<,>,h,l         " move cursor cross lines
+set shortmess+=c
+set tabline=%!bufline#bufs()
+set showtabline=2               " show tabline always
+set ffs=unix,dos,mac            " the priority of EOL format
+set foldtext=MyFoldText()
+
+fun MyFoldText()
+    return getline(v:foldstart) . ' ... ' . 
+         \ substitute(getline(v:foldend), '^\s*', '', '')
+endf
+
 " set wildmode=longest:full
 " set awa aw
 " set clipboard=unnamed           " 系统剪贴板对应默认的寄存器
@@ -56,8 +55,7 @@ endif
 " set list lcs=tab:>-,eol:¬       " 设置显示空白字符
 " set lazyredraw
 " set foldmethod=syntax foldlevel=3
-" 启动vim时恢复上次关闭的buffer
-" set viminfo='100,%100,/100,<100,f100
+" set viminfo='100,%100,/100,<100,f100 " load the MRU files when started vim
 
 " set statusline=\ %t%{&mod?'*':''}\ %h\ %w\ %r\ %=%{&fenc}\|%{&ff}\ %l:%c\ 
 " set makeprg=xmake
@@ -69,3 +67,5 @@ endif
 " set nofoldenable
 " set history=128
 " set vbs=1                       " 显示函数、命令、键盘映射等的详细信息
+" set complete+=k                 " 默认补全里加上字典补全
+" set nowrap
