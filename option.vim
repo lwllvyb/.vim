@@ -27,6 +27,7 @@ set nobackup noswapfile         " don't use the backup and swap file
 set hidden
 set mousehide                   " hide the cursor when typing
 set noea                        " don't set same width or height after close a window
+set splitbelow splitright
 set nosol                       " don't goto the first column when press 'gg'
 set noshowmode                  " don't show the mode on last line
 set number                      " show line number

@@ -58,10 +58,17 @@ fun! s:tabsbufnr()
     endfo
     return list
 endf
+
+if !exists('g:bufline#buftype')
+    let g:bufline#buftype = ['', 'nowrite', 'terminal']
+endif
+
 " Get all buffers of common files
 fun! s:filesbufnr()
-    return map(filter(getbufinfo({'buflisted':1}),
-            \ {i,v->empty(getbufvar(v['bufnr'], '&bt'))}),
+    return map(
+            \ filter(getbufinfo({'buflisted':1}),
+                    \ {i,v->index(g:bufline#buftype,
+                                \ getbufvar(v['bufnr'], '&bt')) >= 0}),
             \ {i,v->v['bufnr']})
     " return map(tabpagebuflist(), {i,v->empty(getbufvar(v, '&bt'))})
 endf

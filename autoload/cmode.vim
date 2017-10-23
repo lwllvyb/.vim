@@ -1,5 +1,16 @@
 
 let s:path = expand('<sfile>:p:h')
+
+fun! cmode#add_inc(f)
+    let l = search('^#include', 'b')
+    exe 'norm!' (l ? 'o': 'ggO') . '#include ' . a:f
+    if empty(a:f)
+        startinsert!
+    else
+        norm ''
+    endif
+endf
+
 " Generate the macro that prevent reincluding for headers
 fun! cmode#genIncMacro()
     let h = toupper(expand('%:t'))
@@ -15,11 +26,9 @@ endf
 fun! s:switch2(f)
     let nr = bufnr(a:f)
     if nr < 0
-        update
-        exe 'e' a:f
-    else
-        exe 'b!' a:f
+        exe 'badd' a:f
     endif
+    exe 'b!' a:f
 endf
 " Toggle the header and source file
 fun! cmode#toggleHeader()

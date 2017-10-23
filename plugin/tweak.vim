@@ -1,15 +1,22 @@
-func! s:SetAlpha(n)
-    call libcallnr('vimtweak64.dll', 'SetAlpha', a:n)
-endf
-func! EnableCaption(b)
-    call libcallnr('vimtweak64.dll', 'EnableCaption', a:b)
-endf
-func! EnableTopMost(b)
-    call libcallnr('vimtweak64.dll', 'EnableTopMost', a:b)
-endf
-func! EnableMaximize(b)
-    call libcallnr('vimtweak64.dll', 'EnableMaximize', a:b)
-endf
 
-com! -nargs=1 SetAlpha call <SID>SetAlpha(<args>)
-com! Maximize call EnableMaximize(1)
+if !has('nvim')
+    func! GuiSetAlpha(n)
+        call libcallnr('vimtweak64.dll', 'SetAlpha', a:n)
+    endf
+
+    func! GuiSetTopMost(b)
+        call libcallnr('vimtweak64.dll', 'EnableTopMost', a:b)
+    endf
+
+    let g:GuiWindowFullScreen = 0
+    func! GuiWindowFullScreen(b)
+        call libcallnr('vimtweak64.dll', 'EnableCaption', a:b)
+        let g:GuiWindowFullScreen = a:b
+    endf
+
+    let g:GuiWindowMaximized = getwinposx() < 0 && getwinposy() < 0
+    func! GuiWindowMaximized(b)
+        call libcallnr('vimtweak64.dll', 'EnableMaximize', a:b)
+        let g:GuiWindowMaximized = getwinposx() < 0 && getwinposy() < 0
+    endf
+endif

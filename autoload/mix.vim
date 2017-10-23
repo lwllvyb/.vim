@@ -73,6 +73,6 @@ function! mix#help_toc() abort
     call setloclist(0, toc, ' ')
     call setloclist(0, [], 'a', {'title': 'Help TOC'})
     vertica lopen 32
-    setl nowrap
+    setl nowrap nonumber
     let w:qf_toc = bufname
 endfunction

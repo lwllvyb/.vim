@@ -6,6 +6,7 @@
 " =============================================================================
 
 let s:path = expand('<sfile>:p:h')
+
 " Echo functions {{{ "
 let s:deep = 0
 fun! s:EchoIndent(...)
@@ -35,6 +36,3 @@ fun! echo#(d, ...)
     else | echon strtrans(string(a:d)) | endif
 endf
 " }}} Echo functions "
-
-com! EchoRuntimePath call echo#(split(&rtp, ','))
-com! EchoPATH call echo#(split($PATH, has('win32')?';': ':'))

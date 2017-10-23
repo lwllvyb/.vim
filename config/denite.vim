@@ -17,32 +17,20 @@ fun! s:config()
     " Default options
     call denite#custom#option('_', {
         \ 'prompt': '>',
-        \ 'split': 'vertical',
-        \ 'winwidth': '48'
+        \ 'split': 'horizontal', 'direction': 'aboveleft',
+        \ 'winwidth': '48', 'winheight': 8
         \ })
 
-    " My commands
-    let cmds = {
-        \ 'description': 'My commands',
-        \ 'command_candidates': [
-            \ ['Open cmd.exe', 'call open#cmd()'],
-            \ ['Show the runtime path', 'Echo split(&rtp, ",")'],
-            \ ['Open powershell', 'call open#powershell()'],
-            \ ['Open bash', 'call open#bash()'],
-            \ ['Open current directory', 'call open#curdir()']
-        \ ]}
-    " My files
-    let files = {
-        \ 'description': 'My files',
-        \ 'file_candidates': [
-            \ ['Hosts', has('win32') ?
-                \ 'C:\Windows\System32\drivers\etc\hosts': '/etc/hosts'],
-            \ ['MyVimrc', '~/.config/envs.vim/init.vim']]
-        \ }
     " My files
     call denite#custom#var('menu', 'menus', {
-        \ 'mycmds': cmds, 'myfiles': files
-        \ })
+        \ 'myfiles': {
+            \ 'description': 'My files',
+            \ 'file_candidates': [
+                \ ['Hosts', has('win32') ?
+                    \ 'C:\Windows\System32\drivers\etc\hosts': '/etc/hosts'],
+                \ ['MyVimrc', '~/.config/envs.vim/init.vim']]
+        \ }
+    \ })
 endf
 
 call s:config()

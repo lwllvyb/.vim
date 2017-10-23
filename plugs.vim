@@ -62,6 +62,7 @@ let s:path = expand('<sfile>:p:h')
 if !exists('g:dein#cache_directory')
     let g:dein#cache_directory = s:path . '/dein.vim'
 endif
+
 " {{{ load the plugins
 if dein#load_state(g:dein#cache_directory)
     call dein#begin(g:dein#cache_directory)
@@ -73,28 +74,32 @@ if dein#load_state(g:dein#cache_directory)
     let on_html = {'on_ft': 'html'}
 
     call dein#config('xmake.vim', {'depends': ['job.vim', 'qrun.vim']})
+    call dein#config('vim-markdown', on_markdown)
 
     call dein#add('Shougo/dein.vim', {'rtp': dein_rtp})
 " ------------------ Utility -------------------- {{{
-    call dein#add('Lokaltog/vim-easymotion')
+    call dein#add('Lokaltog/vim-easymotion', {
+                \ 'on_map': {'nv': '<Plug>(easymotion-'}
+                \ })
+    call dein#add('terryma/vim-expand-region', {
+                \ 'on_map': {'nv': '<Plug>(expand_region'}
+                \ })
     call dein#add('Shougo/denite.nvim', {'on_cmd': 'Denite*'})
     call dein#add('Shougo/echodoc.vim')
     call dein#add('Shougo/neopairs.vim')
     call dein#add('Shougo/context_filetype.vim')
     call dein#add('SirVer/ultisnips')
     call dein#add('honza/vim-snippets')
-    call dein#add('terryma/vim-expand-region')
     call dein#add('tpope/vim-commentary', {'on_cmd': 'Commentary*'})
     call dein#add('tpope/vim-surround')
     call dein#add('Chiel92/vim-autoformat', {'on_cmd': 'Autoformat*'})
-    call dein#add('godlygeek/tabular')
+    call dein#add('godlygeek/tabular', {'on_cmd': 'Tabularize*)'})
     call dein#add('airblade/vim-gitgutter', {'on_cmd': 'Git*'})
     call dein#add('scrooloose/nerdtree', {'on_cmd': 'NERDTree*'})
     call dein#add('majutsushi/tagbar', {'on_cmd': 'Tagbar*'})
     call dein#add('libclang-vim/libclang-vim')
     call dein#add('tiagofumo/vim-nerdtree-syntax-highlight')
     call dein#add('RIscRIpt/vim-fasm-syntax')
-    call dein#add('gko/vim-coloresque')
     call dein#add('MattesGroeger/vim-bookmarks')
     call dein#add('neomake/neomake')
     call dein#add('vim-voom/VOoM', {'on_cmd': 'Voom*'})
@@ -124,10 +129,12 @@ if dein#load_state(g:dein#cache_directory)
 " }}}
 " ------------------ Completer --------------------- {{{
     let on_cxx = {'on_ft': ['c', 'cpp']}
-    call dein#add('maralla/completor.vim', {'if': '!has("nvim")'})
+    " call dein#add('maralla/completor.vim', {'if': '!has("nvim")'})
     call dein#add('autozimu/LanguageClient-neovim', {'name': 'lsp-client'})
-    call dein#add('othree/csscomplete.vim')
+    call dein#add('othree/csscomplete.vim', {'on_ft': ['css', 'html']})
     call dein#add('Shougo/deoplete.nvim', {'do': ':UpdateRemotePlugins'})
+    call dein#add('roxma/nvim-yarp')
+    call dein#add('roxma/vim-hug-neovim-rpc')
     call dein#add('Shougo/neoinclude.vim', on_cxx)
     call dein#add('Shougo/neco-syntax')
     call dein#add('Shougo/neco-vim', {'on_ft': 'vim'})
@@ -144,14 +151,15 @@ if dein#load_state(g:dein#cache_directory)
 " }}}
 " ------------------ Appearance ------------------- {{{
     call dein#add('itchyny/lightline.vim')
-    call dein#add('NLKNguyen/papercolor-theme', {'name': 'papercolor'})
-    call dein#add('rakr/vim-one')
-    call dein#add('morhetz/gruvbox')
-    call dein#add('tomasr/molokai')
-    call dein#add('KeitaNakamura/neodark.vim')
+    call dein#add('rakr/vim-one', {'script_type': 'colors'})
+    call dein#add('morhetz/gruvbox', {'script_type': 'colors'})
     call dein#add('Yggdroot/indentLine')
     call dein#add('ryanoasis/vim-devicons')
     call dein#add('mhinz/vim-startify')
+    call dein#add('gko/vim-coloresque')
+    " call dein#add('NLKNguyen/papercolor-theme', {'name': 'papercolor'})
+    " call dein#add('tomasr/molokai')
+    " call dein#add('KeitaNakamura/neodark.vim')
     " call dein#add('nathanaelkane/vim-indent-guides')
     " call dein#add('xsunsmile/showmarks')
 " }}}

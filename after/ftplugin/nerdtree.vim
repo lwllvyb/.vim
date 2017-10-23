@@ -1,4 +1,14 @@
 
+" setl signcolumn=yes
+
+nmap <buffer><silent> dd mdy
+nmap <buffer> <DEL> md
+nmap <buffer> <F2> mm
+nmap <buffer> gg P
+
+unmap <buffer> <c-j>
+unmap <buffer> <c-k>
+
 fun! s:open()
     let curNode = g:NERDTreeFileNode.GetSelected()
     call open#(curNode.path.str())
@@ -63,16 +73,14 @@ fun! s:paste()
 endf
 " }}}
 
-call popup#addl('util', 'Util', ['e', 'EXPLORER', funcref('s:open')])
-call popup#addl('edit', 'Edit-NERDTREE',
-            \['c', 'Copy', funcref('s:copy')],
-            \['x', 'Cut', funcref('s:cut')],
-            \['p', 'Paste', funcref('s:paste')],
-            \'---------------------------------')
-
-nmap <buffer><silent> dd mdy
-nmap <buffer> <DEL> md
-nmap <buffer> <F2> mm
+if exists('g:popup_loaded')
+    call popup#addl('util', 'Util',
+        \ ['e', 'EXPLORER', funcref('s:open')],
+        \ ['c', 'Copy', funcref('s:copy')],
+        \ ['x', 'Cut', funcref('s:cut')],
+        \ ['p', 'Paste', funcref('s:paste')],
+        \ '--------------------------------')
+endif
 
 " Let the cursor in body of filename {{{
 fun! s:set_cursor()
@@ -81,6 +89,5 @@ fun! s:set_cursor()
         call cursor(line('.'), n+1)
     endif
 endf
-
 au CursorMoved <buffer> call <SID>set_cursor()
 " }}}

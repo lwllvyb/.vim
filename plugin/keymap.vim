@@ -23,14 +23,24 @@ imap <c-p> <up>
 imap <expr><c-k> col('.') == col('$') ? "\<del>" : "\<c-o>D"
 imap <expr><c-a> col('.') == 1 ? "\<c-o>I" : "\<home>"
 nmap <expr>0     col('.') == 1 ? '^': '0'
-nmap <expr><c-l> winline() * 2 <= winheight(0) + 1 ? winline() <= (&so + 1) ? 'zb' : 'zt' : 'zz'
+nmap <expr><c-l> winline() * 2 <= winheight(0) + 1 ?
+                    \ winline() <= (&so + 1) ? 'zb' : 'zt' : 'zz'
 imap <c-l> <c-o><c-l>
+
+nnoremap gl $
+vnoremap gl $h
+
+map <m-;> <Plug>(easymotion-bd-wl)
+map <m-n> <Plug>(easymotion-bd-jk)
+map <c-k> <Plug>(easymotion-s2)
 " }}}
 
 " Completion {{{
-inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
-inoremap <expr><s-tab> pumvisible() ? "\<c-p>" : "\<s-tab>"
-inoremap <expr><c-q> pumvisible() ? "\<c-e>" : "\<c-q>"
+" inoremap <expr><tab> pumvisible() ? "\<c-n>" :
+"             \ g:ultisnips_entered ? "\<c-r>=UltiSnips#JumpForwards()\<cr>": "\<tab>"
+" inoremap <expr><s-tab> pumvisible() ? "\<c-p>" :
+"             \ g:ultisnips_entered ? "\<c-r>=UltiSnips#JumpBackwards()\<cr>": "\<s-tab>"
+" inoremap <expr><c-q> pumvisible() ? "\<c-e>" : "\<c-q>"
 inoremap <m-/> <c-n>
 " }}}
 
@@ -67,6 +77,8 @@ nnoremap <silent><m-]> :call mix#SwitchFile('bn')<cr>
 nnoremap <silent><expr>' v:count ? ":Bufline 'split','right'\<cr>": "'"
 nnoremap <silent><expr>. v:count ? ":Bufline 'split','below'\<cr>": "."
 nnoremap <silent><expr><tab> v:count ? ":Bufline\<cr>": "\<tab>"
+nnoremap <silent><c-p> :DeniteProjectDir file_rec<cr>
+nnoremap <silent><c-tab> :Denite buffer<cr>
 " }}}
 
 " Quickfix {{{
@@ -79,15 +91,8 @@ nnoremap <c-j> za
 vnoremap <c-j> zf
 " }}}
 
-" nnoremap <c-c> <esc>
 inoremap <m-o> <esc>
 nnoremap Q gQ
-nmap <m-\> <Plug>(easymotion-s2)
-
-nnoremap <silent><c-p> :DeniteProjectDir file_rec<cr>
-nnoremap <silent><c-tab> :Denite buffer<cr>
-
-nnoremap <silent><F3> :Denite -direction=aboveleft -split=horizontal -winheight=5 line<cr>
 
 " F5 -- Run {{{
 fun! MyRun()
@@ -129,7 +134,7 @@ nnoremap <c-a> ggVG
 " }}}
 
 " Terminal operation {{{
-if exists(':tmap')
+if exists(':tnoremap')
     tnoremap <c-s> <c-\><c-n>
     tnoremap <m-h> <c-\><c-n><c-w>h
     tnoremap <m-l> <c-\><c-n><c-w>l

@@ -44,7 +44,7 @@ endf
 
 " ClangComplete {{{
 fun! s:GenClangComplete()
-    let cont = ['-DDEBUG']
+    let cont = ['-DDEBUG', '-I.']
     if exists('$INCLUDE')
         let incs = split($INCLUDE, ';')
         let cont += map(incs, {i,v->'-I' . shellescape(v)})
