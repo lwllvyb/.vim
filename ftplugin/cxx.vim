@@ -9,10 +9,16 @@ let b:tab_map = {
     \ 'tab': [
         \ ['{$','}'], "\<cr>\<esc>O",
         \ '{$', "}\<left>\<cr>\<esc>O",
-        \ '\.$', "\<c-x>\<c-o>", '::$', "\<c-x>\<c-o>"]}
+        \ '\.$', "\<c-x>\<c-o>", '::$', "\<c-x>\<c-o>"]
+    \ }
 
 if exists('g:popup_loaded')
-    call popup#addl('util', 'Util', ['i', 'Add #include', ":Include\<cr>"])
+    if !exists('s:popup_menu')
+        let s:popup_menu = pmenu#new('Util',
+            \ ['i', 'Add #include', ":Include\<cr>"])
+        call s:popup_menu.merge(popup#get('util'))
+    endif
+    let b:popup_menus = {'util': s:popup_menu}
 endif
 
 com! -buffer GenIncMacro call cmode#genIncMacro()

@@ -1,5 +1,5 @@
 
-call popup#add('xmake', 'XMAKE',
+let s:normal = pmenu#new('XMAKE',
     \['q', 'QuickFix' , ":bel copen 8\<cr>"],
     \['a', 'Build all', ":XMake\<cr>"],
     \['b', 'Build ...', ":XMake build "],
@@ -7,4 +7,6 @@ call popup#add('xmake', 'XMAKE',
     \['g', 'Generate', ":XMake project -k "],
     \['c', 'Clean', ":XMake clean\<cr>"])
 
-nmap <expr><m-x> Popup('xmake')
+fun! pmenu#xmake#n()
+    return s:normal
+endf

@@ -15,7 +15,14 @@ vnoremap <buffer><m-o> yoechom <c-r>" \| call getchar()<esc>
 nmap <buffer><m-o> viw<m-o>
 
 if exists('g:popup_loaded')
-    call popup#addl('goto', 'Goto',
-            \['f', 'Function', "\<Plug>(GoToVimFun)"],
-            \['d', 'Definition', "\<Plug>(GoToVimLet)"])
+    if exists('s:goto') | finish | endif
+
+    fun! s:get_goto()
+        let s:goto = pmenu#new('Goto',
+                \ ['f', 'Function', "\<Plug>(GoToVimFun)"],
+                \ ['d', 'Definition', "\<Plug>(GoToVimLet)"])
+        call s:goto.merge(pmenu#common#goto())
+        return s:goto
+    endf
+    let b:popup_menus = {'goto': funcref('s:get_goto')}
 endif

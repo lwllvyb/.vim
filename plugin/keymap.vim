@@ -15,17 +15,21 @@ cmap <m-f> <s-right>
 cmap <m-b> <s-left>
 cmap <c-a> <home>
 
-imap <m-f> <c-c>ea
-imap <m-b> <c-left>
-imap <m-d> <c-o>dw
-imap <c-n> <down>
-imap <c-p> <up>
-imap <expr><c-k> col('.') == col('$') ? "\<del>" : "\<c-o>D"
-imap <expr><c-a> col('.') == 1 ? "\<c-o>I" : "\<home>"
-nmap <expr>0     col('.') == 1 ? '^': '0'
-nmap <expr><c-l> winline() * 2 <= winheight(0) + 1 ?
-                    \ winline() <= (&so + 1) ? 'zb' : 'zt' : 'zz'
-imap <c-l> <c-o><c-l>
+inoremap <silent><m-f> <c-o>e<right>
+inoremap <m-b> <c-left>
+inoremap <m-d> <c-o>dw
+inoremap <c-n> <down>
+inoremap <c-p> <up>
+inoremap <expr><c-k> col('.') == col('$') ? "\<del>" : "\<c-o>D"
+inoremap <expr><c-a> col('.') == 1 ? "\<c-o>I" : "\<home>"
+nnoremap <expr>0     col('.') == 1 ? '^': '0'
+
+fun! s:get_redraw()
+    return winline() * 2 <= winheight(0) + 1 ? winline() <= (&so + 1) ? 'zb' : 'zt' : 'zz'
+endf
+
+nnoremap <expr><c-l> <sid>get_redraw()
+inoremap <expr><c-l> "\<c-o>" . <sid>get_redraw()
 
 nnoremap gl $
 vnoremap gl $h
@@ -36,12 +40,21 @@ map <c-k> <Plug>(easymotion-s2)
 " }}}
 
 " Completion {{{
-" inoremap <expr><tab> pumvisible() ? "\<c-n>" :
-"             \ g:ultisnips_entered ? "\<c-r>=UltiSnips#JumpForwards()\<cr>": "\<tab>"
-" inoremap <expr><s-tab> pumvisible() ? "\<c-p>" :
-"             \ g:ultisnips_entered ? "\<c-r>=UltiSnips#JumpBackwards()\<cr>": "\<s-tab>"
-" inoremap <expr><c-q> pumvisible() ? "\<c-e>" : "\<c-q>"
+inoremap <expr><c-q> pumvisible() ? "\<c-e>": "\<c-q>"
+inoremap <expr><silent><cr> <sid>on_enter()
+inoremap <expr><silent><c-j> pumvisible() ? "\<c-n>": deoplete#manual_complete()
 inoremap <m-/> <c-n>
+
+fun! s:on_enter()
+    if !pumvisible() || empty(v:completed_item)
+        return "\<cr>"
+    elseif v:completed_item.menu =~ '^\[US\]'
+        return "\<c-r>=UltiSnips#ExpandSnippet()\<cr>"
+    else
+        return "\<cr>"
+        return deoplete#close_popup()
+    endif
+endf
 " }}}
 
 " Powerful line move {{{
@@ -72,8 +85,8 @@ nnoremap <m-l> <c-w>l
 " }}}
 
 " Switch file {{{
-nnoremap <silent><m-[> :call mix#SwitchFile('bp')<cr>
-nnoremap <silent><m-]> :call mix#SwitchFile('bn')<cr>
+nnoremap <silent><m-[> :call bufline#prev()<cr>
+nnoremap <silent><m-]> :call bufline#next()<cr>
 nnoremap <silent><expr>' v:count ? ":Bufline 'split','right'\<cr>": "'"
 nnoremap <silent><expr>. v:count ? ":Bufline 'split','below'\<cr>": "."
 nnoremap <silent><expr><tab> v:count ? ":Bufline\<cr>": "\<tab>"
@@ -123,6 +136,7 @@ inoremap <c-z> <c-o>u
 inoremap <c-y> <c-o><c-r>
 " Paste
 inoremap <expr><c-g><c-v> "\<c-o>" . (col('.')==col('$')?'"+gp':'"+gP')
+inoremap <expr><c-g><c-p> "\<esc>" . (col('.')==1?'gPa':'gpa')
 " Toggle comment
 noremap  <silent><m-/> :Commentary<cr>
 " Save && Exit

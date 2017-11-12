@@ -14,16 +14,21 @@ com -buffer Py3Toggle let b:py3 = !b:py3
 com -buffer PywToggle let b:pyw = !b:pyw
 com -buffer IPyToggle let b:ipy = !b:ipy
 
-if exists('g:popup_loaded')
-    call popup#addl('goto', 'Goto',
-                \ ['f', '函数', "\<Plug>(GoToPyDef)"])
-    call popup#addl('util', 'Util',
-                \ ['p', 'Print', "yiwoprint()\<esc>P"],
-                \ ['b', 'BP', ''])
-    call popup#addl('util-v', 'Util',
-                \ ['p', 'Print', "yoprint()\<esc>P"])
-endif
-
 nnoremap <buffer><silent> K :call LanguageClient_textDocument_hover()<CR>
 nnoremap <buffer><silent> gd :call LanguageClient_textDocument_definition()<CR>
 nnoremap <buffer><silent> <F2> :call LanguageClient_textDocument_rename()<CR>
+
+if exists('g:popup_loaded') && !exists('b:popup_menus')
+    let b:popup_menus = {
+                \ 'goto': {->pmenu#new('Goto',
+                            \ ['f', '函数', "\<Plug>(GoToPyDef)"]
+                            \ ).merge(pmenu#common#goto())},
+                \ 'util': {->pmenu#new('Util',
+                            \ ['p', 'Print', "yiwoprint()\<esc>P"],
+                            \ ['b', 'BP', '']
+                            \ ).merge(pmenu#util#n())},
+                \ 'util-v': {->pmenu#new('Util',
+                            \ ['p', 'Print', "yoprint()\<esc>P"]
+                            \ ).merge(pmenu#util#v())},
+                \ }
+endif

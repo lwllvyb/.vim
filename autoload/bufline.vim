@@ -72,7 +72,8 @@ fun! s:filesbufnr()
             \ {i,v->v['bufnr']})
     " return map(tabpagebuflist(), {i,v->empty(getbufvar(v, '&bt'))})
 endf
-" Select a buffer
+
+" Select a buffer {{{
 fun! bufline#(n, ...)
     let n = a:n - 1
     if n < len(s:files) && n >= 0
@@ -100,15 +101,35 @@ fun! bufline#(n, ...)
         exe s:files[n] 'b!'
     endif
 endf
-" set tabline=%!bufline#bufs()
+" }}}
+
+fun! bufline#next()
+    let i = index(s:files, bufnr('%'))
+    if i >= 0
+        let n = s:files[(i + 1) % len(s:files)]
+        exe n 'b!'
+    endif
+endf
+
+fun! bufline#prev()
+    let i = index(s:files, bufnr('%'))
+    if i >= 0
+        exe s:files[i - 1] 'b!'
+    endif
+endf
+
+" set tabline=%!bufline#bufs() {{{
 fun! bufline#bufs()
     let s:files = s:filesbufnr()
     return s:get(s:files)
 endf
-" set tabline=%!bufline#tabs()
+" }}}
+
+" set tabline=%!bufline#tabs() {{{
 fun! bufline#tabs()
     return s:get(s:tabsbufnr())
 endf
+" }}}
 
 fun! s:get(nrs)
     let curnr = bufnr('%')
@@ -132,11 +153,7 @@ fun! s:get(nrs)
                 \ 'startify': ' [Startify] ',
                 \ 'denite': ' [Denite] '
                 \ }, &ft, '')]
-        if winnr() == 1
-            let l = n + l
-        else
-            let l += n
-        endif
+        let l += n
     elseif &bt == 'help'
         let l += ['%#MyTabLineSel#', ' [HELP:', expand('%:t'), '] ']
     elseif &bt == 'quickfix'

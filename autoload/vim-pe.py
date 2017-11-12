@@ -19,6 +19,7 @@ SUBSYSTEM = {
     8: 'NATIVE_WINDOWS', 9: 'WINDOWS_CE_GUI', 10: 'EFI_APPLICATION', 11: 'EFI_BOOT_SERVICE_DRIVER',
     12: 'EFI_RUNTIME_DRIVER', 13: 'EFI_ROM', 14: 'XBOX', 16: 'WINDOWS_BOOT_APPLICATION', 17: 'XBOX_CODE_CATALOG' }
 
+# Append text to buffer tail
 def buf_append(text = None):
     if text:
         text = INDENT * indent_level + text
@@ -26,13 +27,33 @@ def buf_append(text = None):
     else:
         buf.append('')
 
+def bits_parse(bits, value):
+    n = len(bits)
+    i = 0
+    ret = [v[0] for v in bits if v[1] & value]
+    return ' | '.join(ret)
+    
 buf_append('[Overview]')
 
 indent_level += 1
 opt = pe.OPTIONAL_HEADER
-buf_append('EntryPoint: %x' % opt.AddressOfEntryPoint)
-buf_append('Subsystem: ' + SUBSYSTEM.get(opt.Subsystem, '<INVALID>'))
-buf_append('Machine: ' + MACHINE.get(pe.FILE_HEADER.Machine, '<INVALID>'))
+buf_append('EntryPoint: 0x%08x' % opt.AddressOfEntryPoint)
+buf_append(' Subsystem: 0x%08x %s' % (
+        opt.Subsystem, SUBSYSTEM.get(opt.Subsystem, '<INVALID>')
+    )
+)
+buf_append('   Machine: 0x%08x %s' % (
+        pe.FILE_HEADER.Machine,
+        MACHINE.get(pe.FILE_HEADER.Machine, '<INVALID>')
+    )
+)
+buf_append('DllCharacteristics: 0x%08x %s' % (
+        opt.DllCharacteristics, bits_parse([
+            ('DYNAMIC_BASE(ALSR)', 0x40),
+            ('NX_COMPAT(DEP)', 0x100)
+        ], opt.DllCharacteristics)
+    )
+)
 indent_level -= 1
 
 buf_append()

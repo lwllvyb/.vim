@@ -1,4 +1,3 @@
-scripte utf-8
 
 fun! CloseBuffer()
     try
@@ -20,7 +19,7 @@ fun! CloseBuffer()
     endt
 endf
 
-call popup#add('file', 'File',
+let s:file = pmenu#new('File',
     \ ['n', 'New', ":conf ene\<cr>"],
     \ ['o', 'Open ...', ":browse confirm e\<cr>"],
     \ ['r', 'Open recent', ":Denite file_mru\<cr>"],
@@ -43,15 +42,17 @@ call popup#add('file', 'File',
     \ ['a', 'Save all', ":wa\<cr>"],
     \ ['x', 'Exit', ":confirm qa\<cr>"])
 
-call popup#add('goto', 'Jump',
+let s:jump = pmenu#new('Jump',
     \ ['f', 'Function', ""],
     \ ['d', 'Implentation', "gd"],
     \ ['p', 'Previous', "[["],
     \ ['n', 'Next Function', "]]"])
 
-nmap <expr><m-f> Popup('file')
-nmap <expr><m-g> Popup('goto')
-map  <expr><m-.> popup#last()
-map! <expr><m-.> popup#last()
+fun! pmenu#common#file()
+    return s:file
+endf
 
-let g:popup#upkey = "\<c-h>"
+fun! pmenu#common#goto()
+    return s:jump
+endf
+

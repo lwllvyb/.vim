@@ -3,11 +3,12 @@ fun! s:config()
         call denite#custom#var('file_rec', 'command',
             \ ['pt', '--follow', '--nocolor', '--nogroup', '-g:', ''])
     endif
+
     " Key mapping
-    call denite#custom#map('insert', '<c-j>',
-        \ '<denite:move_to_next_line>', 'noremap')
-    call denite#custom#map('insert', '<c-k>',
-        \ '<denite:move_to_previous_line>', 'noremap')
+    call denite#custom#map('insert', '<c-j>', '<denite:assign_next_text>')
+    call denite#custom#map('insert', '<c-k>', '<denite:assign_previous_text>')
+    call denite#custom#map('insert', '<c-n>', '<denite:move_to_next_line>')
+    call denite#custom#map('insert', '<c-p>', '<denite:move_to_previous_line>')
     call denite#custom#map('insert', '<c-a>', '<Home>')
     call denite#custom#map('insert', '<c-e>', '<End>')
     call denite#custom#map('insert', '<c-f>', '<Right>')

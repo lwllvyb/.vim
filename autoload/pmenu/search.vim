@@ -1,12 +1,12 @@
 
-call popup#add('search', 'Search',
+let s:normal = pmenu#new('Search',
     \ ['s', 'EasyMotion-S2 <c-\>', "\<Plug>(easymotion-s2)"],
     \ ['l', 'Denite search line', ":Denite -split=horizontal -winheight=5 line\<cr>"],
     \ ['d', 'Current Directory',
         \ {->printf(':vim /%s/ %%:h/*', input('pattern: '))}],
     \ )
 
-call popup#add('search-v', 'Search',
+let s:visual = pmenu#new('Search',
     \ ['d', 'Current directory', ":vim /\<c-r>" . '"/ %:h/*'],
     \ ['.', 'The text' , 'y/\V'."\<c-r>\""],
     \ ['w', 'The word' , 'y/\V\<'."\<c-r>".'"\>'],
@@ -14,5 +14,10 @@ call popup#add('search-v', 'Search',
     \ ['o', 'Replace word' , 'y:%s/\V\<'."\<c-r>".'"\>/'],
     \ )
 
-nmap <expr><m-s> Popup('search')
-vmap <expr><m-s> Popup('search-v')
+fun! pmenu#search#n()
+    return s:normal
+endf
+
+fun! pmenu#search#v()
+    return s:visual
+endf
