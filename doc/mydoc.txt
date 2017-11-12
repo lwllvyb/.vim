@@ -22,4 +22,20 @@ gen_envs.py~
 gen_envs.py generates a series variable according the user's environment.
 see |load_envs.vim|
 
+3. Install
+>
+    # Install git
+    # Install python3 and python3 for vim
+    # let 'python3' is executable
+    pip3 install neovim
+    nvim
+        :DeinInstall
+        :" Wait a minute
+        :q
+    cd .dein/.cache
+    ln -s init.vim vimrc        # mklink /D vimrc init.vim
+    ln -s init.vim .vimrc       # mklink /D .vimrc init.vim
+    ln -s init.vim _vimrc       # mklink /D _vimrc init.vim
+<
+
  vim:tw=78:ts=8:ft=help:norl:

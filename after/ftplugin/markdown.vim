@@ -38,45 +38,12 @@ vnoremap <buffer><expr> <m-2> mdm#bold()
 nnoremap <buffer><expr> # (getline('.')[col('.')-1]=='#'?"I#\<esc>":'#')
 " }}} 
 
-if !exists('s:goto_menu')
-    let s:goto_menu = [
-        \ ['n', 'Next Header', "\<Plug>Markdown_MoveToNextHeader"],
-        \ ['p', 'Prev Header', "\<Plug>Markdown_MoveToPreviousHeader"],
-        \ ['.', 'Current Header', "\<Plug>Markdown_MoveToCurHeader"],
-        \ ['a', 'Parent Header', "\<Plug>Markdown_MoveToParentHeader"],
-        \ ['j', 'Next Sibling', "\<Plug>Markdown_MoveToNextSiblingHeader"],
-        \ ['k', 'Prev Sibling', "\<Plug>Markdown_MoveToPreviousSiblingHeader"]
-    \ ]
-    let q = ['q', 'Quote', function('mdm#quote')]
-    let b = ['b', 'Bold', function('mdm#bold')]
-    let c = ['c', 'Code', function('mdm#code')]
-    let l = ['l', 'Smart List', ":call mdm#SmartList()\<cr>"]
-    let H = ['H', 'Smart Header', ":call mdm#SmartHeader()\<cr>"]
-    let O = ['O', 'Orderd List', ":call mdm#OrderedList()\<cr>"]
-    let s:util_menu = [q, b, c, l, H, O,
-        \ ['o', 'Toc' , ":Toc\<cr>"],
-        \ [',', 'Task', ":call mdplus#togtask()\<cr>"],
-        \ ['f', 'Anchor', "yiw/<span id=\"\<c-r>\"\">"]
-    \ ]
-    let s:util_v = [q, b, c, l, H, O]
-    let s:inset_menu = [
-        \ ['b', 'Bold', "****\<left>\<left>"],
-        \ ['i', 'Italic', "**\<left>"],
-        \ ['k', 'Task', "* []\<left>"],
-        \ ['/', 'Comment', "<!---->\<esc>2h"],
-        \ ['l', 'Link', "[]()\<left>"],
-        \ ['a', 'Anchor', "<span id=\"\">\<esc>2h"]
-    \ ]
-endif
-
 if exists('g:popup_loaded')
-    call popup#addl('goto', 'Goto', s:goto_menu)
-
-    call popup#addl('util', 'Markdown utils', s:util_menu)
-    call popup#addl('util-v', 'Markdown utils', s:util_v)
-    call popup#addl('insert-i', 'Insert', s:inset_menu)
-
-    imap <buffer><expr><m-i> Popup('insert-i')
+    let b:popup_menus = {
+        \ 'goto': 'pmenu#markdown#goto',
+        \ 'util': 'pmenu#markdown#util',
+        \ 'util-v': 'pmenu#markdown#util_v',
+        \ }
 endif
 
 nmap <buffer><F5> :MarkdownPreview<cr>

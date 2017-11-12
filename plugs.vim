@@ -6,10 +6,8 @@
 " =============================================================================
 
 " Check init {{{
-let dein_rtp = expand('<sfile>:h') . '/dein.vim'
-if isdirectory(dein_rtp)
-    let &rtp .= ',' . dein_rtp
-else
+let s:dein_rtp = expand('<sfile>:h') . '/dein.vim'
+if !isdirectory(s:dein_rtp)
     fun! CheckRequire()
         let errs = []
         if !executable('git')
@@ -28,6 +26,8 @@ else
     endif
     finish
 endif
+
+let &rtp .= ',' . s:dein_rtp
 " }}}
 
 " Define some commands for dein {{{
@@ -47,12 +47,12 @@ fun! s:config_hook()
         let f = s:confdir . v['normalized_name'] . '.vim'
         if filereadable(f)
             call dein#set_hook(k, 'hook_source', 'so ' . f)
-        elseif isdirectory(f)
-            let fs = glob(f . '/*.vim', 0, 1)
-            fun! T() closure
-                for f in fs|exe 'so' f|endfo
-            endf
-            call dein#set_hook(k, 'hook_source', funcref('T'))
+        " elseif isdirectory(f)
+        "     let fs = glob(f . '/*.vim', 0, 1)
+        "     fun! T() closure
+        "         for f in fs|exe 'so' f|endfo
+        "     endf
+        "     call dein#set_hook(k, 'hook_source', funcref('T'))
         endif
     endfo
 endf
@@ -60,7 +60,7 @@ endf
 
 let s:path = expand('<sfile>:p:h')
 if !exists('g:dein#cache_directory')
-    let g:dein#cache_directory = s:path . '/dein.vim'
+    let g:dein#cache_directory = s:path . '/.dein'
 endif
 
 " {{{ load the plugins
@@ -75,8 +75,10 @@ if dein#load_state(g:dein#cache_directory)
 
     call dein#config('xmake.vim', {'depends': ['job.vim', 'qrun.vim']})
     call dein#config('vim-markdown', on_markdown)
+    call dein#config('mdm.vim', on_markdown)
+    call dein#config('idc.vim', {'on_ft': 'idc'})
 
-    call dein#add('Shougo/dein.vim', {'rtp': dein_rtp})
+    call dein#add('Shougo/dein.vim', {'rtp': s:dein_rtp})
 " ------------------ Utility -------------------- {{{
     call dein#add('Lokaltog/vim-easymotion', {
                 \ 'on_map': {'nv': '<Plug>(easymotion-'}
@@ -92,6 +94,7 @@ if dein#load_state(g:dein#cache_directory)
     call dein#add('honza/vim-snippets')
     call dein#add('tpope/vim-commentary', {'on_cmd': 'Commentary*'})
     call dein#add('tpope/vim-surround')
+    call dein#add('tpope/vim-repeat')
     call dein#add('Chiel92/vim-autoformat', {'on_cmd': 'Autoformat*'})
     call dein#add('godlygeek/tabular', {'on_cmd': 'Tabularize*)'})
     call dein#add('airblade/vim-gitgutter', {'on_cmd': 'Git*'})
@@ -101,9 +104,10 @@ if dein#load_state(g:dein#cache_directory)
     call dein#add('tiagofumo/vim-nerdtree-syntax-highlight')
     call dein#add('RIscRIpt/vim-fasm-syntax')
     call dein#add('MattesGroeger/vim-bookmarks')
-    call dein#add('neomake/neomake')
+    " call dein#add('neomake/neomake')
     call dein#add('vim-voom/VOoM', {'on_cmd': 'Voom*'})
     call dein#add('metakirby5/codi.vim', {'on_cmd': 'Codi*'})
+    call dein#add('vim-scripts/csv.vim', {'on_ft': 'csv'})
 " }}}
 " ------------------ textobjs -------------------- {{{
     call dein#add('vim-scripts/argtextobj.vim')
@@ -141,10 +145,10 @@ if dein#load_state(g:dein#cache_directory)
     call dein#add('Shougo/neomru.vim')
     call dein#add('zchee/deoplete-asm')
     call dein#add('zchee/deoplete-clang')
+    call dein#add('zchee/deoplete-jedi')
     call dein#add('fszymanski/deoplete-emoji')
     call dein#add('carlitux/deoplete-ternjs', {'on_ft': 'javascript'})
     call dein#add('Rip-Rip/clang_complete', on_cxx)
-    " call dein#add('zchee/deoplete-jedi')
     " call dein#add('justmao945/vim-clang')
     " call dein#add('wokalski/autocomplete-flow')
     " call dein#add('vim-scripts/cmdline-completion')
@@ -173,6 +177,8 @@ if dein#load_state(g:dein#cache_directory)
     call dein#add('rhysd/nyaovim-mini-browser')
     call dein#add('rhysd/nyaovim-markdown-preview')
 " }}}
+" ------------------ C/C++ ---------------------
+    " call dein#add('hari-rangarajan/CCTree')
 
     call s:config_hook()
     let f = s:confdir . '/_all_.vim'

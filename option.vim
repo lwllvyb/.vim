@@ -27,7 +27,6 @@ set nobackup noswapfile         " don't use the backup and swap file
 set hidden
 set mousehide                   " hide the cursor when typing
 set noea                        " don't set same width or height after close a window
-set splitbelow splitright
 set nosol                       " don't goto the first column when press 'gg'
 set noshowmode                  " don't show the mode on last line
 set number                      " show line number
@@ -51,7 +50,7 @@ endf
 
 " set wildmode=longest:full
 " set awa aw
-" set clipboard=unnamed           " 系统剪贴板对应默认的寄存器
+" set clipboard=unnamed           " which register that system's clipboard use
 " set ambw=double
 " set list lcs=tab:>-,eol:¬       " 设置显示空白字符
 " set lazyredraw
@@ -61,12 +60,13 @@ endf
 " set statusline=\ %t%{&mod?'*':''}\ %h\ %w\ %r\ %=%{&fenc}\|%{&ff}\ %l:%c\ 
 " set makeprg=xmake
 " set noerrorbells
-" set cmdheight=2                 " 命令行高度
-" set cursorline                  " 高亮光标所在行
+" set cmdheight=2                 " the height of EX command-line
+" set cursorline                  " hilight the cursor line
 " set cursorcolumn
 " set foldmethod=syntax
 " set nofoldenable
 " set history=128
 " set vbs=1                       " 显示函数、命令、键盘映射等的详细信息
-" set complete+=k                 " 默认补全里加上字典补全
+" set complete+=k                 " add the dictionary-completion to default-completions
 " set nowrap
+" set splitbelow splitright       " Default directions of split

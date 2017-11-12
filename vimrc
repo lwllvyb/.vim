@@ -25,7 +25,7 @@ if has('nvim')
     endf
 else
     if has('gui_running')
-        Source gvim.vim
+        Source ginit.vim
     else
         Source alt-mapping.vim
     endif
