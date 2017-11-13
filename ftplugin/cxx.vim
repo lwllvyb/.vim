@@ -5,13 +5,6 @@ nnoremap <buffer><silent><F4> :call cmode#toggleHeader()<cr>
 imap <buffer><F4> <esc><F4>
 nmap <buffer>gd <Plug>(clang_complete_goto_declaration)
 
-let b:tab_map = {
-    \ 'tab': [
-        \ ['{$','}'], "\<cr>\<esc>O",
-        \ '{$', "}\<left>\<cr>\<esc>O",
-        \ '\.$', "\<c-x>\<c-o>", '::$', "\<c-x>\<c-o>"]
-    \ }
-
 if exists('g:popup_loaded')
     if !exists('s:popup_menu')
         let s:popup_menu = pmenu#new('Util',

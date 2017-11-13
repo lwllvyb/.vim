@@ -12,6 +12,8 @@
 
                 *g:deoplete#sources#clang#clang_header*
 
+                *g:python3_prog_path*
+
 ==============================================================================
 2. Tools
 

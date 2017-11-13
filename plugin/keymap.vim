@@ -22,14 +22,14 @@ inoremap <c-n> <down>
 inoremap <c-p> <up>
 inoremap <expr><c-k> col('.') == col('$') ? "\<del>" : "\<c-o>D"
 inoremap <expr><c-a> col('.') == 1 ? "\<c-o>I" : "\<home>"
-nnoremap <expr>0     col('.') == 1 ? '^': '0'
+noremap <expr>0     col('.') == 1 ? '^': '0'
 
-fun! s:get_redraw()
+fun! s:redraw_cmd()
     return winline() * 2 <= winheight(0) + 1 ? winline() <= (&so + 1) ? 'zb' : 'zt' : 'zz'
 endf
 
-nnoremap <expr><c-l> <sid>get_redraw()
-inoremap <expr><c-l> "\<c-o>" . <sid>get_redraw()
+nnoremap <expr><c-l> <sid>redraw_cmd()
+inoremap <expr><c-l> "\<c-o>" . <sid>redraw_cmd()
 
 nnoremap gl $
 vnoremap gl $h
@@ -137,6 +137,8 @@ inoremap <c-y> <c-o><c-r>
 " Paste
 inoremap <expr><c-g><c-v> "\<c-o>" . (col('.')==col('$')?'"+gp':'"+gP')
 inoremap <expr><c-g><c-p> "\<esc>" . (col('.')==1?'gPa':'gpa')
+cnoremap <c-g><c-v> <c-r>+
+cnoremap <c-g><c-p> <c-r>"
 " Toggle comment
 noremap  <silent><m-/> :Commentary<cr>
 " Save && Exit
