@@ -21,6 +21,7 @@ let s:tools = pmenu#new('Tools',
     \ ['c', 'Codi', ":Codi\<cr>"],
     \ ['g', 'Goyo', ":Goyo\<cr>"],
     \ ['m', "Matrix", ":Matrix<cr>"],
+    \ ['x', "Hex Calc", ":call hexcalc#init()<cr>"],
     \ )
 
 fun! pmenu#leader#n()
