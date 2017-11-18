@@ -20,8 +20,9 @@ let s:tools = pmenu#new('Tools',
     \ ['b', 'Bookmark', "\<Plug>BookmarkToggle"],
     \ ['c', 'Codi', ":Codi\<cr>"],
     \ ['g', 'Goyo', ":Goyo\<cr>"],
-    \ ['m', "Matrix", ":Matrix<cr>"],
-    \ ['x', "Hex Calc", ":call hexcalc#init()<cr>"],
+    \ ['m', 'Matrix', ":Matrix\<cr>"],
+    \ ['x', 'Hex Calc', ":call hexcalc#init()\<cr>"],
+    \ ['l', 'LuaEval', ":call luaeval#()\<cr>"],
     \ )
 
 fun! pmenu#leader#n()

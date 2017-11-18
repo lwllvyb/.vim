@@ -41,6 +41,7 @@ let g:lightline.colorscheme = get({
         \ 'neodark': 'one'
         \ },
     \ get(g:, 'COLORSCHEME', 'one'))
+if &bg == 'dark' | let g:lightline.colorscheme = 'wombat' | endif
 " }}}
 
 let g:lightline.enable = {'statusline': 1, 'tabline': 0}
