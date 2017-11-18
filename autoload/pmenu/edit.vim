@@ -59,7 +59,8 @@ let s:visual = pmenu#new('Edit',
 
 let s:insert = pmenu#new('Edit',
     \ ['l', 'Dump Line', "\<esc>yypA"],
-    \ ['p', 'Paste', {->"\<c-o>".(col('.')==col('$')?'"+gp': '"+gP')}])
+    \ ['d', 'Delete Line', "\<c-o>dd"],
+    \ ['p', 'Paste', {-> "\<c-o>".(col('.')==col('$')?'"+gp': '"+gP')}])
 
 fun! pmenu#edit#n()
     return s:normal
