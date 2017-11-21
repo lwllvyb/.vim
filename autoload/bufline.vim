@@ -13,21 +13,24 @@ fun! bufline#hilight()
     " hi clear TabLineFill
     hi! link TabLineFill TabLine
 
-    let dir_fg_g = synIDattr(hlID('Directory'), 'fg', 'gui')
-    let dir_fg_c = synIDattr(hlID('Directory'), 'fg', 'cterm')
-    let sel_bg_g = synIDattr(hlID('MyTabLineSel'), 'bg', 'gui')
-    let sel_bg_c = synIDattr(hlID('MyTabLineSel'), 'bg', 'cterm')
-    let tab_bg_g = synIDattr(hlID('TabLine'), 'bg', 'gui')
-    let tab_bg_c = synIDattr(hlID('TabLine'), 'bg', 'cterm')
-    " let warn_fg_g = synIDattr(hlID('WarningMsg'), 'fg', 'gui')
-    " let warn_fg_c = synIDattr(hlID('WarningMsg'), 'fg', 'cterm')
-    let warn_fg_g = '#FF0000'
-    let warn_fg_c = synIDattr(hlID('WarningMsg'), 'fg', 'cterm')
+    let nr = hlID('CursorLineNr')
+    " let nr = hlID('Statement')
+    let nr_fg_g = synIDattr(nr, 'fg', 'gui')
+    let nr_fg_c = synIDattr(nr, 'fg', 'cterm')
 
-    call s:hi('MyTabLineNr', dir_fg_g, tab_bg_g, dir_fg_c, tab_bg_c)
-    call s:hi('MyTabLineWarn', warn_fg_g, tab_bg_g, warn_fg_c, tab_bg_c)
-    call s:hi('MyTabLineCurNr', dir_fg_g, sel_bg_g, dir_fg_c, sel_bg_c)
-    call s:hi('MyTabLineCurWarn', warn_fg_g, sel_bg_g, warn_fg_c, sel_bg_c)
+    let sel = hlID('MyTabLineSel')
+    let sel_bg_g = synIDattr(sel, 'bg', 'gui')
+    let sel_bg_c = synIDattr(sel, 'bg', 'cterm')
+
+    let tab = hlID('TabLine')
+    let reverse = synIDattr(tab, 'reverse', 'gui')
+    let tab_bg_g = synIDattr(tab, reverse ? 'fg': 'bg', 'gui')
+    let tab_bg_c = synIDattr(tab, reverse ? 'fg': 'bg', 'cterm')
+
+    call s:hi('MyTabLineNr', nr_fg_g, tab_bg_g, nr_fg_c, tab_bg_c)
+    call s:hi('MyTabLineWarn', 'red', tab_bg_g, 'red', tab_bg_c)
+    call s:hi('MyTabLineCurNr', nr_fg_g, sel_bg_g, nr_fg_c, sel_bg_c)
+    call s:hi('MyTabLineCurWarn', 'red', sel_bg_g, 'red', sel_bg_c)
 
 endf
 
@@ -146,7 +149,7 @@ fun! s:get(nrs)
         let file = simplify(bufname(nr))
         let file = fnamemodify(file, ':.:gs?\(.\).\{-}[\\\/]?\1\/?')
         let l += ['%', i, 'T',
-                \ nr == curnr ? '%#MyTabLineCurNr# ': '%#TabLineNr# ',
+                \ nr == curnr ? '%#MyTabLineCurNr# ': '%#MyTabLineNr# ',
                 \ i,
                 \ nr == curnr ? ' %#MyTabLineSel#': ' %#TabLine#',
                 \ empty(file) ? ' --- ': file,
