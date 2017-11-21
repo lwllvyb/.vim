@@ -45,7 +45,8 @@ let g:lightline.colorscheme = get(
             \ 'one-dark': 'one',
             \ 'neodark': 'one'
         \ },
-    \ get(g:, 'COLORSCHEME', 'powerline'))
+    \ get(g:, 'COLORSCHEME'),
+    \ 'powerline')
 " }}}
 
 let g:lightline.enable = {'statusline': 1, 'tabline': 0}

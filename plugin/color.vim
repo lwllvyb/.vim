@@ -1,5 +1,5 @@
 " =============================================================================
-" Filename:    plugin\color.vim
+" Filename:    plugin/color.vim
 " Author:      luzhlon
 " Date:        2017-10-09
 " Description: Transparent Visual and Cursor background-color
@@ -16,6 +16,7 @@ fun! s:setcursor()
     hi clear Visual
     exe 'hi' 'Cursor' 'guibg=' . (empty(cur_bg_gui) ? bg_gui: cur_bg_gui) empty(cur_bg_term) ? '': 'ctermbg=' . cur_bg_term
     exe 'hi' 'Visual' 'guibg=' . vis_bg_gui empty(vis_bg_term) ? '': 'ctermbg=' . vis_bg_term
+    exe 'hi' 'VertSplit' 'guibg=' . synIDattr(hlID('VertSplit'), 'fg', 'gui')
 endf
 
 au ColorScheme * call <SID>setcursor()
