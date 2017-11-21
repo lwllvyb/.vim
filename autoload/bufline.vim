@@ -10,24 +10,25 @@ com! -count -nargs=* Bufline call bufline#(v:count ? v:count: input('# '), <args
 
 fun! bufline#hilight()
     hi! link MyTabLineSel Normal
-    hi! link MyTabLine TabLineFill
-    let normal = hlID('Normal')
-    let gui_bg = synIDattr(normal, 'bg', 'gui')
-    let cui_bg = synIDattr(normal, 'bg', 'cterm')
-    let gui_fg = synIDattr(normal, 'fg', 'gui')
-    let cui_fg = synIDattr(normal, 'fg', 'cterm')
+    " hi clear TabLineFill
+    hi! link TabLineFill TabLine
+
     let dir_fg_g = synIDattr(hlID('Directory'), 'fg', 'gui')
     let dir_fg_c = synIDattr(hlID('Directory'), 'fg', 'cterm')
-    let fill_bg_g = synIDattr(hlID('TabLineFill'), 'bg', 'gui')
-    let fill_bg_c = synIDattr(hlID('TabLineFill'), 'bg', 'cterm')
-    let warn_fg_g = synIDattr(hlID('WarningMsg'), 'fg', 'gui')
+    let sel_bg_g = synIDattr(hlID('MyTabLineSel'), 'bg', 'gui')
+    let sel_bg_c = synIDattr(hlID('MyTabLineSel'), 'bg', 'cterm')
+    let tab_bg_g = synIDattr(hlID('TabLine'), 'bg', 'gui')
+    let tab_bg_c = synIDattr(hlID('TabLine'), 'bg', 'cterm')
+    " let warn_fg_g = synIDattr(hlID('WarningMsg'), 'fg', 'gui')
+    " let warn_fg_c = synIDattr(hlID('WarningMsg'), 'fg', 'cterm')
+    let warn_fg_g = '#FF0000'
     let warn_fg_c = synIDattr(hlID('WarningMsg'), 'fg', 'cterm')
-    call s:hi('TabLineFill',
-        \ synIDattr(normal, 'fg', 'gui'), 0,
-        \ synIDattr(normal, 'fg', 'cterm'), 0)
-    call s:hi('MyTabLineNr', dir_fg_g, fill_bg_g, dir_fg_c, fill_bg_c)
-    call s:hi('MyTabLineCurNr', dir_fg_g, gui_bg, dir_fg_c, cui_bg)
-    call s:hi('MyTabFillWarn', warn_fg_g, fill_bg_g, warn_fg_c, fill_bg_c)
+
+    call s:hi('MyTabLineNr', dir_fg_g, tab_bg_g, dir_fg_c, tab_bg_c)
+    call s:hi('MyTabLineWarn', warn_fg_g, tab_bg_g, warn_fg_c, tab_bg_c)
+    call s:hi('MyTabLineCurNr', dir_fg_g, sel_bg_g, dir_fg_c, sel_bg_c)
+    call s:hi('MyTabLineCurWarn', warn_fg_g, sel_bg_g, warn_fg_c, sel_bg_c)
+
 endf
 
 fun! s:hi(group, gfg, gbg, cfg, cbg)
@@ -131,6 +132,13 @@ fun! bufline#tabs()
 endf
 " }}}
 
+let s:ft_sig = {
+    \ 'nerdtree': ' [NerdTree] ',
+    \ 'tagbar': ' [Tabbar] ',
+    \ 'startify': ' [Startify] ',
+    \ 'denite': ' [Denite] '
+    \ }
+
 fun! s:get(nrs)
     let curnr = bufnr('%')
     let i = 1 | let l = []
@@ -138,21 +146,16 @@ fun! s:get(nrs)
         let file = simplify(bufname(nr))
         let file = fnamemodify(file, ':.:gs?\(.\).\{-}[\\\/]?\1\/?')
         let l += ['%', i, 'T',
-                \ nr == curnr ? '%#MyTabLineCurNr#': '%#MyTabLineNr#', ' ',
-                \ i, ' ',
-                \ nr == curnr ? '%#MyTabLineSel#': '%#MyTabLine#',
-                \ empty(file) ? '   ': file,
-                \ getbufvar(nr, '&mod') ? (nr == curnr ? '%#WarningMsg# • ': '%#MyTabFillWarn# • '): ' ']
+                \ nr == curnr ? '%#MyTabLineCurNr# ': '%#TabLineNr# ',
+                \ i,
+                \ nr == curnr ? ' %#MyTabLineSel#': ' %#TabLine#',
+                \ empty(file) ? ' --- ': file,
+                \ getbufvar(nr, '&mod') ? (nr == curnr ? '%#MyTabLineCurWarn# • ': '%#MyTabLineWarn# • '): ' ']
         let i += 1
     endfor
     " Special buffer
     if &bt == 'nofile'
-        let n = ['%#MyTabLineSel#', get({
-                \ 'nerdtree': ' [NerdTree] ',
-                \ 'tagbar': ' [Tabbar] ',
-                \ 'startify': ' [Startify] ',
-                \ 'denite': ' [Denite] '
-                \ }, &ft, '')]
+        let n = ['%#MyTabLineSel#', get(s:ft_sig, &ft, '')]
         let l += n
     elseif &bt == 'help'
         let l += ['%#MyTabLineSel#', ' [HELP:', expand('%:t'), '] ']

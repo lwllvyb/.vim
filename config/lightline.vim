@@ -35,13 +35,17 @@ let g:lightline.tabline = {
 
 " The lightline's theme {{{
 " powerline、wombat、jellybes、solarized、Dracula、one、landscape
-let g:lightline.colorscheme = get({
-        \ 'one': 'one',
-        \ 'one-dark': 'one',
-        \ 'neodark': 'one'
+let g:lightline.colorscheme = get(
+        \ &bg == 'dark' ? {
+            \ 'amcolors': 'powerline',
+            \ 'one-dark': 'one',
+            \ 'neodark': 'one'
+        \ } : {
+            \ 'one': 'one',
+            \ 'one-dark': 'one',
+            \ 'neodark': 'one'
         \ },
-    \ get(g:, 'COLORSCHEME', 'one'))
-if &bg == 'dark' | let g:lightline.colorscheme = 'wombat' | endif
+    \ get(g:, 'COLORSCHEME', 'powerline'))
 " }}}
 
 let g:lightline.enable = {'statusline': 1, 'tabline': 0}

@@ -22,7 +22,7 @@ set encoding=utf-8              " internal encoding of vim
 set et sw=4 ts=4                " expand tab-character as spaces
 set ignorecase smartcase        " ignore the case of letter when search
 set confirm                     " show confirm-dialog before quit
-set laststatus=0                " show the windows-status on the below-window
+set laststatus=1                " show the windows-status on the below-window
 set nobackup noswapfile         " don't use the backup and swap file
 set hidden
 set mousehide                   " hide the cursor when typing
