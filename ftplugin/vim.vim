@@ -3,6 +3,7 @@ set sw=4 sts=4 ts=4 fdm=marker
 
 let &fmr=' {{{, }}}'
 set mps+=<:>
+set iskeyword&
 
 "vnoremap <buffer><silent> <space>x "ty:call execute(@t)<cr>
 "nnoremap <buffer><silent> <space>x :call execute(getline(line('.')))<cr>
