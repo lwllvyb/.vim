@@ -1,3 +1,9 @@
+" =============================================================================
+" Filename:    vsvim.vim
+" Author:      luzhlon
+" Date:        2017-11-23
+" Description: The configuration for vsvim, link this file to ~/_vsvimrc
+" =============================================================================
 
 set autoindent smartindent      "自动缩进、智能缩进
 set autoread                    "自动读入外部更改过的文件
@@ -59,6 +65,7 @@ imap <expr><c-k> (col('.')==col('$'))?"\<del>":"\<c-o>D"
 imap <c-cr> <c-o>O
 imap <c-n> <down>
 imap <c-p> <up>
+imap <c-c> <esc>
 
 inoremap <m-]> <c-t>
 inoremap <m-[> <c-d>
