@@ -16,7 +16,10 @@ fun! s:setcursor()
     hi clear Visual
     exe 'hi' 'Cursor' 'guibg=' . (empty(cur_bg_gui) ? bg_gui: cur_bg_gui) empty(cur_bg_term) ? '': 'ctermbg=' . cur_bg_term
     exe 'hi' 'Visual' 'guibg=' . vis_bg_gui empty(vis_bg_term) ? '': 'ctermbg=' . vis_bg_term
-    exe 'hi' 'VertSplit' 'guibg=' . synIDattr(hlID('VertSplit'), 'fg', 'gui')
+    let vertbg = synIDattr(hlID('VertSplit'), 'fg', 'gui')
+    if !empty(vertbg)
+        exe 'hi' 'VertSplit' 'guibg=' . vertbg
+    endif
 endf
 
 au ColorScheme * call <SID>setcursor()
