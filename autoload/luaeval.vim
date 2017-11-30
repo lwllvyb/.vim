@@ -10,11 +10,13 @@ fun! luaeval#()
 
     startinsert
 
-    imap <expr><buffer><c-cr> "\<cr>" . execute('lua ' . getline('.'))
+    imap <expr><buffer><c-cr> "\<cr>" . luaeval#exec()
     imap <expr><buffer><m-cr> "\<cr>" . luaeval(getline('.'))
 endf
 
 fun! luaeval#exec()
+    let @- = execute('lua ' . getline('.'))
+    return "\<esc>" . '"-p'
 endf
 
 fun! luaeval#eval()
