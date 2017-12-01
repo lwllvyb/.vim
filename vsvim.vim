@@ -12,12 +12,11 @@ set display=lastline            "显示不完整的行
 set encoding=utf-8
 set shiftwidth=4
 set tabstop=4
-set ffs=unix,dos,mac ff=unix    "unix格式的换行符
 set hlsearch                    "高亮所有的查找结果
 set ignorecase
 set smartcase        "忽略大小写
 set incsearch
-set laststatus=1
+set laststatus=0
 set nosol                       "不跳转到行首
 set nowrap
 set number                      "显示行号
@@ -30,24 +29,11 @@ set tabline=%!bufline#bufs()
 set showtabline=2
 set cursorline
 set clipboard=unamed
-let &foldtext='(getline(v:foldstart) . " ... " . getline(v:foldend))'
+set cursorline                  "高亮光标所在行
 "set statusline=\ %t%{&mod?'*':''}\ %h\ %r\ %=Line:%l\ Col:%c\ [%{&fenc}:%{&ff}]\ 
-"set awa aw
-"set list lcs=tab:>-,eol:¬       "设置显示空白字符
-"set lazyredraw
-"set foldmethod=syntax foldlevel=3
-"启动vim时恢复上次关闭的buffer
-"set viminfo='100,%100,/100,<100,f100
 
-"set makeprg=xmake
 "set noerrorbells
-"set cmdheight=2                "命令行高度
-"set cursorline                  "高亮光标所在行
-"set cursorcolumn
 "set foldmethod=syntax
-"set nofoldenable
-"set history=128
-
 
 " Line edit
 imap <c-b> <left>
@@ -80,30 +66,8 @@ nmap <m-j> <c-w>j
 nmap <m-h> <c-w>h
 nmap <m-l> <c-w>l
 
-nnoremap <silent><m-1> :call bufline#(1)<cr>
-nnoremap <silent><m-2> :call bufline#(2)<cr>
-nnoremap <silent><m-3> :call bufline#(3)<cr>
-nnoremap <silent><m-4> :call bufline#(4)<cr>
-nnoremap <silent><m-5> :call bufline#(5)<cr>
-nnoremap <silent><m-6> :call bufline#(6)<cr>
-nnoremap <silent><m-7> :call bufline#(7)<cr>
-nnoremap <silent><m-8> :call bufline#(8)<cr>
-nnoremap <silent><m-9> :call bufline#(9)<cr>
-
-nnoremap + <c-a>
-nnoremap - <c-x>
-nnoremap <c-a> ggVG
 nnoremap <c-j> za
-nnoremap <m-left> <c-o>
-nnoremap <m-right> <c-i>
-nnoremap <silent><c-s> :w<cr>
-nnoremap <silent><m-E> :NERDTreeToggle<cr>
 nnoremap <c-c><c-c> :conf qa<cr>
 
-vmap * y/\V\<<c-r>"\>
-vmap # y?\V\<<c-r>"\>
-vmap g* y/\V<C-R>"
-vmap g# y?\V<C-R>"
-vmap P p:let @"=@0<cr>
 vmap <tab> >gv
 vmap <s-tab> <gv
