@@ -106,6 +106,7 @@ vnoremap <c-j> zf
 
 inoremap <m-o> <esc>
 nnoremap Q gQ
+noremap <expr>K help#map_K()
 
 " F5 -- Run {{{
 fun! MyRun()

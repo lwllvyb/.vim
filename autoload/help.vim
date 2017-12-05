@@ -24,7 +24,7 @@ fun! help#keyword()
     return keyword
 endf
 
-fun! help#()
+fun! help#(...)
     let keyword = a:0 ? a:1 : help#keyword()
 
     let dir = s:finddir('doc/' . &ft)
@@ -53,3 +53,5 @@ fun! help#map_K()
                 \ "y:call help#(@\")\<cr>" :
                 \ ":call help#()\<cr>"
 endf
+
+com! -nargs=* Help call help#(<q-args>)
