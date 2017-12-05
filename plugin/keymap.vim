@@ -147,7 +147,7 @@ nnoremap <silent><c-s> :update<cr>
 nnoremap <silent><c-c><c-c> :conf qa<cr>
 nnoremap + <c-a>
 nnoremap - <c-x>
-nnoremap <c-a> ggVG
+noremap <c-a> gggH<c-o>G
 " }}}
 
 " Terminal operation {{{

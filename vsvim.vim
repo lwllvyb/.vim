@@ -91,11 +91,11 @@ vnoremap <C-Insert> "+y
 
 " CTRL-V and SHIFT-Insert are Paste
 map <C-V>		"+gP
-map <S-Insert>		"+gP
+" map <S-Insert>		"+gP
 imap <C-V>		<Esc>"+gpa
 
 cmap <C-V>		<C-R>+
-cmap <S-Insert>		<C-R>+
+" cmap <S-Insert>		<C-R>+
 
 nnoremap <c-j> za
 nnoremap <c-c><c-c> :conf qa<cr>
