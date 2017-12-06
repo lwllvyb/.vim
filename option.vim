@@ -41,9 +41,10 @@ set shortmess+=c
 set tabline=%!bufline#bufs()
 set showtabline=2               " show tabline always
 set ffs=unix,dos,mac            " the priority of EOL format
+set fillchars=fold:\ ,vert:\ 
 set foldtext=MyFoldText()
 
-fun MyFoldText()
+fun! MyFoldText()
     return getline(v:foldstart) . ' ... ' . 
          \ substitute(getline(v:foldend), '^\s*', '', '')
 endf

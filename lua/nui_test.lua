@@ -1,13 +1,21 @@
 
-local Tree = require 'Tree'
+local Tree = require 'nui.Tree'
 
-local tree = Tree:new()
+tree = Tree:new({data = 'root'})
 
-local node2 = tree:append({data = 'root'})
-                  :after({data = 'node1'})
-                  :after({data = 'node2'})
+tree:append {data = 'node0'}
+    :append {data = 'node1'}
+    :append {data = 'node2'}
+    :append({data = 'node3'})
+    :append({data = 'node4'})
 
-node2:append({data = 'node21'}):after('node22')
+node2 = tree:child(2)
 
-node2:after({data = 'node3'}):after({data = 'node4'})
+node2:append {data = 'node21'}
+     :append {data = 'node22'}
 
+-- tree:open()
+
+-- print(tree:render())
+
+-- qrun.vim@vimlua:

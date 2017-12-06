@@ -183,17 +183,17 @@ Once a loader is found, require calls the loader with a single argument, modname
 
 If there is any error loading or running the module, or if it cannot find any loader for the module, then require signals an error.
 
-package.cpath
+* `package.cpath`
 
 The path used by require to search for a C loader.
 
 Lua initializes the C path package.cpath in the same way it initializes the Lua path package.path, using the environment variable LUA_CPATH or a default path defined in luaconf.h.
 
-package.loaded
+* `package.loaded`
 
 A table used by require to control which modules are already loaded. When you require a module modname and package.loaded[modname] is not false, require simply returns the value stored there.
 
-package.loaders
+* `package.loaders`
 
 A table used by require to control how to load modules.
 

@@ -1,12 +1,11 @@
 
-local Tree = require 'nui.Tree'
-
 local Node = {}
 Node.__index = Node
 
 local function InitNode(self, node)
     node = setmetatable(node or {}, Node)
-    node._root = self._root
+    node._root, node._height = self._root, 1
+    return node
 end
 
 -- get renderde text
@@ -26,12 +25,20 @@ function Node:render()
         end
     end
 
-    generate_lines(node, node:deep())
+    generate_lines(self, self:deep())
     return lines
 end
 
 function Node:__tostring()
     return table.concat(self:render(), '\n')
+end
+
+function Node:__len()
+    local len = 0
+    for child in self:childs() do
+        len = len + 1
+    end
+    return len
 end
 
 -- append a child after self
@@ -46,7 +53,12 @@ function Node:append(node)
     end
     -- ensure self is a non-leaf node
     self._opened = self._opened or false
-    return node
+    self:_addheight(1)
+    return self
+end
+
+function Node:tree()
+    return self._root
 end
 
 -- get child node by index
@@ -67,7 +79,7 @@ function Node:childs()
     local node = self._first
     return function()
         local ret = node
-        node = node._next
+        if node then node = node._next end
         return ret
     end
 end
@@ -85,6 +97,7 @@ function Node:before(node)
     if self == parent._first then
         parent._first = node
     end
+    self._parent:_addheight(1)
     return node
 end
 
@@ -98,9 +111,11 @@ function Node:after(node)
     node._next = self._next
     node._prev, self._next = self, node
 
+    local parent = self._parent
     if self == parent._last then
         parent._last = node
     end
+    self._parent:_addheight(1)
     return node
 end
 
@@ -119,37 +134,67 @@ function Node:remove(node)
     end
 end
 
+local bufsetlines = vim.api.nvim_buf_set_lines
+local nvim_setbufopt = vim.api.nvim_buf_set_option
+
+function Node:updateview(height)
+    local content = self:render()
+    height = height or #content
+    local start = self:line() - 1
+    local end_ = start + height
+    -- print(start, height, #content)
+
+    nvim_setbufopt(bufnr, 'modifiable', true)
+    bufsetlines(self._root._bufnr, start, end_, 0, content)
+    nvim_setbufopt(bufnr, 'modifiable', false)
+end
+
 -- fold a node
 function Node:fold()
     assert(self._first, 'self is a leaf node')
     assert(self._opened, 'self node is folded')
     
+    local old_height = self._height
+    self:_addheight(1 - old_height)
     self._opened = false
     self._height = 1
 
-    -- TODO: update view
-    root:shrink(self)
+    self:updateview(old_height)
 end
 
 -- open a node
 function Node:open()
     assert(self._first, 'self is a leaf node')
     assert(not self._opened, 'self node is opened')
-    -- set line as absolute with root
-    local root = self._root
-    if root then
-        self._line = self:line() - root._line
-    end
 
-    self._opened = true
-    local height = 1
-    for child in self:childs() do
-        height += child:_height
-    end
-    self._height = height
+    local parent = self._parent
+    if not parent or parent._opened then
+        -- set line as absolute with root
+        local root = self._root
+        if root then
+            self._line = self:line()
+        end
 
-    -- TODO: update view
-    root:expand(self)
+        self._opened = true
+        self._height = 1
+        local height = 0
+        for child in self:childs() do
+            height = height + child._height
+        end
+        self:_addheight(height)
+
+        self:updateview(1)
+    end
+end
+
+function Node:_addheight(n)
+    if self._opened then
+        self._height = self._height + n
+        local parent = self._parent
+        if parent then
+            parent:_addheight(n)
+        end
+    end
 end
 
 -- _line: if the node is rootNode, it is absolute line-number
@@ -161,17 +206,29 @@ function Node:line(offset)
         return self._line + offset
     elseif self._opened then
         -- opened node
-        return self._root._line + self._line + offset
+        return self._line + offset
     else
         -- leaf node or folded node
-        upnode = self._prev or self._parent
-        return upnode:line(upnode._height + offset)
+        local prev = self._prev
+        if prev then
+            return prev:line(prev._height + offset)
+        else
+            return self._parent:line(1 + offset)
+        end
     end
 end
 
 -- get the height of node, in number of lines
 function Node:height()
     return self._height
+end
+
+function Node:first()
+    return self._first
+end
+
+function Node:last()
+    return self._last
 end
 
 -- get the deep of node
@@ -198,7 +255,11 @@ end
 function Node:onrender()
     -- this function decided the content to show
     -- it should return a list contained content lines
-    return self.data or 'NIL'
+    if self._opened == nil then
+        return '  ' .. self.data
+    else
+        return (self._opened and '- ' or '+ ') .. self.data
+    end
 end
 
 function Node:onclick()
