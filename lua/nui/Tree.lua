@@ -37,3 +37,25 @@ function Tree:new(tree)
     vim.command 'set bh=nowrite'
     tree._bufnr = vim.eval('bufnr("%")')
 end
+
+function Tree:expand(node)
+    assert(node._root == self)
+
+    local lines, generate_lines = {}, nil
+
+    function generate_lines(node, deep)
+        local text = string.rep(self.indent, deep)
+        text = text .. node:onrender()
+        table.insert(lines, text)
+        -- if self is opened, expand childs recursively
+        if not self._folded then
+            for child in node:childs() do
+                generate_lines(child, deep + 1)
+            end
+        end
+    end
+
+    generate_lines(node, node:deep())
+    -- 递归遍历展开的节点，调用generate_lines函数
+    -- 最后结果存在lines中
+end

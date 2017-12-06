@@ -1,12 +1,13 @@
 
 local Tree = require 'nui.Tree'
 
-local Node = {}
+local Node = {__index = {}}
+local NodeIndex = Node.__index
 
-local NodeAttr, NodeMethod = {}, {}
+NodeIndex.indent = 2
 
 -- create a node in a tree
-function Node:new(node)
+function NodeIndex:new(node)
     node = node or {}
     setmetatable(node, self)
 
@@ -14,8 +15,8 @@ function Node:new(node)
 end
 
 -- TODO
-function Node:addChild(node)
-    node = Node:new(node)
+function NodeIndex:addChild(node)
+    node = NodeIndex:new(node)
     local last = self._last
     if last then
         last:append(node)
@@ -25,7 +26,7 @@ function Node:addChild(node)
 end
 
 -- get child node by index
-function Node:child(index)
+function NodeIndex:child(index)
     if type(index) == 'number' then
         local i, node = 0, self._first
         while node do
@@ -38,7 +39,7 @@ function Node:child(index)
 end
 
 -- get iterator of child nodes
-function Node:childs()
+function NodeIndex:childs()
     local node = self._first
     return function()
         local ret = node
@@ -48,7 +49,7 @@ function Node:childs()
 end
 
 -- get/set previous node
-function Node:before(node)
+function NodeIndex:before(node)
     if not node then return self._prev end
 
     local parent = self._parent
@@ -65,7 +66,7 @@ function Node:before(node)
 end
 
 -- get/set next node
-function Node:after(node)
+function NodeIndex:after(node)
     if not node then return self._next end
 
     local parent = self._parent
@@ -82,7 +83,7 @@ function Node:after(node)
 end
 
 -- remove self from siblings or remove self from parent
-function Node:remove(node)
+function NodeIndex:remove(node)
     if node then
         if type(node) == 'number' then
             local child = self:child(node)
@@ -97,7 +98,7 @@ function Node:remove(node)
 end
 
 -- fold a node
-function Node:fold()
+function NodeIndex:fold()
     assert(self._first, 'self is a leaf node')
     assert(not self._folded, 'self node is folded')
     
@@ -105,10 +106,11 @@ function Node:fold()
     self._height = 1
 
     -- TODO: update view
+    root:shrink(self)
 end
 
 -- open a node
-function Node:open()
+function NodeIndex:open()
     assert(self._first, 'self is a leaf node')
     assert(self._folded, 'self node is opened')
     -- set line as absolute with root
@@ -125,11 +127,12 @@ function Node:open()
     self._height = height
 
     -- TODO: update view
+    root:expand(self)
 end
 
 -- _line: if the node is rootNode, it is absolute line-number
 --          else it is relative number after parent node
-function Node:line(offset)
+function NodeIndex:line(offset)
     offset = offset or 0
     if not self._root then
         return self._line + offset
@@ -144,24 +147,33 @@ function Node:line(offset)
 end
 
 -- get the height of node, in number of lines
-function Node:height()
+function NodeIndex:height()
     return self._height
 end
 
-function Node:clone()
+-- get the deep of node
+function NodeIndex:deep()
+    local i = 0
+    self = self._parent
+    while self do
+        i = i + 1
+        self = self._parent
+    end
+    return i
+end
+
+function NodeIndex:clone()
 end
 
 ----------------- Event handler -----------------
 
-function Node:onRender()
+function NodeIndex:onrender()
     -- this function decided the content to show
     -- it should return a list contained content lines
+    return self.data or 'NIL'
 end
 
-function Node:onClick()
-end
-
-function Node:onEnter()
+function NodeIndex:onclick()
 end
 
 -- qrun.vim@vimlua:
