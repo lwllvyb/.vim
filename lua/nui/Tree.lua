@@ -7,55 +7,48 @@
 
 local Node = require 'nui.Node'
 
-local TreeMethod = {}
-local Tree = {__index = TreeMethod}
+local Tree = {}
+Tree.__index = Tree
+setmetatable(Tree, Node)
 
-function TreeMethod:render()
-end
+-- indent text
+Tree.indent = '  '
 
-function TreeMethod:update()
-end
-
--- get a node by line number
-function TreeMethod:getNode(line)
-end
-
-function NewTreeBuffer()
-end
-    
 function Tree:new(tree)
-    setmetatable(tree, self)
+    tree = setmetatable(tree or {}, self)
 
-    local root = tree.rootNode assert(root)
-    -- create tree window
-    local direction = tree.direction or 'left'
-    local filetype = tree.filetype or 'nui_tree'
+    tree._root = tree
+    tree._parent = nil      -- root node haven't parent node
+    tree._opened = false
 
-    vim.command 'ene!'
-    vim.command('set ft=' .. filetype)
-    vim.command 'set bt=nofile'
-    vim.command 'set bh=nowrite'
-    tree._bufnr = vim.eval('bufnr("%")')
+    -- the begin line
+    tree._line = tree.baseline or 2
+    -- position of the tree window
+    tree.position = tree.position or 'left'
+    -- with of the tree window
+    tree.winwidth = tree.winwidth or 23
+
+    -- render the text
 end
 
 function Tree:expand(node)
-    assert(node._root == self)
+    assert(node and node._root == self)
 
-    local lines, generate_lines = {}, nil
+    local view = self._view
 
-    function generate_lines(node, deep)
-        local text = string.rep(self.indent, deep)
-        text = text .. node:onrender()
-        table.insert(lines, text)
-        -- if self is opened, expand childs recursively
-        if not self._folded then
-            for child in node:childs() do
-                generate_lines(child, deep + 1)
-            end
-        end
-    end
+end
 
-    generate_lines(node, node:deep())
-    -- 递归遍历展开的节点，调用generate_lines函数
-    -- 最后结果存在lines中
+function Tree:shrink(node)
+    assert(node and node._root == self)
+end
+
+function Tree:curnode()
+end
+
+function Tree:before(node)
+    error('can not add node before root node')
+end
+
+function Tree:after(node)
+    error('can not add node after root node')
 end

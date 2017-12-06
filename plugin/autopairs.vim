@@ -26,7 +26,7 @@ if !exists('g:AutoPairsMapCR')
 end
 
 if !exists('g:AutoPairsMapSpace')
-  let g:AutoPairsMapSpace = 1
+  let g:AutoPairsMapSpace = 0
 end
 
 if !exists('g:AutoPairsCenterLine')
@@ -420,14 +420,14 @@ function! AutoPairsInit()
     let b:AutoPairs = g:AutoPairs
   end
 
-  " buffer level map pairs keys
-  for [open, close] in items(b:AutoPairs)
-    call AutoPairsMap(open)
-    if open != close
-      call AutoPairsMap(close)
-    end
-    let b:AutoPairsClosedPairs[close] = open
-  endfor
+  " " buffer level map pairs keys
+  " for [open, close] in items(b:AutoPairs)
+  "   call AutoPairsMap(open)
+  "   if open != close
+  "     call AutoPairsMap(close)
+  "   end
+  "   let b:AutoPairsClosedPairs[close] = open
+  " endfor
 
   " Still use <buffer> level mapping for <BS> <SPACE>
   if g:AutoPairsMapBS
@@ -532,4 +532,4 @@ function! AutoPairsTryInit()
   call AutoPairsInit()
 endfunction
 
-au BufEnter * :call AutoPairsTryInit()
+au BufEnter * call AutoPairsTryInit()
