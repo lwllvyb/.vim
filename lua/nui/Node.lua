@@ -88,6 +88,14 @@ end
 function Node:before(node)
     if not node then return self._prev end
 
+    if type(node) == 'number' then
+        for i = node - 1 , 0, -1 do
+            if not self then return end
+            self = self._prev
+        end
+        return self
+    end
+
     node = InitNode(self, node)
     node._parent = self._parent
 
@@ -104,6 +112,14 @@ end
 -- get/set next node
 function Node:after(node)
     if not node then return self._next end
+
+    if type(node) == 'number' then
+        for i = 0, node - 1 do
+            if not self then return end
+            self = self._next
+        end
+        return self
+    end
 
     node = InitNode(self, node)
     node._parent = self._parent
@@ -154,10 +170,13 @@ function Node:fold()
     assert(self._first, 'self is a leaf node')
     assert(self._opened, 'self node is folded')
     
+    self._root:_delopen(self)
+
     local old_height = self._height
     self:_addheight(1 - old_height)
-    self._opened = false
-    self._height = 1
+
+    -- self._line = nil
+    self._opened, self._height = false, 1
 
     self:updateview(old_height)
 end
@@ -170,13 +189,9 @@ function Node:open()
     local parent = self._parent
     if not parent or parent._opened then
         -- set line as absolute with root
-        local root = self._root
-        if root then
-            self._line = self:line()
-        end
+        self._line = self:line()
+        self._opened, self._height = true, 1
 
-        self._opened = true
-        self._height = 1
         local height = 0
         for child in self:childs() do
             height = height + child._height
@@ -184,6 +199,16 @@ function Node:open()
         self:_addheight(height)
 
         self:updateview(1)
+        self._root:_addopen(self)
+    end
+end
+
+function Node:toggle()
+    if self._opened == nil then return end
+    if self._opened then
+        return self:fold()
+    else
+        return self:open()
     end
 end
 
