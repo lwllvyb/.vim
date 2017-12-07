@@ -272,7 +272,8 @@ for imp in pe.imports() do
     end
 end
 
+local i = 3 / 0
 return pefile
 
--- qrun.vim@vimlua:
 -- qrun.vim@luajit:
+-- qrun.vim@vimlua:

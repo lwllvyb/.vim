@@ -38,7 +38,8 @@ function Tree:curnode()
             if offset == 0 then
                 return node
             else
-                return offset < node._height and node:child(offset) or node:after(node)
+                return offset < node._height and
+                       node:child(offset - 1) or node:after(node)
             end
         end
     end
