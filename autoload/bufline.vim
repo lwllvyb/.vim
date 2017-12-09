@@ -146,8 +146,9 @@ fun! s:get(nrs)
     let curnr = bufnr('%')
     let i = 1 | let l = []
     for nr in a:nrs
-        let file = simplify(bufname(nr))
-        let file = fnamemodify(file, ':.:gs?\(.\).\{-}[\\\/]?\1\/?')
+        " let file = simplify()
+        " let file = fnamemodify(file, ':.:gs?\(.\).\{-}[\\\/]?\1\/?')
+        let file = pathshorten(fnamemodify(bufname(nr), ':.'))
         let l += ['%', i, 'T',
                 \ nr == curnr ? '%#MyTabLineCurNr# ': '%#MyTabLineNr# ',
                 \ i,

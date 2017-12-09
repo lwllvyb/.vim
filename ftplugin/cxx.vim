@@ -8,7 +8,8 @@ nmap <buffer>gd <Plug>(clang_complete_goto_declaration)
 if exists('g:popup_loaded')
     if !exists('s:popup_menu')
         let s:popup_menu = pmenu#new('Util',
-            \ ['i', 'Add #include', ":Include\<cr>"])
+            \ ['i', 'Add #include', ":Include\<cr>"],
+            \ ['r', 'Integer -> str', "viw\"-s\<c-r>=ida#int2str(@-)\<cr>"])
         call s:popup_menu.merge(popup#get('util'))
     endif
     let b:popup_menus = {'util': s:popup_menu}

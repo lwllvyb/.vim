@@ -8,13 +8,14 @@ endf
 fun! s:search_text()
     let cur_node = g:NERDTreeFileNode.GetSelected()
     let cur_path = cur_node.path.getDir().str()
-    return ":winc p\<cr>" . printf(':vim /%s/ %s/*', input('Pattern: '), cur_path)
+    return printf("\<c-w>p:vim /%s/ %s/*", input('Pattern: '), cur_path)
 endf
 
 fun! s:search_file()
     let cur_node = g:NERDTreeFileNode.GetSelected()
     let cur_path = cur_node.path.getDir().str()
-    return ':Denite file_rec:' . cur_path
+    let cur_path = fnamemodify(cur_path, ':.')
+    return "\<c-w>p:Denite file_rec:" . cur_path . "\<cr>"
 endf
 
 let s:node2mod = ''

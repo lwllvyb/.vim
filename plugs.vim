@@ -176,7 +176,7 @@ if dein#load_state(g:dein#cache_directory)
     " call dein#add('xsunsmile/showmarks')
 " }}}
 " ------------------ Various ---------------------- {{{
-    call dein#add('uguu-org/vim-matrix-screensaver', {'on_cmd': 'Matrix'})
+    call dein#add('uguu-org/vim-matrix-screensaver', {'on_cmd': 'Matrix*'})
     call dein#add('wannesm/wmgraphviz.vim', {'on_ft': 'dot'})
     call dein#add('jpalardy/vim-slime', {'on_if': 'has("unix")'})
 " }}}

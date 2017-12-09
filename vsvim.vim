@@ -101,6 +101,7 @@ nnoremap <c-j> za
 nnoremap <c-c><c-c> :conf qa<cr>
 
 nmap <C-O> :vsc View.NavigateBackward<CR>
+nmap <esc> :vsc View.NavigateBackward<CR>
 nmap <C-I> :vsc View.NavigateForward<CR>
 
 vmap <tab> >gv

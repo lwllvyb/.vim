@@ -4,7 +4,6 @@ if has('nvim')
     set icm=nosplit             " real-time preview for substitute-command
 else
     set nocompatible
-    set autoread
     set hlsearch                " hilight all the search result
     set incsearch               " hilight the search-result in real time
     set display=lastline        " the display option, about how to render the screen text
@@ -18,6 +17,7 @@ endif
 
 set title                       " show the filename in caption (by default)
 set autoindent smartindent
+set autoread autowrite
 set encoding=utf-8              " internal encoding of vim
 set et sw=4 ts=4                " expand tab-character as spaces
 set ignorecase smartcase        " ignore the case of letter when search

@@ -6,8 +6,8 @@ tree = Tree:new({data = 'root'})
 tree:append {data = 'node0'}
     :append {data = 'node1'}
     :append {data = 'node2'}
-    :append({data = 'node3'})
-    :append({data = 'node4'})
+    :append {data = 'node3'}
+    :append {data = 'node4'}
 
 node2 = tree:child(2)
 

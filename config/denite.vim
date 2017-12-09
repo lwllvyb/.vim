@@ -32,6 +32,10 @@ fun! s:config()
                 \ ['MyVimrc', '~/.config/envs.vim/init.vim']]
         \ }
     \ })
+
+    " call denite#custom#var('outline', 'command', {
+    "     \ 'options':
+    " \ })
 endf
 
 call s:config()

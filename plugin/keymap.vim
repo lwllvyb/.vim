@@ -91,6 +91,7 @@ nnoremap <silent><expr>' v:count ? ":Bufline 'split','right'\<cr>": "'"
 nnoremap <silent><expr>. v:count ? ":Bufline 'split','below'\<cr>": "."
 nnoremap <silent><expr><tab> v:count ? ":Bufline\<cr>": "\<tab>"
 nnoremap <silent><c-p> :DeniteProjectDir file_rec<cr>
+nnoremap <silent><m-p> :Denite outline<cr>
 nnoremap <silent><c-tab> :Denite buffer<cr>
 " }}}
 

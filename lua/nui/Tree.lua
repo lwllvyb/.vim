@@ -56,6 +56,13 @@ function Tree:ToggleCurrent()
     if node then return node:toggle() end
 end
 
+function Tree:MoveToParrent()
+    local node = self:curnode()
+    if node and node._parent then
+        nvim_command(tostring(node._parent._line))
+    end
+end
+
 function Tree:new(tree)
     tree = setmetatable(tree or {}, Tree)
 
