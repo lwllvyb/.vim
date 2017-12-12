@@ -343,7 +343,7 @@ function! AutoPairsMap(key)
   end
   let escaped_key = substitute(key, "'", "''", 'g')
   " use expr will cause search() doesn't work
-  execute 'inoremap <buffer> <silent> '.key." <C-R>=AutoPairsInsert('".escaped_key."')<CR>"
+  execute 'inoremap <silent>'.key." <C-R>=AutoPairsInsert('".escaped_key."')<CR>"
 endfunction
 
 function! AutoPairsToggle()
@@ -531,5 +531,12 @@ function! AutoPairsTryInit()
   endif
   call AutoPairsInit()
 endfunction
+
+call AutoPairsMap('(')
+call AutoPairsMap('[')
+call AutoPairsMap('{')
+call AutoPairsMap('`')
+call AutoPairsMap('"')
+call AutoPairsMap("'")
 
 au BufEnter * call AutoPairsTryInit()

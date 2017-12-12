@@ -190,6 +190,7 @@ function Node:open()
     if not parent or parent._opened then
         -- set line as absolute with root
         self._line = self:line()
+        self._deep = self:deep()
         self._opened, self._height = true, 1
 
         local height = 0
@@ -226,10 +227,7 @@ end
 --          else it is relative number after parent node
 function Node:line(offset)
     offset = offset or 0
-    if not self._parent then
-        -- root node
-        return self._line + offset
-    elseif self._opened then
+    if self._opened then
         -- opened node
         return self._line + offset
     else
@@ -259,12 +257,11 @@ end
 -- get the deep of node
 function Node:deep()
     local i = 0
-    self = self._parent
-    while self do
-        i = i + 1
-        self = self._parent
+    if self._opened then
+        return self._deep
+    else
+        return 1 + self._parent:deep()
     end
-    return i
 end
 
 -- is a leaf node
@@ -281,7 +278,7 @@ function Node:onrender()
     -- this function decided the content to show
     -- it should return a list contained content lines
     if self._opened == nil then
-        return '  ' .. self.data
+        return '  ' .. tostring(self.data)
     else
         return (self._opened and '- ' or '+ ') .. self.data
     end

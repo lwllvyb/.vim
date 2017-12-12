@@ -88,7 +88,7 @@ function Tree:_initview()
     nvim_command 'vertical winc s'
     nvim_command ('e ' .. self.name)
 
-    for i = 1, self._line do
+    for i = 1, self._line - 1 do
         nvim_callfunc('append', {'.', ''})
     end
 
@@ -97,6 +97,7 @@ function Tree:_initview()
     buf2tree[bufnr] = self
 
     nvim_command 'setl nomod nonu bt=nofile ft=nuitree'
+    nvim_command 'setl nowrap'
     nvim_setwidth(nvim_curwin(), self.winwidth)
     self:updateview()
 end
@@ -115,6 +116,14 @@ end
 
 function Tree:after(node)
     error('can not add node after root node')
+end
+
+function Tree:deep()
+    return -1
+end
+
+function Tree:line()
+    return self._line
 end
 
 return Tree
