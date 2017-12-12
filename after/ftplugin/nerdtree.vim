@@ -15,6 +15,32 @@ if exists('g:popup_loaded')
         \ }
 endif
 
+fun! s:move2filewin()
+    winc p
+    let nr = winnr()
+    while 1
+        let buf = winbufnr(0)
+        if empty(getbufvar(buf, '&bt'))
+            return 1
+        endif
+        winc w
+        if winnr() == nr | break | endif
+    endw
+endf
+
+fun! s:search_file()
+    let cur_node = g:NERDTreeFileNode.GetSelected()
+    let cur_path = cur_node.path.getDir().str()
+    let cur_path = fnamemodify(cur_path, ':.')
+    if !s:move2filewin()
+        belowright winc v
+        ene
+    endif
+    exe 'Denite file_rec:' . cur_path
+endf
+
+nnoremap <buffer><silent><c-p> :call <sid>search_file()<cr>
+
 " Let the cursor in body of filename {{{
 fun! s:set_cursor()
     let n = match(getline('.'), '^\s*\(\[.\{-}\]\)\?\zs')
