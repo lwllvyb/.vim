@@ -52,57 +52,62 @@ inoremap <m-o> <esc>
 nmap <m-J> :cn<cr>
 nmap <m-K> :cp<cr>
 
-nmap <m-k> <c-w>k
-nmap <m-j> <c-w>j
-nmap <m-h> <c-w>h
-nmap <m-l> <c-w>l
+nnoremap <c-l> zt
 
-nnoremap <c-p> :vsc Edit.GotoFile<cr>
+nnoremap <c-p> :vsc 编辑.转到所有<cr>
 inoremap <c-j> <esc>:vsc Edit.ListMembers<cr>a
 
+nnoremap <c-g><c-g> <c-g>
+nnoremap <c-g><c-h> :vsc 编辑器上下文菜单.代码窗口.切换标题代码文件<cr>
+nnoremap <c-g><c-s> :vsc 编辑.转到符号<cr>
+nnoremap <c-g><c-f> :vsc 编辑.转到文件<cr>
+
+nnoremap gx :vsc 编辑器上下文菜单.代码窗口.打开URL<cr>
+nnoremap gf :vsc 编辑.打开文件<cr>
+" nnoremap gd :vsc 编辑.转到定义<cr>
+
 " Use CTRL-S for saving, also in Insert mode
-noremap <C-S>		:update<CR>
-vnoremap <C-S>		<C-C>:update<CR>
-inoremap <C-S>		<C-O>:update<CR>
+noremap <c-s>		:update<cr>
+vnoremap <c-s>		<c-c>:update<cr>
+inoremap <c-s>		<c-o>:update<cr>
 
 " CTRL-Z is Undo; not in cmdline though
 noremap <C-Z> u
 inoremap <C-Z> <C-O>u
 
 " CTRL-Y is Redo (although not repeat); not in cmdline though
-noremap <C-Y> <C-R>
-inoremap <C-Y> <C-O><C-R>
+noremap <c-y> <c-r>
+inoremap <c-y> <c-o><c-r>
 
 " CTRL-A is Select all
-noremap <C-A> gggH<C-O>G
-inoremap <C-A> <C-O>gg<C-O>gH<C-O>G
-cnoremap <C-A> <C-C>gggH<C-O>G
-onoremap <C-A> <C-C>gggH<C-O>G
-snoremap <C-A> <C-C>gggH<C-O>G
-xnoremap <C-A> <C-C>ggVG
+noremap <c-a> gggH<c-o>G
+inoremap <c-a> <c-o>gg<c-o>gH<c-o>G
+cnoremap <c-a> <c-c>gggH<c-o>G
+onoremap <c-a> <c-c>gggH<c-o>G
+snoremap <c-a> <c-c>gggH<c-o>G
+xnoremap <c-a> <c-c>ggVG
 
 " CTRL-X and SHIFT-Del are Cut
-vnoremap <C-X> "+x
-vnoremap <S-Del> "+x
+vnoremap <c-x> "+x
+vnoremap <s-del> "+x
 
 " CTRL-C and CTRL-Insert are Copy
-vnoremap <C-C> "+y
-vnoremap <C-Insert> "+y
+vnoremap <c-c> "+y
+vnoremap <c-insert> "+y
 
 " CTRL-V and SHIFT-Insert are Paste
-map <C-V>		"+gP
+map <c-v>		"+gP
 " map <S-Insert>		"+gP
-imap <C-V>		<Esc>"+gpa
-
-cmap <C-V>		<C-R>+
+imap <c-v>		<esc>"+gpa
+cmap <c-v>		<c-r>+
 " cmap <S-Insert>		<C-R>+
 
 nnoremap <c-j> za
 nnoremap <c-c><c-c> :conf qa<cr>
 
-nmap <C-O> :vsc View.NavigateBackward<CR>
+nmap <c-o> :vsc View.NavigateBackward<CR>
 nmap <esc> :vsc View.NavigateBackward<CR>
-nmap <C-I> :vsc View.NavigateForward<CR>
+nmap <c-i> :vsc View.NavigateForward<CR>
 
 vmap <tab> >gv
 vmap <s-tab> <gv
