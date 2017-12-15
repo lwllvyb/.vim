@@ -67,13 +67,12 @@ nnoremap gf :vsc 编辑.打开文件<cr>
 " nnoremap gd :vsc 编辑.转到定义<cr>
 
 " Use CTRL-S for saving, also in Insert mode
-noremap <c-s>		:update<cr>
-vnoremap <c-s>		<c-c>:update<cr>
-inoremap <c-s>		<c-o>:update<cr>
+nnoremap <c-s>		:w<cr>
+inoremap <c-s>		<c-o>:w<cr>
 
 " CTRL-Z is Undo; not in cmdline though
-noremap <C-Z> u
-inoremap <C-Z> <C-O>u
+noremap <c-z> u
+inoremap <c-z> <c-o>u
 
 " CTRL-Y is Redo (although not repeat); not in cmdline though
 noremap <c-y> <c-r>
