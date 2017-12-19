@@ -1,2 +1,2 @@
 
-com -buffer Format %!python -m json.tool
+com! -buffer Format %!python -m json.tool
