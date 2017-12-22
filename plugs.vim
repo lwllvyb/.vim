@@ -127,6 +127,7 @@ if dein#load_state(g:dein#cache_directory)
 " ------------------ Web ------------------------- {{{
     call dein#add('mattn/emmet-vim', on_html)
     call dein#add('othree/html5.vim', on_html)
+    call dein#add('othree/xml.vim')
 " }}}
 " ------------------ Markdown/Writing ------------------- {{{
     call dein#add('dhruvasagar/vim-table-mode', on_markdown)
