@@ -122,6 +122,22 @@ fun! bufline#prev()
     endif
 endf
 
+fun! bufline#lightline()
+    let s:files = s:filesbufnr()
+    let curnr = bufnr('%')
+    let left = [] | let middle = [] | let right = []
+    let i = 1 | let l = left
+    for nr in s:files
+        let file = pathshorten(fnamemodify(bufname(nr), ':.'))
+        let t = join([i, empty(file) ? '<uname>': file, getbufvar(nr, '&mod') ? '+': ''])
+        if l is middle | let l = right | endif
+        if nr == curnr | let l = middle | endif
+        call add(l, t)
+        let i += 1
+    endfor
+    return [left, middle, right]
+endf
+
 " set tabline=%!bufline#bufs() {{{
 fun! bufline#bufs()
     let s:files = s:filesbufnr()

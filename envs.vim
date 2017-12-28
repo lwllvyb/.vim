@@ -22,3 +22,7 @@ if isdirectory(confdir)
     let f = confdir . '/init.vim'
     if filereadable(f) | exe 'so' f | endif
 endif
+
+if !exists('g:COLORSCHEME')
+    let g:COLORSCHEME = &bg == 'dark' ? 'monokai': 'one'
+endif

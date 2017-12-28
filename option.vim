@@ -38,7 +38,7 @@ set slm=key,mouse km=startsel   " about Select-mode
 set mouse=a                     " use mouse in all mode
 set ww+=b,s,[,],<,>,h,l         " move cursor cross lines
 set shortmess+=c
-set tabline=%!bufline#bufs()
+" set tabline=%!bufline#bufs()
 set showtabline=2               " show tabline always
 set ffs=unix,dos,mac            " the priority of EOL format
 " set fillchars=fold:\ ,vert:\ 

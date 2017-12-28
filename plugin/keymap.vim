@@ -15,21 +15,17 @@ cmap <m-f> <s-right>
 cmap <m-b> <s-left>
 cmap <c-a> <home>
 
-inoremap <silent><m-f> <c-o>e<right>
+inoremap <silent><m-f> <c-r>=execute('norm e')<cr><right>
+inoremap <silent><m-d> <c-r>=execute('norm dw')<cr>
 inoremap <m-b> <c-left>
-inoremap <m-d> <c-o>dw
 inoremap <c-n> <down>
 inoremap <c-p> <up>
-inoremap <expr><c-k> col('.') == col('$') ? "\<del>" : "\<c-o>D"
-inoremap <expr><c-a> col('.') == 1 ? "\<c-o>I" : "\<home>"
-noremap <expr>0     col('.') == 1 ? '^': '0'
+inoremap <silent><expr><c-k> km#del2end()
+inoremap <silent><c-a> <c-r>=km#move2first()<cr>
+noremap  <expr><silent>0 km#move2first()
 
-fun! s:redraw_cmd()
-    return winline() * 2 <= winheight(0) + 1 ? winline() <= (&so + 1) ? 'zb' : 'zt' : 'zz'
-endf
-
-nnoremap <expr><c-l> <sid>redraw_cmd()
-inoremap <expr><c-l> "\<c-o>" . <sid>redraw_cmd()
+nnoremap <expr><c-l> km#redraw()
+inoremap <silent><c-l> <c-r>=km#redraw()<cr>
 
 nnoremap gl $
 vnoremap gl $h
@@ -41,25 +37,14 @@ map <c-k> <Plug>(easymotion-s2)
 
 " Completion {{{
 inoremap <expr><c-q> pumvisible() ? "\<c-e>": "\<c-q>"
-inoremap <expr><silent><cr> <sid>on_enter()
+inoremap <expr><silent><cr> km#on_enter()
 inoremap <expr><silent><c-j> pumvisible() ? "\<c-n>": deoplete#manual_complete()
 inoremap <m-/> <c-n>
-
-fun! s:on_enter()
-    if !pumvisible() || empty(v:completed_item)
-        return "\<cr>"
-    elseif v:completed_item.menu =~ '^\[US\]'
-        return "\<c-r>=UltiSnips#ExpandSnippet()\<cr>"
-    else
-        return "\<cr>"
-        return deoplete#close_popup()
-    endif
-endf
 " }}}
 
 " Powerful line move {{{
-inoremap <m-s-up> <esc>ddkPA
-inoremap <m-s-down> <esc>ddpA
+inoremap <silent><m-s-up> <c-r>=km#moveline2up()<cr>
+inoremap <silent><m-s-down> <c-r>=km#moveline2down()<cr>
 inoremap <c-up> <c-x><c-e>
 inoremap <c-down> <c-x><c-y>
 " }}}
@@ -96,8 +81,8 @@ nnoremap <silent><c-tab> :Denite buffer<cr>
 " }}}
 
 " Quickfix {{{
-nnoremap <m-J> :cn<cr>
-nnoremap <m-K> :cp<cr>
+nnoremap <silent><m-J> :cn<cr>
+nnoremap <silent><m-K> :cp<cr>
 " }}}
 
 " Fold operation {{{
@@ -134,11 +119,11 @@ vnoremap <c-c> "+y
 smap <c-x> <c-g><c-x>
 smap <c-c> <c-g><c-c>
 " Undo && Redo
-inoremap <c-z> <c-o>u
-inoremap <c-y> <c-o><c-r>
+inoremap <silent><c-z> <c-r>=km#undo()<cr>
+inoremap <silent><c-y> <c-r>=km#redo()<cr>
 " Paste
 inoremap <expr><c-g><c-v> "\<c-o>" . (col('.')==col('$')?'"+gp':'"+gP')
-inoremap <expr><c-g><c-p> "\<esc>" . (col('.')==1?'gPa':'gpa')
+inoremap <silent><c-g><c-p> <c-r>=km#paste()<cr><right>
 cnoremap <c-g><c-v> <c-r>+
 cnoremap <c-g><c-p> <c-r>"
 " Toggle comment

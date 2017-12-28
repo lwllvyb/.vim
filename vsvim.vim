@@ -80,11 +80,11 @@ inoremap <c-y> <c-o><c-r>
 
 " CTRL-A is Select all
 noremap <c-a> gggH<c-o>G
-inoremap <c-a> <c-o>gg<c-o>gH<c-o>G
 cnoremap <c-a> <c-c>gggH<c-o>G
 onoremap <c-a> <c-c>gggH<c-o>G
 snoremap <c-a> <c-c>gggH<c-o>G
 xnoremap <c-a> <c-c>ggVG
+" inoremap <c-a> <c-o>gg<c-o>gH<c-o>G
 
 " CTRL-X and SHIFT-Del are Cut
 vnoremap <c-x> "+x

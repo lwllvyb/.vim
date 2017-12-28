@@ -3,12 +3,18 @@ let g:lightline = {
     \ 'component': {
     \   'readonly': '%{&ft=="help"?"":&ro?"[R0]":""}',
     \   'modified': '%{&ft=="help"?"":&mod?"*":&modifiable?"":"-"}',
-    \   'fugitive': '%{exists("*fugitive#head")?fugitive#head():""}'
+    \   'logo': '  ',
+    \ },
+    \ 'component_expand': {
+    \   'bufline': 'bufline#lightline',
+    \ },
+    \ 'component_type': {
+    \   'bufline': 'tabsel',
+    \   'tabs': 'tabsel', 'close': 'raw'
     \ },
     \ 'component_visible_condition': {
     \   'readonly': '(&ft!="help"&& &ro)',
     \   'modified': '(&ft!="help"&&(&mod||!&modifiable))',
-    \   'fugitive': '(exists("*fugitive#head") && ""!=fugitive#head())'
     \ },
     \ 'separator': {'left': '', 'right': ''},
     \ 'subseparator': {'left': '', 'right': ''},
@@ -25,31 +31,31 @@ let g:lightline.inactive = g:lightline.active
 " }}}
 
 " Tabline => Bufline {{{
+    " \ 'left': [['logo'], ['bufline']],
 let g:lightline.tabline = {
-    \ 'left': [['bufferinfo'],
-             \ ['bufferbefore', 'buffercurrent', 'bufferafter']
-             \ ],
-    \ 'right': [['close']],
+    \ 'left': [['logo'], ['bufline']],
+    \ 'right': [['close']]
     \ }
 " }}}
 
 " The lightline's theme {{{
 " powerline、wombat、jellybes、solarized、Dracula、one、landscape
-let g:lightline.colorscheme = get(
-        \ &bg == 'dark' ? {
+" molokai nord OldHope PaperColor seoul256 Tomorrow darcula 16color materia
+" material default
+let g:lightline.colorscheme = &bg == 'dark' ?
+        \ get({
             \ 'amcolors': 'powerline',
             \ 'one-dark': 'one',
-            \ 'neodark': 'one'
-        \ } : {
-            \ 'one': 'one',
+            \ 'neodark': 'one',
+        \ }, COLORSCHEME, 'powerline') :
+        \ get({
+            \ 'one': 'materia',
             \ 'one-dark': 'one',
-            \ 'neodark': 'one'
-        \ },
-    \ get(g:, 'COLORSCHEME'),
-    \ 'powerline')
+            \ 'neodark': 'one',
+        \ }, COLORSCHEME, 'solarized')
 " }}}
 
-let g:lightline.enable = {'statusline': 1, 'tabline': 0}
+let g:lightline.enable = {'statusline': 1, 'tabline': 1}
 
 " let g:lightline.component_function = {'filetype': 'MyFiletype', 'fileformat': 'MyFileformat'}
 

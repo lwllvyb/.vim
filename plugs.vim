@@ -159,8 +159,8 @@ if dein#load_state(g:dein#cache_directory)
 " }}}
 " ------------------ Appearance ------------------- {{{
     call dein#add('itchyny/lightline.vim')
-    call dein#add('rakr/vim-one', {'script_type': 'colors'})
-    call dein#add('morhetz/gruvbox', {'script_type': 'colors'})
+    call dein#add('rakr/vim-one')
+    call dein#add('morhetz/gruvbox')
     call dein#add('Yggdroot/indentLine', {'on_cmd': 'IndentLines*'})
     call dein#add('ryanoasis/vim-devicons')
     call dein#add('mhinz/vim-startify')
