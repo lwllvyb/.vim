@@ -44,7 +44,7 @@ set ffs=unix,dos,mac            " the priority of EOL format
 set fillchars=fold:\ ,vert:║
 set foldtext=MyFoldText()
 " space character
-set list lcs=tab:>-,trail:┅,extends:↲,precedes:↳
+set list lcs=tab:>-,trail:۰,extends:↲,precedes:↳
 " set lcs+=eol:¬                  " new line
 
 fun! MyFoldText()

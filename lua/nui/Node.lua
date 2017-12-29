@@ -1,4 +1,8 @@
 
+local bufsetlines = vim.api.nvim_buf_set_lines
+local nvim_command = vim.api.nvim_command
+local nvim_setbufopt = vim.api.nvim_buf_set_option
+
 local Node = {}
 Node.__index = Node
 
@@ -8,25 +12,54 @@ local function InitNode(self, node)
     return node
 end
 
+local function UpdateAfterLine(node)
+    local line = node:endline() + 1
+    local after = node:after()
+    if after then
+        if  then
+            
+        end
+    end
+end
+
 -- get renderde text
 function Node:render()
-    local lines, generate_lines = {}, nil
     local root = self._root
+    local bufnr = root._bufnr
+    local indent = root.indent  -- indent text
+    local line = self._line     -- current line to render
+    local content = {}          -- content lines
 
-    function generate_lines(node, deep)
-        local text = string.rep(root.indent, deep)
+    -- generate content
+    local gen_content, setline
+    function gen_content(node, deep)
+        node._line = line; root[line] = node
+        local text = string.rep(indent, deep)
         text = text .. node:onrender()
-        table.insert(lines, text)
+        table.insert(content, text)
+        line = line + 1
         -- if self is opened, expand childs recursively
         if node._opened then
             for child in node:childs() do
-                generate_lines(child, deep + 1)
+                gen_content(child, deep + 1)
             end
         end
     end
 
-    generate_lines(self, self:deep())
-    return lines
+    gen_content(self, self:deep())
+    -- print(self._line, line) vim.api.nvim_call_function('getchar', {})
+    if self._opened then            -- open a node
+        bufsetlines(bufnr, self._line - 1, self._line, 0, content)
+    else                            -- fold a node
+        self._opened = true
+        bufsetlines(bufnr, self._line - 1, self:endline(), 0, content)
+        self._opened = false
+    end
+
+    -- set line for after nodes
+    -- ...
+    -- set line for after nodes of parent
+    -- ...
 end
 
 function Node:__tostring()
@@ -41,6 +74,17 @@ function Node:__len()
     return len
 end
 
+function Node:_setline(line)
+    self._line = line; self._root[line] = self
+    if self._opened then
+        for child in self:childs() do
+            line = line + 1
+            line = child:_setline(line)
+        end
+    end
+    return line
+end
+
 -- append a child after self
 function Node:append(node)
     local last = self._last
@@ -53,7 +97,6 @@ function Node:append(node)
     end
     -- ensure self is a non-leaf node
     self._opened = self._opened or false
-    self:_addheight(1)
     return self
 end
 
@@ -105,7 +148,6 @@ function Node:before(node)
     if self == parent._first then
         parent._first = node
     end
-    self._parent:_addheight(1)
     return node
 end
 
@@ -131,7 +173,6 @@ function Node:after(node)
     if self == parent._last then
         parent._last = node
     end
-    self._parent:_addheight(1)
     return node
 end
 
@@ -150,18 +191,9 @@ function Node:remove(node)
     end
 end
 
-local bufsetlines = vim.api.nvim_buf_set_lines
-local nvim_setbufopt = vim.api.nvim_buf_set_option
-
 function Node:updateview(height)
-    local content = self:render()
-    height = height or #content
-    local start = self:line() - 1
-    local end_ = start + height
-    -- print(start, height, #content)
-
     nvim_setbufopt(bufnr, 'modifiable', true)
-    bufsetlines(self._root._bufnr, start, end_, 0, content)
+    local content = self:render()
     nvim_setbufopt(bufnr, 'modifiable', false)
 end
 
@@ -169,16 +201,9 @@ end
 function Node:fold()
     assert(self._first, 'self is a leaf node')
     assert(self._opened, 'self node is folded')
-    
-    self._root:_delopen(self)
-
-    local old_height = self._height
-    self:_addheight(1 - old_height)
-
-    -- self._line = nil
-    self._opened, self._height = false, 1
-
-    self:updateview(old_height)
+    self._opened = false
+    self._deep = nil
+    self:updateview()
 end
 
 -- open a node
@@ -189,18 +214,9 @@ function Node:open()
     local parent = self._parent
     if not parent or parent._opened then
         -- set line as absolute with root
-        self._line = self:line()
         self._deep = self:deep()
-        self._opened, self._height = true, 1
-
-        local height = 0
-        for child in self:childs() do
-            height = height + child._height
-        end
-        self:_addheight(height)
-
+        self._opened = true
         self:updateview(1)
-        self._root:_addopen(self)
     end
 end
 
@@ -213,37 +229,28 @@ function Node:toggle()
     end
 end
 
-function Node:_addheight(n)
-    if self._opened then
-        self._height = self._height + n
-        local parent = self._parent
-        if parent then
-            parent:_addheight(n)
-        end
-    end
+-- start line number of a node
+function Node:line(offset)
+    return self._line + (offset or 0)
 end
 
--- _line: if the node is rootNode, it is absolute line-number
---          else it is relative number after parent node
-function Node:line(offset)
-    offset = offset or 0
+-- end line number of a node
+function Node:endline()
     if self._opened then
-        -- opened node
-        return self._line + offset
+        local last = self:last()
+        return last and last:endline() or self._line
     else
-        -- leaf node or folded node
-        local prev = self._prev
-        if prev then
-            return prev:line(prev._height + offset)
-        else
-            return self._parent:line(1 + offset)
-        end
+        return self._line
     end
 end
 
 -- get the height of node, in number of lines
 function Node:height()
-    return self._height
+    if self._opened then
+        return self:endline() - self._line + 1
+    else
+        return 1
+    end
 end
 
 function Node:first()
@@ -261,6 +268,12 @@ function Node:deep()
         return self._deep
     else
         return 1 + self._parent:deep()
+    end
+end
+
+function Node:move2parent()
+    if self and self._parent then
+        nvim_command(tostring(self._parent._line))
     end
 end
 

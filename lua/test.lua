@@ -12,9 +12,7 @@ else
 end
 
 -- for section in pe.sections:iter() do
-for section in pe.sections() do
-    print(section)
-end
+-- for section in pe.sections() do print(section) end
 
 local petree = Tree:new {data = tostring(pe)}
 

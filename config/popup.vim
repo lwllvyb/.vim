@@ -5,11 +5,11 @@ map  <expr><m-.> popup#last()
 map! <expr><m-.> popup#last()
 
 nmap <expr><m-e> popup#('edit')
-vmap <expr><m-e> popup#('edit-v')
+xmap <expr><m-e> popup#('edit-v')
 imap <expr><m-e> popup#('edit-i')
 
 nmap <expr><m-s> popup#('search')
-vmap <expr><m-s> popup#('Search-v')
+xmap <expr><m-s> popup#('Search-v')
 
 nmap <expr><m-f> popup#('file')
 nmap <expr><m-g> popup#('goto')
@@ -22,7 +22,7 @@ nmap <expr><silent>\ popup#('leader')
 nmap <expr><silent><m-\> popup#('tools')
 
 nnoremap <expr><space> popup#('util')
-vnoremap <expr><space> popup#('util-v')
+xnoremap <expr><space> popup#('util-v')
 
 nmap <expr><silent><m-w> popup#('window')
 

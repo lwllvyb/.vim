@@ -22,45 +22,18 @@ local nvim_setwidth = vim.api.nvim_win_set_width
 local nvim_callfunc = vim.api.nvim_call_function
 local nvim_setbufopt = vim.api.nvim_buf_set_option
 
-local buf2tree = {}
+local buf2tree = {}             -- bufnr -> tree
 
-function Tree:curnode()
-    local tree = self:curtree()
+function Tree:CurNode()
+    self = self or Tree:CurTree()
     local curline = nvim_callfunc('line', {'.'})
-
-    if curline == tree._line then return tree end
-
-    -- find a closest opened node
-    for i = curline, tree._line, -1 do
-        local node = tree._openodes[i]
-        if node then
-            local offset = curline - i
-            if offset == 0 then
-                return node
-            else
-                return offset < node._height and
-                       node:child(offset - 1) or node:after(node)
-            end
-        end
-    end
+    return self[curline]
 end
 
-function Tree:curtree()
+function Tree:CurTree()
     local tree = buf2tree[nvim_curbuf()]
     assert(tree, 'there is no tree in this buffer')
     return tree
-end
-
-function Tree:ToggleCurrent()
-    local node = self:curnode()
-    if node then return node:toggle() end
-end
-
-function Tree:MoveToParrent()
-    local node = self:curnode()
-    if node and node._parent then
-        nvim_command(tostring(node._parent._line))
-    end
 end
 
 function Tree:new(tree)
@@ -70,8 +43,7 @@ function Tree:new(tree)
     tree._parent = nil      -- root node haven't parent node
     tree._opened = false
     tree._height = 1
-    tree._line = tree.baseline or 2 -- the begin line
-    tree._openodes = {}
+    tree._line = tree.baseline or 2 -- the begin line, 1-based
 
     -- position of the tree window
     tree.position = tree.position or 'left'
@@ -102,13 +74,8 @@ function Tree:_initview()
     self:updateview()
 end
 
-function Tree:_addopen(node)
-    self._openodes[node._line] = node
-end
-
-function Tree:_delopen(node)
-    self._openodes[node._line] = nil
-end
+-- function Tree:_addopen(node) self._openodes[node._line] = node end
+-- function Tree:_delopen(node) self._openodes[node._line] = nil end
 
 function Tree:before(node)
     error('can not add node before root node')
@@ -122,8 +89,6 @@ function Tree:deep()
     return -1
 end
 
-function Tree:line()
-    return self._line
-end
+-- function Tree:line() return self._line end
 
 return Tree
