@@ -47,11 +47,6 @@ let g:completor_blacklist = ['tagbar', 'qf', 'netrw', 'unite', 'vimwiki', 'help'
 let g:surround_{char2nr('p')} = "print(\r)"
 " }}}
 
-" For gitgutter {{{
-let g:gitgutter_enabled = 0
-let g:gitgutter_map_keys = 0
-" }}}
-
 " For CSV.vim {{{
 let g:csv_delim = ','
 " }}}

@@ -1,4 +1,3 @@
-scripte utf-8
 
 if has('nvim')
     set icm=nosplit             " real-time preview for substitute-command
@@ -44,6 +43,9 @@ set ffs=unix,dos,mac            " the priority of EOL format
 " set fillchars=fold:\ ,vert:\ 
 set fillchars=fold:\ ,vert:║
 set foldtext=MyFoldText()
+" space character
+set list lcs=tab:>-,trail:┅,extends:↲,precedes:↳
+" set lcs+=eol:¬                  " new line
 
 fun! MyFoldText()
     return getline(v:foldstart) . ' ... ' . 
@@ -54,7 +56,6 @@ endf
 " set awa aw
 " set clipboard=unnamed           " which register that system's clipboard use
 " set ambw=double
-" set list lcs=tab:>-,eol:¬       " 设置显示空白字符
 " set lazyredraw
 " set foldmethod=syntax foldlevel=3
 " set viminfo='100,%100,/100,<100,f100 " load the MRU files when started vim

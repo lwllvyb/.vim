@@ -59,6 +59,7 @@ inoremap <c-j> <esc>:vsc Edit.ListMembers<cr>a
 
 nnoremap <c-g><c-g> <c-g>
 nnoremap <c-g><c-h> :vsc 编辑器上下文菜单.代码窗口.切换标题代码文件<cr>
+nnoremap <F4> :vsc 编辑器上下文菜单.代码窗口.切换标题代码文件<cr>
 nnoremap <c-g><c-s> :vsc 编辑.转到符号<cr>
 nnoremap <c-g><c-f> :vsc 编辑.转到文件<cr>
 

@@ -15,17 +15,22 @@ cmap <m-f> <s-right>
 cmap <m-b> <s-left>
 cmap <c-a> <home>
 
-inoremap <silent><m-f> <c-r>=execute('norm e')<cr><right>
-inoremap <silent><m-d> <c-r>=execute('norm dw')<cr>
+inoremap <silent><m-f> <c-r>=execute('norm! e')<cr><right>
+inoremap <silent><m-d> <c-r>=execute('norm! dw')<cr>
 inoremap <m-b> <c-left>
 inoremap <c-n> <down>
 inoremap <c-p> <up>
+inoremap <m-n> <PageDown>
+inoremap <m-p> <PageUp>
 inoremap <silent><expr><c-k> km#del2end()
 inoremap <silent><c-a> <c-r>=km#move2first()<cr>
 noremap  <expr><silent>0 km#move2first()
 
 nnoremap <expr><c-l> km#redraw()
 inoremap <silent><c-l> <c-r>=km#redraw()<cr>
+inoremap <silent><c-g><c-m> <c-r>=execute('norm! M')<cr>
+inoremap <silent><c-g><c-h> <c-r>=execute('norm! H')<cr>
+inoremap <silent><c-g><c-l> <c-r>=execute('norm! L')<cr>
 
 nnoremap gl $
 vnoremap gl $h
@@ -94,6 +99,11 @@ inoremap <m-o> <esc>
 nnoremap Q gQ
 noremap <expr>K help#map_K()
 
+nnoremap <silent><m-m><m-m> :BookmarkToggle<cr>
+nnoremap <silent><m-m><m-n> :BookmarkNext<cr>
+nnoremap <silent><m-m><m-p> :BookmarkPrev<cr>
+nnoremap <silent><m-m><m-c> :BookmarkClear<cr>
+
 " F5 -- Run {{{
 fun! MyRun()
     if exists('g:xmproj')
@@ -138,11 +148,11 @@ noremap <c-a> gggH<c-o>G
 
 " Terminal operation {{{
 if exists(':tnoremap')
-    tnoremap <c-s> <c-\><c-n>
-    tnoremap <m-h> <c-\><c-n><c-w>h
-    tnoremap <m-l> <c-\><c-n><c-w>l
-    tnoremap <m-j> <c-\><c-n><c-w>j
-    tnoremap <m-k> <c-\><c-n><c-w>k
+    tnoremap <m-o> <c-\><c-n>
+    tnoremap <c-a> <home>
+    tnoremap <c-e> <end>
+    tnoremap <m-b> <c-left>
+    tnoremap <m-f> <c-right>
 endif
 " }}}
 
