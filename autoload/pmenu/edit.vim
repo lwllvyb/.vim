@@ -22,7 +22,7 @@ let s:subs = [
 
 let s:align = ['l', 'Align', ':Tabularize /']
 let s:comment = [';', 'Comment' , ":Commentary\<cr>"]
-let s:format = ['=', 'Autoformat', ":Autoformat\<cr>"]
+let s:format = ['=', 'Format', ":Neoformat\<cr>"]
 let s:subs = ['s', 'Substitute', s:subs]
 
 let s:normal = pmenu#new('Edit',

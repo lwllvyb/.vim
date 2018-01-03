@@ -143,7 +143,7 @@ if dein#load_state(g:dein#cache_directory)
 " ------------------ Completer --------------------- {{{
     let on_cxx = {'on_ft': ['c', 'cpp']}
     " call dein#add('maralla/completor.vim', {'if': '!has("nvim")'})
-    call dein#add('autozimu/LanguageClient-neovim', {'name': 'lsp-client'})
+    call dein#add('autozimu/LanguageClient-neovim', {'name': 'lsp-client', 'on_cmd': 'LanguageClient*'})
     call dein#add('othree/csscomplete.vim', {'on_ft': ['css', 'html']})
     call dein#add('Shougo/deoplete.nvim', {'do': ':UpdateRemotePlugins'})
     call dein#add('roxma/nvim-yarp')

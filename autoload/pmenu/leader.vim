@@ -23,7 +23,8 @@ let s:tools = pmenu#new('Tools',
     \ ['i', 'IndentLine', ":IndentLinesToggle\<cr>"],
     \ ['m', 'Matrix', ":Matrix\<cr>"],
     \ ['x', 'Hex Calc', ":call hexcalc#init()\<cr>"],
-    \ ['l', 'LuaEval', ":call luaeval#()\<cr>"],
+    \ ['l', 'LanguageClient', ":LanguageClientStart\<cr>"],
+    \ ['e', 'LuaEval', ":call luaeval#()\<cr>"],
     \ )
 
 fun! pmenu#leader#n()
