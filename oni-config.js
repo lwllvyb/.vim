@@ -1,4 +1,7 @@
 
+// mklink %APPDATA%\oni\config.js %USERPROFILE%\vimfiles\oni-config.js
+// ln -s %:p ~/.oni/config.js
+
 module.exports = {
     "oni.useDefaultConfig": false,
     "oni.loadInitVim": true,

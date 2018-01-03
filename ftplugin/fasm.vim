@@ -1,6 +1,4 @@
 
-if exists("b:did_ftplugin") | finish | endif
-let b:did_ftplugin = 1
+setl commentstring=;%s
 
-nnoremap <F5> :call qrun#fasm()<cr>
-imap <F5> <esc><F5>
+let b:match_words = '\<if\>:\<end\s\+if\>,\<struct\>:\<ends\>,\<proc\>:\<endp\>'

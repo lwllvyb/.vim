@@ -115,6 +115,7 @@ if dein#load_state(g:dein#cache_directory)
     call dein#add('vim-voom/VOoM', {'on_cmd': 'Voom*'})
     call dein#add('metakirby5/codi.vim', {'on_cmd': 'Codi*'})
     call dein#add('vim-scripts/csv.vim', {'on_ft': 'csv'})
+    call dein#add('KabbAmine/zeavim.vim')
 " }}}
 " ------------------ textobjs -------------------- {{{
     call dein#add('vim-scripts/argtextobj.vim')

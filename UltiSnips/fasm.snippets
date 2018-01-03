@@ -3,6 +3,15 @@ snippet inc
 include '${1:win32a}.inc'
 endsnippet
 
+snippet lib
+library ${1:lib-name}, '${2:lib-file}'
+endsnippet
+
+snippet imp
+import ${1:lib-name}, \
+		${2:func-name}, '${2}'${3}
+endsnippet
+
 snippet pec
 format PE console 4.0
 entry start
@@ -82,4 +91,48 @@ endsnippet
 
 snippet stdproc
 proc ${1:function-name} stdcall ${2:param1:type1 ...}
+endsnippet
+
+snippet rep
+repeat ${1:count}
+	${2:; ...}
+end repeat
+endsnippet
+
+snippet st
+struct ${1:name}
+	${2:; ...}
+end struct
+endsnippet
+
+snippet if
+if ${1:condition}
+	${2:; ...}
+end if
+endsnippet
+
+snippet .if
+.if ${1:condition}
+	${2:; ...}
+.endif
+endsnippet
+
+snippet .ife
+.if ${1:condition}
+	${3:; ...}
+.elseif ${2:condition}
+	${4:; ...}
+.endif
+endsnippet
+
+snippet .wh
+.while ${1:condition}
+	${2:; ...}
+.endw
+endsnippet
+
+snippet .req
+.repeat
+	${2:; ...}
+.until ${1:condition}
 endsnippet

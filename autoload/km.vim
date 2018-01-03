@@ -61,3 +61,15 @@ fun! km#paste()
     exe 'norm!' col('.') ==1 ? 'gP' : 'gp'
     return ''
 endf
+
+fun! km#enter()
+    let ret = "\<cr>"
+    if mode() == 'n' || mode() =~? 'v'
+        let [ln, cl] = getpos('.')[1:2]
+        let c = getline(ln)[cl-1:cl-1]
+        if c =~ '\v[(){}\[\]<>]'
+            let ret = '%'
+        endif
+    endif
+    return ret
+endf

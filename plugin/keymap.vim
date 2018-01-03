@@ -97,7 +97,8 @@ vnoremap <c-j> zf
 
 inoremap <m-o> <esc>
 nnoremap Q gQ
-noremap <expr>K help#map_K()
+" noremap <expr>K help#map_K()
+noremap <expr><cr> km#enter()
 
 nnoremap <silent><m-m><m-m> :BookmarkToggle<cr>
 nnoremap <silent><m-m><m-n> :BookmarkNext<cr>
@@ -153,6 +154,9 @@ if exists(':tnoremap')
     tnoremap <c-e> <end>
     tnoremap <m-b> <c-left>
     tnoremap <m-f> <c-right>
+    tnoremap <c-b> <left>
+    tnoremap <c-f> <right>
+    tnoremap <c-d> <del>
 endif
 " }}}
 
