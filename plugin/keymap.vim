@@ -150,13 +150,25 @@ noremap <c-a> gggH<c-o>G
 " Terminal operation {{{
 if exists(':tnoremap')
     tnoremap <m-o> <c-\><c-n>
-    tnoremap <c-a> <home>
-    tnoremap <c-e> <end>
-    tnoremap <m-b> <c-left>
-    tnoremap <m-f> <c-right>
-    tnoremap <c-b> <left>
-    tnoremap <c-f> <right>
-    tnoremap <c-d> <del>
+
+    fun! s:on_terminal()
+        let name = bufname('%')
+        if match(name, 'cmd\(\.exe\)\?$', 'i') >= 0
+            tnoremap <buffer><c-a> <home>
+            tnoremap <buffer><c-e> <end>
+            tnoremap <buffer><m-b> <c-left>
+            tnoremap <buffer><m-f> <c-right>
+            tnoremap <buffer><c-b> <left>
+            tnoremap <buffer><c-f> <right>
+            tnoremap <buffer><c-d> <del>
+        endif
+    endf
+
+    if has('nvim')
+        au TermOpen * call <sid>on_terminal()
+    else
+        au BufWinEnter * if &bt == 'terminal' | call <sid>on_terminal() | endif
+    endif
 endif
 " }}}
 
