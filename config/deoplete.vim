@@ -11,9 +11,9 @@ if !has('nvim')
 endif
 
 " Sources
-let s:default_sources = ['buffer', 'around', 'file', 'tag', 'member', 'ultisnips', 'dictionary']
-let s:cxx_sources = (has('win32') ? []: ['clang']) + s:default_sources
-let s:python_sources = (has('win32') ? ['LanguageClient']: ['jedi']) + s:default_sources
+let s:default_sources = ['buffer', 'around', 'file', 'tag', 'member', 'neosnippet', 'ultisnips', 'dictionary']
+let s:cxx_sources = ['clang_complete'] + s:default_sources
+let s:python_sources = ['LanguageClient'] + s:default_sources
 let g:deoplete#sources = {
     \ '_': s:default_sources,
     \ 'c': s:cxx_sources, 'cpp': s:cxx_sources,

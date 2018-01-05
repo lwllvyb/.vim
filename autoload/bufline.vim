@@ -69,10 +69,8 @@ endif
 
 " Get all buffers of common files
 fun! s:filesbufnr()
-    return map(
-            \ filter(getbufinfo({'buflisted':1}),
-                    \ {i,v->index(g:bufline#buftype,
-                                \ getbufvar(v['bufnr'], '&bt')) >= 0}),
+    return map(filter(getbufinfo({'buflisted':1}),
+                \ {i,v->index(g:bufline#buftype, getbufvar(v['bufnr'], '&bt')) >= 0}),
             \ {i,v->v['bufnr']})
     " return map(tabpagebuflist(), {i,v->empty(getbufvar(v, '&bt'))})
 endf
@@ -122,6 +120,25 @@ fun! bufline#prev()
     endif
 endf
 
+fun! s:spec_name()
+    if &ft == 'startify'
+        return '[Startify]'
+    elseif &bt == 'help'
+        return printf('[Help: %s]', expand('%:t'))
+    elseif &bt == 'terminal'
+        return printf('[Term: %s]', expand('%:t'))
+    elseif &bt == 'quickfix'
+        return printf('[QFix: %d]', curnr)
+    elseif &bt == 'nofile'
+        if &ft == 'nerdtree'
+            return '[NERDTree]'
+        elseif &ft == 'tagbar'
+            return '[Tagbar]'
+        endif
+    endif
+    return ''
+endf
+
 fun! bufline#lightline()
     let s:files = s:filesbufnr()
     let curnr = bufnr('%')
@@ -135,6 +152,10 @@ fun! bufline#lightline()
         call add(l, t)
         let i += 1
     endfor
+    if empty(middle)
+        call add(middle, s:spec_name())
+    endif
+    " let &titlestring = middle[0]
     return [left, middle, right]
 endf
 

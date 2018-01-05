@@ -97,8 +97,8 @@ vnoremap <c-j> zf
 
 inoremap <m-o> <esc>
 nnoremap Q gQ
-" noremap <expr>K help#map_K()
-noremap <expr><cr> km#enter()
+" noremap <expr><cr> km#enter()
+noremap <cr> %
 
 nnoremap <silent><m-m><m-m> :BookmarkToggle<cr>
 nnoremap <silent><m-m><m-n> :BookmarkNext<cr>

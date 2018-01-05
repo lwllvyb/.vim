@@ -63,7 +63,7 @@ if !exists('g:dein#cache_directory')
     let g:dein#cache_directory = s:path . '/.dein'
 endif
 
-" {{{ load the plugins
+" load the plugins
 if dein#load_state(g:dein#cache_directory)
     call dein#begin(g:dein#cache_directory)
 
@@ -86,43 +86,40 @@ if dein#load_state(g:dein#cache_directory)
     call dein#add('terryma/vim-expand-region', {
                 \ 'on_map': {'nv': '<Plug>(expand_region'}
                 \ })
-    call dein#add('Shougo/denite.nvim', {'on_cmd': 'Denite*'})
+    call dein#add('Shougo/denite.nvim', {'on_cmd': 'Denite*', 'do': ':UpdateRemotePlugins'})
     call dein#add('Shougo/echodoc.vim')
     call dein#add('Shougo/neopairs.vim')
     call dein#add('Shougo/context_filetype.vim')
-    call dein#add('SirVer/ultisnips')
+    call dein#add('Shougo/neosnippet.vim')
+    call dein#add('Shougo/neosnippet-snippets')
     call dein#add('honza/vim-snippets')
     call dein#add('tpope/vim-commentary', {'on_cmd': 'Commentary*'})
     call dein#add('tpope/vim-surround')
     call dein#add('tpope/vim-repeat')
     " git plugins
-    call dein#add('lambdalisue/gina.vim', {'on_cmd': 'Gina*'})
-    " call dein#add('airblade/vim-gitgutter', {'on_cmd': 'Git*'})
-    " call dein#add('tpope/vim-fugitive')
+    call dein#add('lambdalisue/gina.vim', {'on_cmd': 'Gina*'}) " 'airblade/vim-gitgutter' 'tpope/vim-fugitive'
 
     " format plugins
-    call dein#add('sbdchd/neoformat', {'on_cmd': 'Neoformat*'})
-    " call dein#add('Chiel92/vim-autoformat', {'on_cmd': 'Autoformat*'})
+    call dein#add('sbdchd/neoformat', {'on_cmd': 'Neoformat*'}) " 'Chiel92/vim-autoformat'
 
     call dein#add('godlygeek/tabular', {'on_cmd': 'Tabularize*)'})
     call dein#add('scrooloose/nerdtree', {'on_cmd': 'NERDTree*'})
     call dein#add('majutsushi/tagbar', {'on_cmd': 'Tagbar*'})
-    call dein#add('libclang-vim/libclang-vim')
+    " call dein#add('libclang-vim/libclang-vim')
     call dein#add('tiagofumo/vim-nerdtree-syntax-highlight')
     call dein#add('RIscRIpt/vim-fasm-syntax')
     call dein#add('MattesGroeger/vim-bookmarks', {'on_cmd': 'Bookmark*'})
-    " call dein#add('neomake/neomake')
     call dein#add('vim-voom/VOoM', {'on_cmd': 'Voom*'})
     call dein#add('metakirby5/codi.vim', {'on_cmd': 'Codi*'})
     call dein#add('vim-scripts/csv.vim', {'on_ft': 'csv'})
-    call dein#add('KabbAmine/zeavim.vim')
+    call dein#add('KabbAmine/zeavim.vim', {'on_ft': ['Zealvim*', 'Docset']})
 " }}}
 " ------------------ textobjs -------------------- {{{
     call dein#add('vim-scripts/argtextobj.vim')
     call dein#add('kana/vim-textobj-user')
     call dein#add('kana/vim-textobj-indent')
     call dein#add('kana/vim-textobj-function')
-    call dein#add('libclang-vim/vim-textobj-clang', {'depends': 'libclang-vim'})
+    " call dein#add('libclang-vim/vim-textobj-clang', {'depends': 'libclang-vim'})
     call dein#add('glts/vim-textobj-comment')
     call dein#add('todesking/vim-textobj-methodcall')
     call dein#add('rhysd/vim-textobj-anyblock')
@@ -145,9 +142,9 @@ if dein#load_state(g:dein#cache_directory)
     " call dein#add('maralla/completor.vim', {'if': '!has("nvim")'})
     call dein#add('autozimu/LanguageClient-neovim', {'name': 'lsp-client', 'on_cmd': 'LanguageClient*'})
     call dein#add('othree/csscomplete.vim', {'on_ft': ['css', 'html']})
-    call dein#add('Shougo/deoplete.nvim', {'do': ':UpdateRemotePlugins'})
     call dein#add('roxma/nvim-yarp')
     call dein#add('roxma/vim-hug-neovim-rpc')
+    call dein#add('Shougo/deoplete.nvim', {'do': ':UpdateRemotePlugins'})
     call dein#add('Shougo/neoinclude.vim', on_cxx)
     call dein#add('Shougo/neco-syntax')
     call dein#add('Shougo/neco-vim', {'on_ft': 'vim'})
@@ -193,8 +190,6 @@ if dein#load_state(g:dein#cache_directory)
     call dein#add('rhysd/nyaovim-mini-browser')
     call dein#add('rhysd/nyaovim-markdown-preview')
 " }}}
-" ------------------ C/C++ ---------------------
-    " call dein#add('hari-rangarajan/CCTree')
 
     call s:config_hook()
     let f = s:confdir . '/_all_.vim'
@@ -203,4 +198,3 @@ if dein#load_state(g:dein#cache_directory)
     call dein#call_hook('source')
     " call dein#save_state()
 endif
-" }}}
