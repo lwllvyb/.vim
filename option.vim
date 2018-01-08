@@ -13,12 +13,13 @@ else
     au CmdwinLeave,InsertLeave * set imd
 endif
 
+set encoding=utf-8              " internal encoding of vim
 set title                       " show the filename in caption (by default)
 set autoindent smartindent
 set autoread autowrite
-set encoding=utf-8              " internal encoding of vim
 set et sw=4 ts=4                " expand tab-character as spaces
-set ignorecase smartcase        " ignore the case of letter when search
+set ignorecase                  " ignore the case of letter when search
+set fic wic
 set confirm                     " show confirm-dialog before quit
 set laststatus=1                " show the windows-status on the below-window
 set nobackup noswapfile         " don't use the backup and swap file
