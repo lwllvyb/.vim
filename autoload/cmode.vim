@@ -30,11 +30,15 @@ fun! s:switch2(f)
     endif
     exe 'b!' a:f
 endf
+
+let s:header_time = 0
 " Toggle the header and source file
 fun! cmode#toggleHeader()
     let r =  expand('%:r')
-    if index(['c','cpp','cc'], expand('%:e')) < 0
-        for e in ['c','cpp','cc']
+    let source_exts = ['c', 'cpp', 'cc', 'm', 'mm']
+    let header_exts = ['h', 'hpp']
+    if index(source_exts, expand('%:e')) < 0
+        for e in source_exts
             let f = r . '.' . e
             if filereadable(f)
                 return s:switch2(f)
@@ -42,12 +46,17 @@ fun! cmode#toggleHeader()
         endfo
         echo 'No source file.'
     else
-        for e in  ['h', 'hpp']
+        for e in header_exts
             let f = r . '.' . e
             if filereadable(f)
                 return s:switch2(f)
             endif
         endfo
-        echo 'No header file.'
+        if localtime() - s:header_time <= 2
+            return s:switch2(r . '.h')
+        else
+            echo 'No header file.'
+        endif
+        let s:header_time = localtime()
     endif
 endf

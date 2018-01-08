@@ -133,10 +133,12 @@ smap <c-c> <c-g><c-c>
 inoremap <silent><c-z> <c-r>=km#undo()<cr>
 inoremap <silent><c-y> <c-r>=km#redo()<cr>
 " Paste
-inoremap <expr><c-g><c-v> "\<c-o>" . (col('.')==col('$')?'"+gp':'"+gP')
-inoremap <silent><c-g><c-p> <c-r>=km#paste()<cr><right>
-cnoremap <c-g><c-v> <c-r>+
-cnoremap <c-g><c-p> <c-r>"
+noremap! <c-g><c-v> <c-r>+
+noremap! <c-g><c-p> <c-r>"
+noremap! <c-g>f <c-r>%
+noremap! <c-g><c-f> <c-r>=expand('%:p')<cr>
+noremap! <c-g>d <c-r>=expand('%:h')<cr>
+noremap! <c-g><c-d> <c-r>=expand('%:p:h')<cr>
 " Toggle comment
 noremap  <silent><m-/> :Commentary<cr>
 " Save && Exit
