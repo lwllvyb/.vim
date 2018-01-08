@@ -12,8 +12,8 @@ if !exists('$TEMP') && has('unix')
     let $TEMP = '/tmp'
 endif
 
-Source envs.vim
-Source plugs.vim
+sil! Source envs.vim
+sil! Source plugs.vim
 
 if exists('g:COLORSCHEME')
     exe 'au VimEnter * nested colorscheme' g:COLORSCHEME
