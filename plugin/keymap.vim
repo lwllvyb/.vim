@@ -98,12 +98,16 @@ vnoremap <c-j> zf
 inoremap <m-o> <esc>
 nnoremap Q gQ
 " noremap <expr><cr> km#enter()
-noremap <cr> %
+noremap <expr><cr> empty(&bt)?'%':"\<cr>"
 
 nnoremap <silent><m-m><m-m> :BookmarkToggle<cr>
 nnoremap <silent><m-m><m-n> :BookmarkNext<cr>
 nnoremap <silent><m-m><m-p> :BookmarkPrev<cr>
 nnoremap <silent><m-m><m-c> :BookmarkClear<cr>
+
+cnoremap ( ()<left>
+cnoremap { {}<left>
+cnoremap [ []<left>
 
 " F5 -- Run {{{
 fun! MyRun()
@@ -134,7 +138,7 @@ inoremap <silent><c-z> <c-r>=km#undo()<cr>
 inoremap <silent><c-y> <c-r>=km#redo()<cr>
 " Paste
 noremap! <c-g><c-v> <c-r>+
-noremap! <c-g><c-p> <c-r>"
+noremap! <c-g><c-p> <c-r>=@@<cr>
 noremap! <c-g>f <c-r>%
 noremap! <c-g><c-f> <c-r>=expand('%:p')<cr>
 noremap! <c-g>d <c-r>=expand('%:h')<cr>
