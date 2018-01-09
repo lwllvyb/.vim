@@ -21,7 +21,7 @@ nnoremap <buffer><silent> <F2> :call LanguageClient_textDocument_rename()<CR>
 if exists('g:popup_loaded') && !exists('b:popup_menus')
     let b:popup_menus = {
                 \ 'goto': {->pmenu#new('Goto',
-                            \ ['f', '函数', "\<Plug>(GoToPyDef)"]
+                            \ ['f', 'Function', '/\<def\s\+' . "\<c-r>\<c-w>\<cr>" . '(.*):\s*$']
                             \ ).merge(pmenu#common#goto())},
                 \ 'util': {->pmenu#new('Util',
                             \ ['p', 'Print', "yiwoprint()\<esc>P"],

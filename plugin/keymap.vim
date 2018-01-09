@@ -22,15 +22,15 @@ inoremap <c-n> <down>
 inoremap <c-p> <up>
 inoremap <m-n> <PageDown>
 inoremap <m-p> <PageUp>
-inoremap <silent><expr><c-k> km#del2end()
+inoremap <silent><c-k> <c-r>=km#del2end()<cr>
 inoremap <silent><c-a> <c-r>=km#move2first()<cr>
 noremap  <expr><silent>0 km#move2first()
 
 nnoremap <expr><c-l> km#redraw()
 inoremap <silent><c-l> <c-r>=km#redraw()<cr>
-inoremap <silent><c-g><c-m> <c-r>=execute('norm! M')<cr>
-inoremap <silent><c-g><c-h> <c-r>=execute('norm! H')<cr>
-inoremap <silent><c-g><c-l> <c-r>=execute('norm! L')<cr>
+inoremap <silent><c-g><c-m> <c-r>=km#normal('M', '!')<cr>
+inoremap <silent><c-g><c-h> <c-r>=km#normal('H', '!')<cr>
+inoremap <silent><c-g><c-l> <c-r>=km#normal('L', '!')<cr>
 
 nnoremap gl $
 vnoremap gl $h
@@ -48,8 +48,8 @@ inoremap <m-/> <c-n>
 " }}}
 
 " Powerful line move {{{
-inoremap <silent><m-s-up> <c-r>=km#moveline2up()<cr>
-inoremap <silent><m-s-down> <c-r>=km#moveline2down()<cr>
+inoremap <silent><m-s-up> <c-r>=km#normal('ddkP')<cr>
+inoremap <silent><m-s-down> <c-r>=km#normal('ddp')<cr>
 inoremap <c-up> <c-x><c-e>
 inoremap <c-down> <c-x><c-y>
 " }}}
