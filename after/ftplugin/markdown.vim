@@ -1,5 +1,5 @@
 
-setl wrap breakindent
+setl wrap bri briopt=shift:2
 setl foldlevel=3
 setl conceallevel=2 concealcursor=nc
 setl nonumber

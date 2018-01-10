@@ -20,8 +20,8 @@ if exists('g:popup_loaded')
 
     fun! s:get_goto()
         let s:goto = pmenu#new('Goto',
-                \ ['f', 'Function', "\<Plug>(GoToVimFun)"],
-                \ ['d', 'Definition', "\<Plug>(GoToVimLet)"])
+                \ ['f', 'Function', ":call vmode#goto_define()\<cr>"],
+                \ ['v', 'Variable', ":call vmode#search_var('\<c-r>\<c-w>')\<cr>"])
         call s:goto.merge(pmenu#common#goto())
         return s:goto
     endf

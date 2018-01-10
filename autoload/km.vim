@@ -1,20 +1,21 @@
 
+fun! km#normal(ks, ...)
+    let result = col('.') == col('$') ? "\<end>" : ''
+    exe a:0 ? 'norm!': 'norm' a:ks
+    return result
+endf
+
 fun! km#redraw()
     let l = winline()
     let cmd = l * 2 <= winheight(0) + 1 ? l <= (&so + 1) ? 'zb' : 'zt' : 'zz'
-    if mode() == 'i'
-        exe 'norm!' cmd
-        return ''
-    else
-        return cmd
-    endif
+    return mode() == 'i' ? km#normal(cmd, '!'): cmd
 endf
 
 fun! km#del2end()
     let c = col('.')
     if c == col('$') | return "\<del>" | endif
-    let cmd = "\<c-r>=execute('norm! D')\<cr>"
-    return c == 1 ? cmd : cmd . "\<right>"
+    exe 'norm! D'
+    return c == 1 ? '' : "\<right>"
 endf
 
 fun! km#undo()
@@ -34,21 +35,11 @@ fun! km#move2first()
     endif
 endf
 
-fun! km#moveline2up()
-    norm ddkP
-    startinsert!
-    return ''
-endf
-
-fun! km#moveline2down()
-    norm ddp
-    startinsert!
-    return ''
-endf
-
 fun! km#on_enter()
     if !pumvisible() || empty(v:completed_item)
         return "\<cr>"
+    elseif v:completed_item.menu =~ '^\[ns\]'
+        return "\<Plug>(neosnippet_expand_or_jump)"
     elseif v:completed_item.menu =~ '^\[US\]'
         return "\<c-r>=UltiSnips#ExpandSnippet()\<cr>"
     else
@@ -58,15 +49,14 @@ fun! km#on_enter()
 endf
 
 fun! km#paste()
-    exe 'norm!' col('.') ==1 ? 'gP' : 'gp'
+    exe 'norm!' col('.') == 1 ? 'gP' : 'gp'
     return ''
 endf
 
 fun! km#enter()
     let ret = "\<cr>"
     if mode() == 'n' || mode() =~? 'v'
-        let [ln, cl] = getpos('.')[1:2]
-        let c = getline(ln)[cl-1:cl-1]
+        let c = getline('.')[col('.')-1]
         if c =~ '\v[(){}\[\]<>]'
             let ret = '%'
         endif
