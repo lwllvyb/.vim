@@ -12,7 +12,7 @@ if has('python3')
     py3 import vim
 endif
 " source the common config
-so <sfile>:h/vimrc
+sil! so <sfile>:h/vimrc
 " config for unix-like system
 if has('unix')
     let g:python3_host_prog = '/usr/bin/python3'

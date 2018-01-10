@@ -40,3 +40,18 @@ fun! ida#dec2hex(dec)
     let dec = type(a:dec) == v:t_string ? eval(a:dec): a:dec
     return printf('0x%x', dec)
 endf
+
+fun! ida#objc_method()
+    " 第一个参数：消息接受对象
+    norm f(ldia"_xP
+    " 删除消息名两侧的引号
+    norm f"ds"
+    " 剩余的参数
+    norm! f,yl
+    while @@ == ','
+        norm wdiaF,"_xp
+        norm! f,yl
+    endw
+    " 纠正语法
+    norm cs(]f]%hdiw
+endf

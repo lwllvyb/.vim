@@ -1,6 +1,8 @@
 
 let s:subs = [
         \ ['m', 'C Comment', ':s/\/\/\s*\(.*\)/\/* \1 *\/' . "\<cr>"],
+        \ ['o', 'Objective-C', [
+            \ ['s', '@String', ':s/CFSTR(\("[^"]*"\))/@\1/']]],
         \ ['c', 'Width Char', [
             \ ['c', 'Colon', ":s:/：/:/g\<cr>"],
             \ ['b', 'Breakets', ':s:/（\(.\{-}\)）/(\1)/g' . "\<cr>"]]],
