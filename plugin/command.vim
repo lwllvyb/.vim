@@ -14,3 +14,5 @@ com! EchoPATH call echo#(split($PATH, has('win32')?';': ':'))
 com! SynAttr echo synIDattr(synID(line('.'), col('.'), 1), 'name')
 
 com! HexCalc call hexcalc#init()
+
+au FocusGained * windo checktime
