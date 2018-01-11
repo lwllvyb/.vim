@@ -4,9 +4,9 @@ let g:popup#upkey = "\<c-h>"
 map  <expr><m-.> popup#last()
 map! <expr><m-.> popup#last()
 
-nmap <expr><m-e> popup#('edit')
-xmap <expr><m-e> popup#('edit-v')
-imap <expr><m-e> popup#('edit-i')
+nnoremap <expr><m-e> popup#('edit')
+xnoremap <expr><m-e> popup#('edit-v')
+inoremap <expr><m-e> popup#('edit-i')
 
 nmap <expr><m-s> popup#('search')
 xmap <expr><m-s> popup#('Search-v')
