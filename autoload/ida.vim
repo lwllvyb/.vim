@@ -41,7 +41,7 @@ fun! ida#dec2hex(dec)
     return printf('0x%x', dec)
 endf
 
-fun! ida#objc_method()
+fun! ida#objc_msgsend()
     " 第一个参数：消息接受对象
     norm f(ldia"_xP
     " 删除消息名两侧的引号
@@ -53,5 +53,5 @@ fun! ida#objc_method()
         norm! f,yl
     endw
     " 纠正语法
-    norm cs(]f]%hdiw
+    norm cs)]hdiw
 endf

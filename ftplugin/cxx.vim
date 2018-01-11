@@ -9,11 +9,11 @@ if exists('g:popup_loaded')
     if !exists('s:popup_menu')
         let s:popup_menu = pmenu#new('Util',
             \ ['i', 'Add #include', ":Include\<cr>"],
+            \ ['m', 'GenIncMacro', ":call cmode#genIncMacro()\<cr>"],
             \ ['r', 'Integer -> str', "viw\"-s\<c-r>=ida#int2str(@-)\<cr>"])
         call s:popup_menu.merge(popup#get('util'))
     endif
     let b:popup_menus = {'util': s:popup_menu}
 endif
 
-com! -buffer GenIncMacro call cmode#genIncMacro()
 com! -buffer -nargs=* Include call cmode#add_inc(<q-args>)
