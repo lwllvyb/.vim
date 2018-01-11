@@ -13,6 +13,7 @@ map! <c-e> <end>
 map! <c-bs> <c-w>
 cnoremap <m-f> <c-right>
 cnoremap <m-b> <c-left>
+cnoremap <expr><m-d> km#cmd_del2wordend()
 cnoremap <c-k> <c-\>e strpart(getcmdline(),0,getcmdpos()-1)<cr>
 cnoremap <c-a> <home>
 
@@ -137,12 +138,12 @@ smap <c-c> <c-g><c-c>
 inoremap <silent><c-z> <c-r>=km#undo()<cr>
 inoremap <silent><c-y> <c-r>=km#redo()<cr>
 " Paste
-noremap! <silent><c-g><c-v> <c-r>=km#paste(@+)<cr>
-noremap! <silent><c-g><c-p> <c-r>=km#paste(@@)<cr>
-noremap! <silent><c-g>f <c-r>=km#paste(@%)<cr>
-noremap! <silent><c-g><c-f> <c-r>=km#paste(expand('%:p'))<cr>
-noremap! <silent><c-g>d <c-r>=km#paste(expand('%:h'))<cr>
-noremap! <silent><c-g><c-d> <c-r>=km#paste(expand('%:p:h'))<cr>
+noremap! <expr><c-g><c-v> km#paste(@+)
+noremap! <expr><c-g><c-p> km#paste(@@)
+noremap! <expr><c-g>f     km#paste(@%)
+noremap! <expr><c-g><c-f> km#paste(expand('%:p'))
+noremap! <expr><c-g>d     km#paste(expand('%:h'))
+noremap! <expr><c-g><c-d> km#paste(expand('%:p:h'))
 " Toggle comment
 noremap  <silent><m-/> :Commentary<cr>
 " Save && Exit
@@ -158,8 +159,7 @@ if exists(':tnoremap')
     tnoremap <m-o> <c-\><c-n>
 
     fun! s:on_terminal()
-        let name = bufname('%')
-        if match(name, 'cmd\(\.exe\)\?$', 'i') >= 0
+        if match(@%, 'cmd\(\.exe\)\?$', 'i') >= 0
             tnoremap <buffer><c-a> <home>
             tnoremap <buffer><c-e> <end>
             tnoremap <buffer><m-b> <c-left>

@@ -15,7 +15,8 @@ fun! km#del2end()
     let c = col('.')
     if c == col('$') | return "\<del>" | endif
     exe 'norm! D'
-    return c == 1 ? '' : "\<right>"
+    call cursor(line('.'), c)
+    return ''
 endf
 
 fun! km#undo()
@@ -28,7 +29,7 @@ endf
 
 fun! km#move2first()
     if mode() == 'i'
-        exe 'norm! ' col('.') > 1 ? '0' : '^'
+        exe 'norm!' col('.') > 1 ? '0' : '^'
         return ''
     else
         return col('.') == 1 ? '^': '0'
@@ -49,11 +50,9 @@ fun! km#on_enter()
 endf
 
 fun! km#paste(text)
-    let g:_ = a:text
     set paste
-    call feedkeys("\<c-r>=_\<cr>", 'n')
-    set paste!
-    return ''
+    call timer_start(1, {->execute('set paste!')})
+    return a:text
 endf
 
 fun! km#enter()
@@ -69,6 +68,6 @@ endf
 
 fun! km#cmd_del2wordend()
     let begin = getcmdpos()
-    call feedkeys("\<c-right>", 'n')
-    return repeat("\<bs>", getcmdpos() - begin)
+    call timer_start(1, {->feedkeys(repeat("\<bs>", getcmdpos() - begin), 'n')})
+    return "\<c-right>"
 endf
