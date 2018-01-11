@@ -11,9 +11,10 @@ map! <c-f> <right>
 map! <c-d> <del>
 map! <c-e> <end>
 map! <c-bs> <c-w>
-cmap <m-f> <s-right>
-cmap <m-b> <s-left>
-cmap <c-a> <home>
+cnoremap <m-f> <c-right>
+cnoremap <m-b> <c-left>
+cnoremap <c-k> <c-\>e strpart(getcmdline(),0,getcmdpos()-1)<cr>
+cnoremap <c-a> <home>
 
 inoremap <silent><m-f> <c-r>=execute('norm! e')<cr><right>
 inoremap <silent><m-d> <c-r>=execute('norm! dw')<cr>
@@ -24,16 +25,15 @@ inoremap <m-n> <PageDown>
 inoremap <m-p> <PageUp>
 inoremap <silent><c-k> <c-r>=km#del2end()<cr>
 inoremap <silent><c-a> <c-r>=km#move2first()<cr>
-noremap  <expr><silent>0 km#move2first()
-
-nnoremap <expr><c-l> km#redraw()
 inoremap <silent><c-l> <c-r>=km#redraw()<cr>
 inoremap <silent><c-g><c-m> <c-r>=km#normal('M', '!')<cr>
 inoremap <silent><c-g><c-h> <c-r>=km#normal('H', '!')<cr>
 inoremap <silent><c-g><c-l> <c-r>=km#normal('L', '!')<cr>
 
 nnoremap gl $
+nnoremap <expr><c-l> km#redraw()
 vnoremap gl $h
+noremap  <expr><silent>0 km#move2first()
 
 map <m-;> <Plug>(easymotion-bd-wl)
 map <m-n> <Plug>(easymotion-bd-jk)
@@ -137,12 +137,12 @@ smap <c-c> <c-g><c-c>
 inoremap <silent><c-z> <c-r>=km#undo()<cr>
 inoremap <silent><c-y> <c-r>=km#redo()<cr>
 " Paste
-noremap! <c-g><c-v> <c-r>+
-noremap! <c-g><c-p> <c-r>=@@<cr>
-noremap! <c-g>f <c-r>%
-noremap! <c-g><c-f> <c-r>=expand('%:p')<cr>
-noremap! <c-g>d <c-r>=expand('%:h')<cr>
-noremap! <c-g><c-d> <c-r>=expand('%:p:h')<cr>
+noremap! <silent><c-g><c-v> <c-r>=km#paste(@+)<cr>
+noremap! <silent><c-g><c-p> <c-r>=km#paste(@@)<cr>
+noremap! <silent><c-g>f <c-r>=km#paste(@%)<cr>
+noremap! <silent><c-g><c-f> <c-r>=km#paste(expand('%:p'))<cr>
+noremap! <silent><c-g>d <c-r>=km#paste(expand('%:h'))<cr>
+noremap! <silent><c-g><c-d> <c-r>=km#paste(expand('%:p:h'))<cr>
 " Toggle comment
 noremap  <silent><m-/> :Commentary<cr>
 " Save && Exit

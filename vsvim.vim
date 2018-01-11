@@ -52,7 +52,8 @@ inoremap <m-o> <esc>
 nmap <m-J> :cn<cr>
 nmap <m-K> :cp<cr>
 
-nnoremap <c-l> zt
+noremap <c-l> zt
+noremap <cr> %
 
 nnoremap <c-p> :vsc 编辑.转到所有<cr>
 inoremap <c-j> <esc>:vsc Edit.ListMembers<cr>a

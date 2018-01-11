@@ -48,8 +48,11 @@ fun! km#on_enter()
     endif
 endf
 
-fun! km#paste()
-    exe 'norm!' col('.') == 1 ? 'gP' : 'gp'
+fun! km#paste(text)
+    let g:_ = a:text
+    set paste
+    call feedkeys("\<c-r>=_\<cr>", 'n')
+    set paste!
     return ''
 endf
 
@@ -62,4 +65,10 @@ fun! km#enter()
         endif
     endif
     return ret
+endf
+
+fun! km#cmd_del2wordend()
+    let begin = getcmdpos()
+    call feedkeys("\<c-right>", 'n')
+    return repeat("\<bs>", getcmdpos() - begin)
 endf
