@@ -1,21 +1,20 @@
 
 fun! CloseBuffer()
     try
-        if &bt=='nofile' && 2 == confirm('Not a file, continue quit?', "&Yes\ n&No", 2, "Warning")
-            return ''
-        endif
-        if &bt == 'terminal' && has('nvim')
+        if &bt=='nofile' && 2 == confirm(
+                    \ 'Not a file, continue quit?',
+                    \ "&Yes\ n&No", 2, "Warning")
+            return
+        elseif &bt == 'terminal' && has('nvim')
             set bh=wipe
             call jobclose(b:terminal_job_id)
         endif
         let curbuf = bufnr('%')
-        let a = bufnr('#')
-        exe bufexists(a) && getbufvar(a, '&bt') == '' ? 'b!#': 'bnext'
-        exe 'confirm' 'bw' curbuf
+        let lastbuf = bufnr('#')
+        exe bufexists(lastbuf) && empty(getbufvar(lastbuf, '&bt')) ? 'b!#': 'bnext'
+        exe 'confirm' curbuf 'bw'
     catch
-        echo v:errmsg
-    finally
-        return ''
+        echoe v:errmsg
     endt
 endf
 

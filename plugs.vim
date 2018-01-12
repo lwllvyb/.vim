@@ -117,14 +117,11 @@ if dein#load_state(g:dein#cache_directory)
 " ------------------ textobjs -------------------- {{{
     call dein#add('vim-scripts/argtextobj.vim')
     call dein#add('kana/vim-textobj-user')
-    call dein#add('kana/vim-textobj-indent')
     call dein#add('kana/vim-textobj-function')
     " call dein#add('libclang-vim/vim-textobj-clang', {'depends': 'libclang-vim'})
     call dein#add('glts/vim-textobj-comment')
-    call dein#add('todesking/vim-textobj-methodcall')
-    call dein#add('rhysd/vim-textobj-anyblock')
     call dein#add('adriaanzon/vim-textobj-matchit')
-    call dein#add('syngan/vim-textobj-postexpr')
+    call dein#add('whatyouhide/vim-textobj-xmlattr', {'on_ft': ['xml', 'html']})
 " }}}
 " ------------------ Web ------------------------- {{{
     call dein#add('mattn/emmet-vim', on_html)

@@ -183,6 +183,7 @@ cabbrev baf breakadd func
 cabbrev bal breakadd file
 cabbrev bah breakadd here
 cabbrev brd breakdel
+cnoreabbrev enr echo bufnr('%')
 
-cabbrev chd [一二三四五六七八九十]
+cnoreabbrev chd [一二三四五六七八九十]
 "}}} 

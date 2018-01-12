@@ -15,4 +15,10 @@ com! SynAttr echo synIDattr(synID(line('.'), col('.'), 1), 'name')
 
 com! HexCalc call hexcalc#init()
 
-au FocusGained * windo checktime
+fun! s:checktime()
+    let wid = win_getid()
+    windo checktime
+    call win_gotoid(wid)
+endf
+
+au FocusGained * call <sid>checktime()

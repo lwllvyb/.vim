@@ -1,8 +1,9 @@
 
 let g:lightline = {
     \ 'component': {
-    \   'readonly': '%{&ft=="help"?"":&ro?"[R0]":""}',
+    \   'readonly': '%{&ft=="help"?"":&ro?"":""}',
     \   'modified': '%{&ft=="help"?"":&mod?"*":&modifiable?"":"-"}',
+    \   'lineinfo': '⭡ %3l:%-2v',
     \   'logo': '  ',
     \ },
     \ 'component_expand': {
