@@ -25,6 +25,7 @@ let s:tools = pmenu#new('Tools',
     \ ['x', 'Hex Calc', ":call hexcalc#init()\<cr>"],
     \ ['l', 'LanguageClient', ":LanguageClientStart\<cr>"],
     \ ['e', 'LuaEval', ":call luaeval#()\<cr>"],
+    \ ['q', 'SQHell', ":SQHExecute\<cr>"],
     \ )
 
 fun! pmenu#leader#n()

@@ -43,17 +43,18 @@ let g:lightline.tabline = {
 " powerline、wombat、jellybes、solarized、Dracula、one、landscape
 " molokai nord OldHope PaperColor seoul256 Tomorrow darcula 16color materia
 " material default
+let s:colorscheme = get(g:, 'COLORSCHEME', 'one')
 let g:lightline.colorscheme = &bg == 'dark' ?
         \ get({
             \ 'amcolors': 'powerline',
             \ 'one-dark': 'one',
             \ 'neodark': 'one',
-        \ }, COLORSCHEME, 'powerline') :
+        \ }, s:colorscheme, 'powerline') :
         \ get({
             \ 'one': 'materia',
             \ 'one-dark': 'one',
             \ 'neodark': 'one',
-        \ }, COLORSCHEME, 'solarized')
+        \ }, s:colorscheme, 'solarized')
 " }}}
 
 let g:lightline.enable = {'statusline': 1, 'tabline': 1}

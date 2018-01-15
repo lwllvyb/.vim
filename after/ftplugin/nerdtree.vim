@@ -41,6 +41,11 @@ endf
 
 nnoremap <buffer><silent><c-p> :call <sid>search_file()<cr>
 
+if exists('&winhl')
+    hi NERDNormal guibg=#f0f0f0
+    setl winhl=Normal:NERDNormal
+endif
+
 " Let the cursor in body of filename {{{
 fun! s:set_cursor()
     let n = match(getline('.'), '^\s*\(\[.\{-}\]\)\?\zs')
