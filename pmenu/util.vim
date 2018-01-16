@@ -9,7 +9,7 @@ call popup#reg('util#n', pmenu#new('Util',
     \ [' !', 'No hilight', ":noh\<cr>"],
     \ ["\t:", 'NERDTreeToggle', 'NERDTreeToggle'],
     \ [".:", 'NERDTreeFind', 'NERDTreeFind'],
-    \ ['\r:', 'Do last command', 'sil! exe @:'],
+    \ ["\r", 'Do last command', '@:'],
     \ s:term
 \ ))
 

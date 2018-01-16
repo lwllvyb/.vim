@@ -13,11 +13,11 @@ imap <buffer><F5> <esc><F5>
 nnoremap <expr><buffer><c-j> (foldlevel('.') ? 'za': 'V}zfzc')
 
 if exists('g:popup')
-    call popup#reg('goto', pmenu#new('Goto',
+    call popup#reg('common#goto', pmenu#new('Goto',
         \ ['f:', 'Function', 'call vmode#goto_define()'],
         \ ['v:', 'Variable', 'call vmode#search_var()'],
     \ ), &ft)
-    call popup#reg('util', pmenu#new('Util',
+    call popup#reg('util#n', pmenu#new('Util',
         \ ['e!', 'Echo ...', "viwyoechom \<c-r>\" | call getchar()\<esc>"],
         \ ['b:', 'Breakadd', 'breakadd here'],
     \ ), &ft)
