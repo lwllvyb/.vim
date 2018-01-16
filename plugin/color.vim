@@ -5,7 +5,7 @@
 " Description: Transparent Visual and Cursor background-color
 " =============================================================================
 
-fun! s:setcursor()
+fun! s:setcolor()
     let cur_bg_gui = synIDattr(hlID('Cursor'), 'bg', 'gui')
     let vis_bg_gui = synIDattr(hlID('Visual'), 'bg', 'gui')
     let cur_bg_term = synIDattr(hlID('Cursor'), 'bg', 'cterm')
@@ -18,6 +18,12 @@ fun! s:setcursor()
     exe 'hi' 'Visual' 'guibg=' . vis_bg_gui empty(vis_bg_term) ? '': 'ctermbg=' . vis_bg_term
     let vertbg = synIDattr(hlID('VertSplit'), 'fg', 'gui')
     " if !empty(vertbg) | exe 'hi' 'VertSplit' 'guibg=' . vertbg | endif
+
+    hi NormalDeep guibg=#f0f0f0
+    hi CursorLineDeep guibg=#fafafa
+    hi NormalQF guibg=#E6E7E8
+    hi NormalHelp guibg=#F0E9DF
+    " hi HelpNormal guibg=#EEEEEE
 endf
 
-au ColorScheme * call <SID>setcursor()
+au ColorScheme * call <SID>setcolor()

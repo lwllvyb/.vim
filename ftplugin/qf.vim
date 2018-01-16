@@ -3,8 +3,7 @@ setl wrap
 setl nonumber
 
 if exists('&winhl')
-    hi QFNormal guibg=#f0f0f0
-    setl winhl=Normal:QFNormal
+    setl winhl=Normal:NormalQF
 endif
 
 nmap <silent><buffer> <c-j> :cn<cr>

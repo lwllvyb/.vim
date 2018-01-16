@@ -113,9 +113,7 @@ fun! s:search_file()
 endf
 
 if exists('&winhl')
-    hi NERDNormal guibg=#f0f0f0
-    hi NERDCursorLine guibg=#fafafa
-    setl winhl=Normal:NERDNormal
+    setl winhl=Normal:NormalDeep,CursorLine:CursorLineDeep
 endif
 
 " Let the cursor in body of filename {{{
