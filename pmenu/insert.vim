@@ -15,13 +15,9 @@ fun! SelectChar(str)
     return strcharpart(s, n, 1)
 endf
 
-let s:insert = pmenu#new('Insert', 
+call popup#reg('insert#i', pmenu#new('Insert',
     \ ['s', 'Special character', [
         \ ['a', 'Arrow', "\<c-r>=SelectChar('↑↓←→↖↗↘↙↔↕')\<cr>"],
         \ ['e', 'Emoji', "\<c-r>=SelectChar('🔺🔻💠🔲')\<cr>"]
         \ ]]
-    \ )
-
-fun! pmenu#insert#i()
-    return s:insert
-endf
+\ ))

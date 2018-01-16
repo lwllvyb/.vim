@@ -29,18 +29,15 @@ fun! ResizeWindow()
     redraw
 endf
 
-let s:normal = pmenu#new('Window & Buffer',
-    \ ['o', 'New tabpage', ":tabe\<cr>"],
-    \ ['x', 'Close tabpage', ":tabc\<cr>"],
-    \ ['p', 'Prev tabpage', 'gT'],
-    \ ['n', 'Next tabpage', 'gt'],
+call popup#reg('window#n', pmenu#new('Window & Buffer',
+    \ ['o:', 'New tabpage', 'tabe'],
+    \ ['x:', 'Close tabpage', 'tabc'],
+    \ ['p!', 'Prev tabpage', 'gT'],
+    \ ['n!', 'Next tabpage', 'gt'],
     \ '------------------------------',
-    \ ['v', 'Split', ":Bufline 'split', 'right'\<cr>"],
-    \ ['w', 'Wipe', ":setl bh=wipe | winc c\<cr>"],
-    \ ['s', 'Resize',  ":call ResizeWindow()\<cr>"],
-    \ ['u', 'Unload buffer', ":bun\<cr>"],
-    \ ['c', 'Copy buffer', "ggVGy:bot sp ene!\<cr>Vp"])
-
-fun! pmenu#window#n()
-    return s:normal
-endf
+    \ ['v:', 'Split', "Bufline 'split', 'right'"],
+    \ ['w:', 'Wipe', 'setl bh=wipe | winc c'],
+    \ ['s:', 'Resize',  'call ResizeWindow()'],
+    \ ['u:', 'Unload buffer', 'bun'],
+    \ ['c', 'Copy buffer', "ggVGy:bot sp ene!\<cr>Vp"]
+\ ))

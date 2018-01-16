@@ -2,7 +2,7 @@
 let g:lightline = {
     \ 'component': {
     \   'readonly': '%{&ft=="help"?"":&ro?"":""}',
-    \   'modified': '%{&ft=="help"?"":&mod?"*":&modifiable?"":"-"}',
+    \   'modified': '%{&ft=="help"?"":&mod?"":&modifiable?"":"-"}',
     \   'lineinfo': '⭡ %3l:%-2v',
     \   'logo': '  ',
     \ },

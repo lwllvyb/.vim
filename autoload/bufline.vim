@@ -128,7 +128,7 @@ fun! s:spec_name()
     elseif &bt == 'terminal'
         return printf('[Term: %s]', expand('%:t'))
     elseif &bt == 'quickfix'
-        return printf('[QFix: %d]', curnr)
+        return printf('[QFix: %d]', bufnr('%'))
     elseif &bt == 'nofile'
         if &ft == 'nerdtree'
             return '[NERDTree]'

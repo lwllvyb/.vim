@@ -2,7 +2,7 @@
 setl wrap bri briopt=shift:2
 setl foldlevel=3
 setl conceallevel=2 concealcursor=nc
-setl nonumber
+setl nonumber signcolumn=yes
 
 setl shiftwidth=2 tabstop=2
 setl iskeyword=@,48-57,_,128-167,224-235,-
@@ -38,14 +38,6 @@ vnoremap <buffer><expr> <m-2> mdm#bold()
 nnoremap <buffer><expr> # (getline('.')[col('.')-1]=='#'?"I#\<esc>":'#')
 " }}} 
 
-if exists('g:popup_loaded')
-    let b:popup_menus = {
-        \ 'goto': 'pmenu#markdown#goto',
-        \ 'util': 'pmenu#markdown#util',
-        \ 'util-v': 'pmenu#markdown#util_v',
-        \ }
-endif
-
 nmap <buffer><F5> :MarkdownPreview<cr>
 imap <buffer><F5> <esc><F5>
 
@@ -69,6 +61,44 @@ call imap#("<s-cr>", {
 call imap#("<tab>", {
     \ 'match': '-$', 'rhs': "\<c-r>=align#('-')\<cr>"
     \ })
+
+if !exists('g:popup') || len(popup#menus(&ft))
+    finish
+endif
+
+fun! s:init_menu()
+    call popup#reg('common#goto', pmenu#new('Goto',
+        \ ['n', 'Next Header', "\<Plug>Markdown_MoveToNextHeader"],
+        \ ['p', 'Prev Header', "\<Plug>Markdown_MoveToPreviousHeader"],
+        \ ['.', 'Current Header', "\<Plug>Markdown_MoveToCurHeader"],
+        \ ['a', 'Parent Header', "\<Plug>Markdown_MoveToParentHeader"],
+        \ ['j', 'Next Sibling', "\<Plug>Markdown_MoveToNextSiblingHeader"],
+        \ ['k', 'Prev Sibling', "\<Plug>Markdown_MoveToPreviousSiblingHeader"]
+    \ ), &ft)
+    let q = ['q', 'Quote', function('mdm#quote')]
+    let b = ['b', 'Bold', function('mdm#bold')]
+    let c = ['c', 'Code', function('mdm#code')]
+    let l = ['l:', 'Smart List', 'call mdm#SmartList()']
+    let H = ['H:', 'Smart Header', 'call mdm#SmartHeader()']
+    let O = ['O:', 'Orderd List', 'call mdm#OrderedList()']
+    call popup#reg('util#n', pmenu#new('Util',
+        \ q, b, c, l, H, O,
+        \ ['o:', 'Toc' , 'Toc'],
+        \ [',:', 'Task', 'call mdplus#togtask()'],
+        \ ['f', 'Anchor', "yiw/<span id=\"\<c-r>\"\">"]
+    \ ), &ft)
+    call popup#reg('util#v', pmenu#new('Util', q, b, c, l, H, O), &ft)
+    call popup#reg('insert', pmenu#new('Insert',
+        \ ['b', 'Bold', "****\<left>\<left>"],
+        \ ['i', 'Italic', "**\<left>"],
+        \ ['k', 'Task', "* []\<left>"],
+        \ ['/', 'Comment', "<!---->\<esc>2h"],
+        \ ['l', 'Link', "[]()\<left>"],
+        \ ['a', 'Anchor', "<span id=\"\">\<esc>2h"]
+    \ ), &ft)
+endf
+
+call s:init_menu()
 
 " if has('gui_running')
 "     menu .1 ]MDPopUp.Toc(&t)<tab>:Toc :Toc<cr>

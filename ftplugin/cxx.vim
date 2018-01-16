@@ -1,19 +1,19 @@
 
+set fdm=syntax fdl=3
+
 " Select a class or struct
-vnoremap <buffer> ac ?\<class\>\\|\<struct\><cr><esc>V/{<cr>%
+xnoremap <buffer> ac ?\<class\>\\|\<struct\><cr><esc>V/{<cr>%
 nnoremap <buffer><silent><F4> :call cmode#toggleHeader()<cr>
 imap <buffer><F4> <esc><F4>
 nmap <buffer>gd <Plug>(clang_complete_goto_declaration)
 
-if exists('g:popup_loaded')
-    if !exists('s:popup_menu')
-        let s:popup_menu = pmenu#new('Util',
-            \ ['i', 'Add #include', ":Include\<cr>"],
-            \ ['m', 'GenIncMacro', ":call cmode#genIncMacro()\<cr>"],
-            \ ['r', 'Integer -> str', "viw\"-s\<c-r>=ida#int2str(@-)\<cr>"])
-        call s:popup_menu.merge(popup#get('util'))
-    endif
-    let b:popup_menus = {'util': s:popup_menu}
+if !exists('g:popup') || len(popup#menus(&ft))
+    finish
 endif
 
-com! -buffer -nargs=* Include call cmode#add_inc(<q-args>)
+call popup#reg('util#n', pmenu#new('Util',
+    \ ['i:', 'Add #include', 'call cmode#add_inc()'],
+    \ ['m:', 'GenIncMacro', 'call cmode#genIncMacro()'],
+    \ ['h:', 'ToggleHeader', 'call cmode#toggleHeader()'],
+    \ ['r', 'Integer -> str', "viw\"-s\<c-r>=ida#int2str(@-)\<cr>"]
+\), &ft)
