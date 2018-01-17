@@ -20,7 +20,7 @@ fun! s:setcolor()
     " if !empty(vertbg) | exe 'hi' 'VertSplit' 'guibg=' . vertbg | endif
 
     hi NormalDeep guibg=#f0f0f0
-    hi CursorLineDeep guibg=#fafafa
+    hi CursorLineDeep guibg=#007ACC
     hi NormalQF guibg=#E6E7E8
     hi NormalHelp guibg=#F0E9DF
     " hi HelpNormal guibg=#EEEEEE

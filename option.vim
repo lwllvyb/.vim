@@ -3,6 +3,7 @@ if has('nvim')
     set icm=nosplit             " real-time preview for substitute-command
 else
     set nocompatible
+    set encoding=utf-8              " internal encoding of vim
     set hlsearch                " hilight all the search result
     set incsearch               " hilight the search-result in real time
     set display=lastline        " the display option, about how to render the screen text
@@ -13,13 +14,12 @@ else
     au CmdwinLeave,InsertLeave * set imd
 endif
 
-set encoding=utf-8              " internal encoding of vim
 set title                       " show the filename in caption (by default)
 set autoindent smartindent
 set autoread autowrite
 set et sw=4 ts=4                " expand tab-character as spaces
 set ignorecase                  " ignore the case of letter when search
-set fic wic
+set fic wic                     " ignore the case for command-line editing
 set confirm                     " show confirm-dialog before quit
 set laststatus=1                " show the windows-status on the below-window
 set nobackup noswapfile         " don't use the backup and swap file
@@ -45,6 +45,8 @@ set fillchars=fold:\ ,vert:║
 set foldtext=MyFoldText()
 " space character
 set list lcs=tab:>-,trail:۰,extends:↲,precedes:↳
+set gdefault
+" set debug=msg,throw
 " set lcs+=eol:¬                  " new line
 
 fun! MyFoldText()

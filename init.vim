@@ -19,5 +19,6 @@ if has('unix')
 endif
 
 " For gonvim {{{
-let g:gonvim_draw_statusline = 0
+" let g:gonvim_draw_statusline = 0
+let g:gonvim_draw_tabline = 0
 "}}} 

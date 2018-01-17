@@ -136,3 +136,13 @@ if exists('g:popup')
         \ ['p!', 'Paste', funcref('s:paste')],
     \ ), &ft)
 endif
+
+if !exists('s:checkleave')
+    fun! s:checkleave()
+        if getbufvar('#', '&ft') == 'nerdtree' && getbufvar('#', '&bt') == 'nofile'
+            silent! buffer #
+            echo 'You can not switch to another buffer in a NERDTree window'
+        endif
+    endf
+    au BufEnter * call <sid>checkleave()
+endif

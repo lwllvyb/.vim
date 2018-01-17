@@ -25,7 +25,7 @@ let g:slime_no_mappings = 1
 " }}}
 
 " For nerdtree {{{
-let NERDTreeWinSize   = 27
+let NERDTreeWinSize   = 33
 let NERDTreeQuitOnOpen = 0
 let g:NERDTreeDirArrowExpandable = ''
 let g:NERDTreeDirArrowCollapsible = ''

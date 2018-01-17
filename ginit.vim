@@ -8,7 +8,7 @@
 " ----------------------- Config -------------------------
 let s:font = 'FantasqueSansMono NF'
 let s:fontsize = 12
-" let s:linespace = 0
+let s:linespace = 0
 
 " Code {{{
 let s:fontstr = s:font . (exists('s:fontsize') ? ':h' . s:fontsize: '')
