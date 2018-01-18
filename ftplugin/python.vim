@@ -18,7 +18,7 @@ endif
 
 call popup#reg('common#goto', pmenu#new('Goto',
     \ ['f', 'Function', '/\<def\s\+' . "\<c-r>\<c-w>\<cr>" . '(.*):\s*$']
-\ ))
+\ ), &ft)
 
 call popup#reg('util#n', pmenu#new('Util',
     \ ['3:', 'Py3Toggle', 'let b:py3 = !b:py3'],
@@ -26,8 +26,8 @@ call popup#reg('util#n', pmenu#new('Util',
     \ ['i:', 'IPyToggle', 'let b:ipy = !b:ipy'],
     \ ['p', 'Print', "yiwoprint()\<esc>P"],
     \ ['b', 'BP', ''],
-\ )
+\ ), &ft)
 
 call popup#reg('util#v', pmenu#new('Util',
     \ ['p', 'Print', "yoprint()\<esc>P"]
-\ ))
+\ ), &ft)

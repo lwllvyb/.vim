@@ -12,4 +12,8 @@ endif
 call popup#reg('util#n', pmenu#new('Edit',
     \ ['f', 'Fold Tag', 'zfat'],
     \ ['r', 'Replace Tag', 'cstt'],
+    \ ['s', 'Substitute', [
+        \ ['s', 'Strip', ':s/<\(\w\+\)[^>]*>\(\_.\{-}\)<\/\1>/\2/g'],
+        \ ["'", "&nbsp -> '", ":s/&nbsp;/'/g"],
+        \ ['b', '<br>', ':s/<br\/\?>/\r/g']]],
 \ ))

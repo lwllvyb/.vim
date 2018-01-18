@@ -96,8 +96,10 @@ nnoremap <c-j> za
 vnoremap <c-j> zf
 " }}}
 
+" Various {{{
 inoremap <m-o> <esc>
 nnoremap Q gQ
+nnoremap <esc> <c-o>
 " noremap <expr><cr> km#enter()
 noremap <expr><cr> empty(&bt)?'%':"\<cr>"
 
@@ -109,6 +111,7 @@ nnoremap <silent><m-m><m-c> :BookmarkClear<cr>
 cnoremap ( ()<left>
 cnoremap { {}<left>
 cnoremap [ []<left>
+" }}}
 
 " F5 -- Run {{{
 fun! MyRun()
@@ -151,7 +154,8 @@ nnoremap <silent><c-s> :update<cr>
 nnoremap <silent><c-c><c-c> :conf qa<cr>
 nnoremap + <c-a>
 nnoremap - <c-x>
-noremap <c-a> gggH<c-o>G
+" noremap <c-a> gggH<c-o>G
+nnoremap <c-a> ggVG
 " }}}
 
 " Terminal operation {{{
@@ -184,6 +188,7 @@ cabbrev bal breakadd file
 cabbrev bah breakadd here
 cabbrev brd breakdel
 cnoreabbrev enr echo bufnr('%')
+cnoreabbrev lc let @+ =
 
 cnoreabbrev chd [一二三四五六七八九十]
 "}}} 
