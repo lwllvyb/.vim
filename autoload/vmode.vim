@@ -21,3 +21,17 @@ endf
 fun! vmode#search_var(var)
     return search('\<let\s\+.*\zs' . a:var)
 endf
+
+fun! vmode#dump(obj)
+    split +ene
+    setl ft=json
+    try
+        let obj = a:obj
+        py3 import json
+        py3 _ = json.dumps(vim.eval('l:obj'), indent = 4)
+        let @x = py3eval('_')
+        norm! "xp
+    catch
+        call setline(1, json_encode(a:obj))
+    endt
+endf
