@@ -1,84 +1,12 @@
 
 local api                   = vim.api
 
-local nvim_buf_get_lines    = api.nvim_buf_get_lines
-local nvim_buf_set_lines    = api.nvim_buf_set_lines
-local nvim_buf_line_count   = api.nvim_buf_line_count
-local nvim_buf_set_option   = api.nvim_buf_set_option
-local nvim_buf_get_option   = api.nvim_buf_get_option
-local nvim_buf_get_var      = api.nvim_buf_get_var
-local nvim_buf_set_var      = api.nvim_buf_set_var
-local nvim_buf_set_name     = api.nvim_buf_set_name
-local nvim_buf_get_name     = api.nvim_buf_get_name
-local nvim_buf_is_valid     = api.nvim_buf_is_valid
-local nvim_buf_get_mark     = api.nvim_buf_get_mark
 local nvim_get_current_buf  = api.nvim_get_current_buf
 local nvim_set_current_buf  = api.nvim_set_current_buf
 local nvim_get_current_line = api.nvim_get_current_line
 local nvim_set_current_line = api.nvim_set_current_line
 local nvim_set_current_dir  = api.nvim_set_current_dir
 local nvim_call_function    = api.nvim_call_function
-
-local buffer
-
-buffer = {
-    __index = function(self, key)
-        if type(key) == 'number' then
-            return nvim_buf_get_lines(self._nr, key - 1, key, 1)
-        else
-            return rawget(buffer, key)
-        end
-    end,
-
-    __newindex = function(self, key, value)
-        if type(key) == 'number' then
-            return nvim_buf_set_lines(self._nr, key - 1, key, 1, {value})
-        end
-    end,
-
-    __len = function(self)
-        return nvim_buf_line_count(self._nr)
-    end,
-}
-
-function buffer:option(key, ...)
-    if #{...} == 1 then
-        return nvim_buf_set_option(self._nr, key, ...)
-    else
-        return nvim_buf_get_option(self._nr, key)
-    end
-end
-
-function buffer:var(key, ...)
-    if #{...} == 1 then
-        if ... == nil then
-            return nvim_buf_del_var(self._nr, key)
-        else
-            return nvim_buf_set_var(self._nr, key, ...)
-        end
-    else
-        return nvim_buf_get_var(self._nr, key)
-    end
-end
-
-function buffer:name(...)
-    if #{...} == 1 then
-        return nvim_buf_set_name(self._nr, ...)
-    else
-        return nvim_buf_get_name(self._nr)
-    end
-end
-
-function buffer:lines(begin, _end)
-end
-
-function buffer:is_valid()
-    return nvim_buf_is_valid(self._nr)
-end
-
-function buffer:mark(name)
-    return nvim_buf_get_mark(self._nr, name)
-end
 
 return {
     command  = nvim_command,
@@ -89,8 +17,9 @@ return {
     feedkeys = nvim_feedkeys,
 
     buffer = function(nr)
+        nr = nr or nvim_get_current_buf()
         return setmetatable({
-            _nr = nr or nvim_get_current_buf()
+            _nr = nr or 
         }, buffer)
     end,
 
