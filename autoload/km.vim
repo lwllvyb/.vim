@@ -71,3 +71,29 @@ fun! km#cmd_del2wordend()
     call timer_start(1, {->feedkeys(repeat("\<bs>", getcmdpos() - begin), 'n')})
     return "\<c-right>"
 endf
+
+fun! km#cmd_forward_word()
+    let cmd = getcmdline()
+    let pos = getcmdpos() - 1
+    while cmd[pos] !~ '\w\|[^\x00-\xff]' && pos < len(cmd)
+        let pos += 1
+    endw
+    while cmd[pos] =~ '\w\|[^\x00-\xff]' && pos < len(cmd)
+        let pos += 1
+    endw
+    call setcmdpos(pos + 1)
+    return ''
+endf
+
+fun! km#cmd_backward_word()
+    let cmd = getcmdline()
+    let pos = getcmdpos() - 2
+    while cmd[pos] !~ '\w\|[^\x00-\xff]' && pos >= 0
+        let pos -= 1
+    endw
+    while cmd[pos] =~ '\w\|[^\x00-\xff]' && pos >= 0
+        let pos -= 1
+    endw
+    call setcmdpos(pos + 2)
+    return ''
+endf

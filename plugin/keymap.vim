@@ -11,8 +11,8 @@ map! <c-f> <right>
 map! <c-d> <del>
 map! <c-e> <end>
 map! <c-bs> <c-w>
-cnoremap <m-f> <c-right>
-cnoremap <m-b> <c-left>
+cnoremap <m-f> <c-r>=km#cmd_forward_word()<cr>
+cnoremap <m-b> <c-r>=km#cmd_backward_word()<cr>
 cnoremap <expr><m-d> km#cmd_del2wordend()
 cnoremap <c-k> <c-\>e strpart(getcmdline(),0,getcmdpos()-1)<cr>
 cnoremap <c-a> <home>
@@ -31,14 +31,14 @@ inoremap <silent><c-g><c-m> <c-r>=km#normal('M', '!')<cr>
 inoremap <silent><c-g><c-h> <c-r>=km#normal('H', '!')<cr>
 inoremap <silent><c-g><c-l> <c-r>=km#normal('L', '!')<cr>
 
-nnoremap gl $
+noremap  <expr>0     col('.') == 1 ? '^': '0'
+xnoremap <expr><c-e> col('.') == col('$') ? 'g_': '$'
+nnoremap <expr><c-e> col('.') + 1 == col('$') ? 'g_': '$'
 nnoremap <expr><c-l> km#redraw()
-vnoremap gl $h
-noremap  <expr><silent>0 km#move2first()
 
-map <m-;> <Plug>(easymotion-bd-wl)
-map <m-n> <Plug>(easymotion-bd-jk)
-map <c-k> <Plug>(easymotion-s2)
+map <c-h> <Plug>(easymotion-bd-wl)
+map <c-k> <Plug>(easymotion-bd-jk)
+map <c-g> <Plug>(easymotion-s)
 " }}}
 
 " Completion {{{
