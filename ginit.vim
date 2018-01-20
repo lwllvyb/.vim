@@ -20,7 +20,6 @@ fun! s:gvim_init()
         let &linespace = s:linespace
     endif
 
-    set imcmdline               " 命令行可以输入中文
     set mousemodel=popup_setpos
     let &guioptions = ''
 endf

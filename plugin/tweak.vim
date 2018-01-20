@@ -1,5 +1,5 @@
 
-if !has('nvim')
+if !has('nvim') && has('win32')
     func! GuiSetAlpha(n)
         call libcallnr('vimtweak64.dll', 'SetAlpha', a:n)
     endf

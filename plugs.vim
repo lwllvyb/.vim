@@ -47,14 +47,9 @@ fun! s:config_hook()
         let f = s:confdir . v['normalized_name'] . '.vim'
         if filereadable(f)
             call dein#set_hook(k, 'hook_source', 'so ' . f)
-        " elseif isdirectory(f)
-        "     let fs = glob(f . '/*.vim', 0, 1)
-        "     fun! T() closure
-        "         for f in fs|exe 'so' f|endfo
-        "     endf
-        "     call dein#set_hook(k, 'hook_source', funcref('T'))
         endif
     endfo
+    sil! exe 'so' s:confdir.'/_all_.vim'
 endf
 " }}}
 
@@ -114,7 +109,7 @@ if dein#load_state(g:dein#cache_directory)
     call dein#add('vim-voom/VOoM', {'on_cmd': 'Voom*'})
     call dein#add('metakirby5/codi.vim', {'on_cmd': 'Codi*'})
     call dein#add('vim-scripts/csv.vim', {'on_ft': 'csv'})
-    call dein#add('KabbAmine/zeavim.vim', {'on_ft': ['Zealvim*', 'Docset']})
+    call dein#add('KabbAmine/zeavim.vim', {'on_cmd': ['Zealvim*', 'Docset*']})
 " }}}
 " ------------------ textobjs -------------------- {{{
     call dein#add('vim-scripts/argtextobj.vim')
@@ -128,18 +123,18 @@ if dein#load_state(g:dein#cache_directory)
 " ------------------ Web ------------------------- {{{
     call dein#add('mattn/emmet-vim', on_html)
     call dein#add('othree/html5.vim', on_html)
-    call dein#add('othree/xml.vim')
+    call dein#add('othree/xml.vim', {'on_ft': 'xml'})
 " }}}
 " ------------------ Markdown/Writing ------------------- {{{
     call dein#add('dhruvasagar/vim-table-mode', on_markdown)
-    call dein#add('junegunn/goyo.vim', {'on_cmd': 'Goyo'})
+    call dein#add('junegunn/goyo.vim', {'on_cmd': 'Goyo*'})
     call dein#add('iamcco/mathjax-support-for-mkdp', on_markdown)
     call dein#add('iamcco/markdown-preview.vim', on_markdown)
 " }}}
 " ------------------ Completer --------------------- {{{
     let on_cxx = {'on_ft': ['c', 'cpp']}
     " call dein#add('maralla/completor.vim', {'if': '!has("nvim")'})
-    call dein#add('autozimu/LanguageClient-neovim', {'name': 'lsp-client', 'on_cmd': 'LanguageClient*'})
+    call dein#add('autozimu/LanguageClient-neovim', {'name': 'lsp-client'})
     call dein#add('othree/csscomplete.vim', {'on_ft': ['css', 'html']})
     call dein#add('roxma/nvim-yarp')
     call dein#add('roxma/vim-hug-neovim-rpc')
@@ -192,9 +187,10 @@ if dein#load_state(g:dein#cache_directory)
 " }}}
 
     call s:config_hook()
-    let f = s:confdir . '/_all_.vim'
-    if filereadable(f) | exe 'so' f | endif
     call dein#end()
     call dein#call_hook('source')
     " call dein#save_state()
 endif
+
+filetype plugin indent on
+syntax enable

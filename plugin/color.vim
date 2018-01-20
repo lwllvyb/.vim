@@ -19,11 +19,18 @@ fun! s:setcolor()
     let vertbg = synIDattr(hlID('VertSplit'), 'fg', 'gui')
     " if !empty(vertbg) | exe 'hi' 'VertSplit' 'guibg=' . vertbg | endif
 
-    hi NormalDeep guibg=#f0f0f0
-    hi CursorLineDeep guibg=#007ACC
-    hi NormalQF guibg=#E6E7E8
-    hi NormalHelp guibg=#F0E9DF
-    " hi HelpNormal guibg=#EEEEEE
+    if &bg == 'light'
+        hi NormalDeep guibg=#f0f0f0
+        hi CursorLineDeep guibg=#007ACC
+        hi NormalQF guibg=#E6E7E8
+        hi NormalHelp guibg=#F0E9DF
+    else
+        hi NormalDeep guibg=#252526
+        hi CursorLineDeep guibg=#3F3F46
+        hi NormalQF guibg=#3F3F40
+        hi NormalHelp guibg=#3F3F40
+    endif
 endf
 
+call s:setcolor()
 au ColorScheme * call <SID>setcolor()
