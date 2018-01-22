@@ -88,6 +88,7 @@ fun! s:paste()
 endf
 " }}}
 
+" Move cursor to a file window {{{
 fun! s:move2filewin()
     winc p
     let nr = winnr()
@@ -100,7 +101,9 @@ fun! s:move2filewin()
         if winnr() == nr | break | endif
     endw
 endf
+" }}}
 
+" {{{
 fun! s:search_file()
     let cur_node = g:NERDTreeFileNode.GetSelected()
     let cur_path = cur_node.path.getDir().str()
@@ -111,6 +114,7 @@ fun! s:search_file()
     endif
     exe 'Denite file_rec:' . cur_path
 endf
+" }}}
 
 if exists('&winhl')
     setl winhl=Normal:NormalDeep,CursorLine:CursorLineDeep
@@ -140,8 +144,12 @@ endif
 if !exists('s:checkleave')
     fun! s:checkleave()
         if getbufvar('#', '&ft') == 'nerdtree' && getbufvar('#', '&bt') == 'nofile'
-            silent! buffer #
-            echo 'You can not switch to another buffer in a NERDTree window'
+            let nr = bufnr('%')
+            if empty(getbufvar(nr, '&bt'))
+                silent! b! #
+                call s:move2filewin()
+                exe nr 'b!'
+            endif
         endif
     endf
     au BufEnter * call <sid>checkleave()
