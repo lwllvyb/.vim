@@ -1,4 +1,6 @@
 
+inoremap <buffer><silent><m-cr> <esc>yyo<c-r>=iconv(system(@@),'gbk','utf8')<cr>
+
 fun! s:gen_prog_wrap(path)
     call append(0, '@echo off')
     call setline(2, '%~dp0\' . a:path . ' %*')
