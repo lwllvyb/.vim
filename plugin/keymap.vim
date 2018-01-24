@@ -56,15 +56,15 @@ inoremap <c-down> <c-x><c-y>
 " }}}
 
 " Bufline {{{
-nnoremap <silent><m-1> :call bufline#(1)<cr>
-nnoremap <silent><m-2> :call bufline#(2)<cr>
-nnoremap <silent><m-3> :call bufline#(3)<cr>
-nnoremap <silent><m-4> :call bufline#(4)<cr>
-nnoremap <silent><m-5> :call bufline#(5)<cr>
-nnoremap <silent><m-6> :call bufline#(6)<cr>
-nnoremap <silent><m-7> :call bufline#(7)<cr>
-nnoremap <silent><m-8> :call bufline#(8)<cr>
-nnoremap <silent><m-9> :call bufline#(9)<cr>
+nnoremap <silent><m-1> :call bufline#goto(1)<cr>
+nnoremap <silent><m-2> :call bufline#goto(2)<cr>
+nnoremap <silent><m-3> :call bufline#goto(3)<cr>
+nnoremap <silent><m-4> :call bufline#goto(4)<cr>
+nnoremap <silent><m-5> :call bufline#goto(5)<cr>
+nnoremap <silent><m-6> :call bufline#goto(6)<cr>
+nnoremap <silent><m-7> :call bufline#goto(7)<cr>
+nnoremap <silent><m-8> :call bufline#goto(8)<cr>
+nnoremap <silent><m-9> :call bufline#goto(9)<cr>
 " }}}
 
 " Window operation {{{
@@ -78,9 +78,9 @@ nnoremap <m-l> <c-w>l
 " Switch file {{{
 nnoremap <silent><m-[> :call bufline#prev()<cr>
 nnoremap <silent><m-]> :call bufline#next()<cr>
-nnoremap <silent><expr>' v:count ? ":Bufline 'split','right'\<cr>": "'"
-nnoremap <silent><expr>. v:count ? ":Bufline 'split','below'\<cr>": "."
-nnoremap <silent><expr><tab> v:count ? ":Bufline\<cr>": "\<tab>"
+nnoremap <silent><expr>' v:count ? ":\<c-u>call bufline#goto(v:count,'right')\<cr>": "'"
+nnoremap <silent><expr>. v:count ? ":\<c-u>call bufline#goto(v:count,'below')\<cr>": '.'
+nnoremap <silent><expr><tab> v:count ? ":\<c-u>call bufline#goto(v:count)\<cr>": "\<tab>"
 nnoremap <silent><c-p> :DeniteProjectDir file_rec<cr>
 nnoremap <silent><m-p> :Denite outline<cr>
 nnoremap <silent><c-tab> :Denite buffer<cr>

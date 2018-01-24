@@ -6,8 +6,6 @@
 " =============================================================================
 let s:files = []    " files bufnrs
 
-com! -count -nargs=* Bufline call bufline#(v:count ? v:count: input('# '), <args>)
-
 fun! bufline#hilight()
     hi! link MyTabLineSel Normal
     " hi clear TabLineFill
@@ -76,25 +74,25 @@ fun! s:filesbufnr()
 endf
 
 " Select a buffer {{{
-fun! bufline#(n, ...)
-    let n = a:n - 1
+fun! bufline#goto(...)
+    let n = (a:0 ? a:1 : nr2char(getchar())) - 1
     if n < len(s:files) && n >= 0
         " split window
-        if index(a:000, 'split') >= 0
+        if a:0 > 1
             let split = 'winc s'
             let direction = 'aboveleft'
-            if index(a:000, 'right') >= 0
+            if index(a:000, 'right') > 0
                 let split = 'winc v'
                 let direction = 'belowright'
             endif
-            if index(a:000, 'left') >= 0
+            if index(a:000, 'left') > 0
                 let split = 'winc v'
                 let direction = 'aboveleft'
             endif
-            if index(a:000, 'below') >= 0
+            if index(a:000, 'below') > 0
                 let direction = 'belowright'
             endif
-            if index(a:000, 'above') >= 0
+            if index(a:000, 'above') > 0
                 let direction = 'aboveleft'
             endif
             exe direction split
