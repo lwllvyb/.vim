@@ -59,7 +59,7 @@ if !exists('g:dein#cache_directory')
 endif
 
 " load the plugins
-if dein#load_state(g:dein#cache_directory)
+fun! s:load()
     call dein#begin(g:dein#cache_directory)
 
     let my_plug_path = s:path . '/myplugs'
@@ -181,15 +181,19 @@ if dein#load_state(g:dein#cache_directory)
     call dein#add('jpalardy/vim-slime', {'on_if': 'has("unix")'})
 " }}}
 " ------------------ UI Plugins ------------------- {{{
-    call dein#add('rhysd/nyaovim-popup-tooltip')
-    call dein#add('rhysd/nyaovim-mini-browser')
-    call dein#add('rhysd/nyaovim-markdown-preview')
+    " call dein#add('rhysd/nyaovim-popup-tooltip')
+    " call dein#add('rhysd/nyaovim-mini-browser')
+    " call dein#add('rhysd/nyaovim-markdown-preview')
 " }}}
 
     call s:config_hook()
     call dein#end()
     call dein#call_hook('source')
     " call dein#save_state()
+endf
+
+if dein#load_state(g:dein#cache_directory)
+    call s:load()
 endif
 
 filetype plugin indent on

@@ -27,9 +27,11 @@ fun! s:config()
         \ 'myfiles': {
             \ 'description': 'My files',
             \ 'file_candidates': [
+                \ ['EnvInit', '~/.config/envs.vim/init.vim'],
                 \ ['Hosts', has('win32') ?
                     \ 'C:\Windows\System32\drivers\etc\hosts': '/etc/hosts'],
-                \ ['MyVimrc', '~/.config/envs.vim/init.vim']]
+                \ ['OniConfig', has('win32') ?
+                    \ '$APPDATA\oni\config.js': '~/.oni/config.js']]
         \ }
     \ })
 

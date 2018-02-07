@@ -2,9 +2,9 @@
 " Filename:    autoload\imap.vim
 " Author:      luzhlon
 " Date:        2017-09-01
-" Description: return different RHS according a list of conditions by imap#
+" Description: return different RHS according a list of conditions by condmap#
 " =============================================================================
-fun! imap#(k, opt)
+fun! condmap#(k, opt)
     " 获取当前buffer的imap表，
     "   表里的数字键用来记录第i个键，
     "   '_nr'用来记录下一个要映射的键的序号，
@@ -21,8 +21,8 @@ fun! imap#(k, opt)
     if empty(conds)     " add the k firstly
         let m[k] = conds | let m[m._nr] = k
         " do mapping
-        exe printf('imap <expr><buffer> %s imap#_rhs(%d)',
-                    \ a:k, m._nr)
+        exe printf('%s <expr><buffer> %s condmap#_rhs(%d)',
+                    \ get(a:opt, 'map', 'inoremap'), a:k, m._nr)
         let m._nr += 1
     endif
     " 添加到条件列表
@@ -31,11 +31,11 @@ fun! imap#(k, opt)
     let RHS = get(a:opt, 'rhs')
     call assert_true(RHS, 'You must specify the "rhs" field')
     call add(conds, type(M1) == v:t_string ?
-            \ funcref('imap#match', [M1, M2]) : M1)
+            \ funcref('condmap#match', [M1, M2]) : M1)
     call add(conds, RHS)
 endf
 " a:b is text before cursor, a:a is after
-fun! imap#match(b, a)
+fun! condmap#match(b, a)
     let c = col('.')
     let n = c - 1
     let l = getline('.')
@@ -44,7 +44,7 @@ fun! imap#match(b, a)
     return f =~ a:b && s =~ a:a
 endf
 " get the rhs of the b:_imap[b:_imap[n]] by conditions
-fun! imap#_rhs(n)
+fun! condmap#_rhs(n)
     let k = b:_imap[a:n]
     let conds = b:_imap[k]
     let i = 0

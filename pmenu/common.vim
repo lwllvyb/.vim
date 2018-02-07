@@ -1,23 +1,4 @@
 
-fun! CloseBuffer()
-    try
-        if &bt=='nofile' && 2 == confirm(
-                    \ 'Not a file, continue quit?',
-                    \ "&Yes\ n&No", 2, "Warning")
-            return
-        elseif &bt == 'terminal' && has('nvim')
-            set bh=wipe
-            call jobclose(b:terminal_job_id)
-        endif
-        let curbuf = bufnr('%')
-        let lastbuf = bufnr('#')
-        exe bufexists(lastbuf) && empty(getbufvar(lastbuf, '&bt')) ? 'b!#': 'bnext'
-        exe 'confirm' curbuf 'bw'
-    catch
-        echoe v:errmsg
-    endt
-endf
-
 call popup#reg('common#file', pmenu#new('File',
     \ ['n:', 'New', "conf ene"],
     \ ['o:', 'Open ...', "browse confirm e"],
@@ -37,7 +18,7 @@ call popup#reg('common#file', pmenu#new('File',
     \ ['m', 'Temp files', ':conf e $TEMP/'],
     \ '-----------------------------------------',
     \ ['s:', 'Save', "write"],
-    \ ['d:', 'Close', "call CloseBuffer()"],
+    \ ['d:', 'Close', "call editor#close_file()"],
     \ ['a:', 'Save all', "wa"],
     \ ['x:', 'Exit', "confirm qa"]
 \ ))

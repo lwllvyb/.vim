@@ -46,20 +46,25 @@ com! -buffer GenHtml up | !pandoc -f markdown_github -t html %:p -o %:p:r.html
 
 let s:tab_cond = {->g:mdm#tab#enable && getline('.')=~'^\s*|'}
 
-call imap#("<tab>", {
-    \ 'match': s:tab_cond, 'rhs': "\<c-r>=mdmtab#jump('l')\<cr>"
+call condmap#("<tab>", {
+    \ 'match': s:tab_cond,
+    \ 'rhs': "\<c-r>=mdmtab#jump('l')\<cr>"
     \ })
-call imap#("<s-tab>", {
-    \ 'match': s:tab_cond, 'rhs': "\<c-r>=mdmtab#jump('h')\<cr>"
+call condmap#("<s-tab>", {
+    \ 'match': s:tab_cond,
+    \ 'rhs': "\<c-r>=mdmtab#jump('h')\<cr>"
     \ })
-call imap#("<cr>", {
-    \ 'match': s:tab_cond, 'rhs': "\<c-r>=mdmtab#jump('j')\<cr>"
+call condmap#("<cr>", {
+    \ 'match': s:tab_cond,
+    \ 'rhs': "\<c-r>=mdmtab#jump('j')\<cr>"
     \ })
-call imap#("<s-cr>", {
-    \ 'match': s:tab_cond, 'rhs': "\<c-r>=mdmtab#jump('k')\<cr>"
+call condmap#("<s-cr>", {
+    \ 'match': s:tab_cond,
+    \ 'rhs': "\<c-r>=mdmtab#jump('k')\<cr>"
     \ })
-call imap#("<tab>", {
-    \ 'match': '-$', 'rhs': "\<c-r>=align#('-')\<cr>"
+call condmap#("<tab>", {
+    \ 'match': '-$',
+    \ 'rhs': "\<c-r>=align#('-')\<cr>"
     \ })
 
 if !exists('g:popup') || len(popup#menus(&ft))
