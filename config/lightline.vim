@@ -62,6 +62,7 @@ au ColorScheme * call <sid>set_scheme()
 " }}}
 
 let g:lightline.enable = {'statusline': 1, 'tabline': 1}
+au VimEnter,BufNew,BufAdd,BufDelete,BufUnload,BufWipeout * let &showtabline = len(bufline#files()) > 1 ? 2: 0
 
 " let g:lightline.component_function = {'filetype': 'MyFiletype', 'fileformat': 'MyFileformat'}
 

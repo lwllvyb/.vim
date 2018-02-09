@@ -29,15 +29,13 @@ fun! ResizeWindow()
     redraw
 endf
 
-call popup#reg('window#n', pmenu#new('Window & Buffer',
+call popup#reg('window', pmenu#new('Window & Buffer',
     \ ['o:', 'New tabpage', 'tabe'],
     \ ['x:', 'Close tabpage', 'tabc'],
     \ ['p!', 'Prev tabpage', 'gT'],
     \ ['n!', 'Next tabpage', 'gt'],
     \ '------------------------------',
-    \ ['v:', 'Split', "Bufline 'split', 'right'"],
-    \ ['w:', 'Wipe', 'setl bh=wipe | winc c'],
+    \ ['w', 'Wipe', "\<c-w>\<c-u>"],
     \ ['s:', 'Resize',  'call ResizeWindow()'],
-    \ ['u:', 'Unload buffer', 'bun'],
     \ ['c', 'Copy buffer', "ggVGy:bot sp ene!\<cr>Vp"]
 \ ))

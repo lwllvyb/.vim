@@ -44,7 +44,7 @@ call bufline#hilight()
 au ColorScheme * call bufline#hilight()
 
 " Get buffer list of tabpages
-fun! s:tabsbufnr()
+fun! bufline#tabbufs()
     let list = []
     for i in range(1, tabpagenr('$'))
         let fl = tabpagebuflist(i)
@@ -66,7 +66,7 @@ if !exists('g:bufline#buftype')
 endif
 
 " Get all buffers of common files
-fun! s:filesbufnr()
+fun! bufline#files()
     return map(filter(getbufinfo({'buflisted':1}),
                 \ {i,v->index(g:bufline#buftype, getbufvar(v['bufnr'], '&bt')) >= 0}),
             \ {i,v->v['bufnr']})
@@ -138,7 +138,7 @@ fun! s:spec_name()
 endf
 
 fun! bufline#lightline()
-    let s:files = s:filesbufnr()
+    let s:files = bufline#files()
     let curnr = bufnr('%')
     let left = [] | let middle = [] | let right = []
     let i = 1 | let l = left
@@ -159,14 +159,14 @@ endf
 
 " set tabline=%!bufline#bufs() {{{
 fun! bufline#bufs()
-    let s:files = s:filesbufnr()
+    let s:files = bufline#files()
     return s:get(s:files)
 endf
 " }}}
 
 " set tabline=%!bufline#tabs() {{{
 fun! bufline#tabs()
-    return s:get(s:tabsbufnr())
+    return s:get(bufline#tabbufs())
 endf
 " }}}
 

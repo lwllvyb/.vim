@@ -1,16 +1,21 @@
 
-if has('nvim')
-    let s:term = [',:', 'Terminal', 'winc s | term bash']
-else
-    let s:term = [',:', 'Terminal', 'terminal bash']
-endif
-
 call popup#reg('util#n', pmenu#new('Util',
-    \ [' !', 'No hilight', ":noh\<cr>"],
-    \ ["\t:", 'NERDTreeToggle', 'NERDTreeToggle'],
-    \ [".:", 'NERDTreeFind', 'NERDTreeFind'],
-    \ ["\r", 'Do last command', '@:'],
-    \ s:term
+    \ [' ', 'Common', [
+        \ ["\t:", 'NERDTreeToggle', 'NERDTreeToggle'],
+        \ ["\r:", 'NERDTreeFind', 'NERDTreeFind'],
+        \ [' !', 'No hilight', ":noh\<cr>"],
+        \ ['.!', 'Do last command', '@:'],
+    \ ]],
+    \ ["\t:", 'Tools', [
+        \ ['c', 'cmd.exe', "call open#cmd()"],
+        \ ['p', 'powershell', "call open#powershell()"],
+        \ ['b', 'bash', "call open#bash()"],
+        \ ['d', 'File directory', "call open#curdir()"],
+        \ ['r', 'reopen vim', "call open#reopen()"],
+        \ ['f', 'reopen file', "call open#reopen_curfile()"],
+        \ ['.', 'File under cursor', "call open#cur_file()"],
+        \ [',', 'Bash', has('nvim') ? 'winc s | term bash': 'terminal bash'],
+    \ ]],
 \ ))
 
 let s:baidu = ":call web#search#by_baidu(@\")\<cr>"

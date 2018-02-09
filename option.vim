@@ -8,10 +8,9 @@ else
     set incsearch                   " hilight the search-result in real time
     set display=lastline            " the display option, about how to render the screen text
     set backspace=indent,eol,start  " the backspace can delete to previous line
-    set imdisable
-
-    au CmdwinEnter,InsertEnter * set noimd
-    au CmdwinLeave,InsertLeave * set imd
+    set imc imi=2
+    " au CmdwinEnter,InsertEnter * set noimd
+    " au CmdwinLeave,InsertLeave * set imd
 endif
 
 set title                       " show the filename in caption (by default)

@@ -69,6 +69,7 @@ nnoremap <silent><m-9> :call bufline#goto(9)<cr>
 
 " Window operation {{{
 nnoremap <c-w><c-e> <c-w>c
+nnoremap <c-w><c-u> :setl bh=wipe \| close<cr>
 nnoremap <m-j> <c-w>j
 nnoremap <m-k> <c-w>k
 nnoremap <m-h> <c-w>h
@@ -76,14 +77,16 @@ nnoremap <m-l> <c-w>l
 " }}}
 
 " Switch file {{{
-nnoremap <silent><m-[> :call bufline#prev()<cr>
-nnoremap <silent><m-]> :call bufline#next()<cr>
+nnoremap <silent><m-i> :call bufline#prev()<cr>
+nnoremap <silent><m-o> :call bufline#next()<cr>
 nnoremap <silent><expr>' v:count ? ":\<c-u>call bufline#goto(v:count,'right')\<cr>": "'"
 nnoremap <silent><expr>. v:count ? ":\<c-u>call bufline#goto(v:count,'below')\<cr>": '.'
+nnoremap <silent><expr>o v:count ? ":\<c-u>call bufline#goto(v:count,'above')\<cr>": 'o'
 nnoremap <silent><expr><tab> v:count ? ":\<c-u>call bufline#goto(v:count)\<cr>": "\<tab>"
 nnoremap <silent><c-p> :DeniteProjectDir file_rec<cr>
 nnoremap <silent><m-p> :Denite outline<cr>
 nnoremap <silent><c-tab> :Denite buffer<cr>
+nnoremap <silent><c-u> :call editor#close_file()<cr>
 " }}}
 
 " Quickfix {{{
@@ -127,6 +130,8 @@ imap <silent><F5> <esc><F5>
 " }}}
 
 " Select && Edit {{{
+map <m-v> <Plug>(expand_region_expand)
+map <m-V> <Plug>(expand_region_shrink)
 " Indent
 xnoremap <tab> >gv
 xnoremap <s-tab> <gv
@@ -151,6 +156,7 @@ noremap! <expr><c-g><c-d> km#paste(expand('%:p:h'))
 noremap  <silent><m-/> :Commentary<cr>
 " Save && Exit
 nnoremap <silent><c-s> :update<cr>
+inoremap <silent><c-s> <c-r>=execute('update')?'':''<cr>
 nnoremap <silent><c-c><c-c> :conf qa<cr>
 nnoremap + <c-a>
 nnoremap - <c-x>
