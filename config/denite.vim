@@ -28,6 +28,7 @@ fun! s:config()
             \ 'description': 'My files',
             \ 'file_candidates': [
                 \ ['EnvInit', '~/.config/envs.vim/init.vim'],
+                \ ['GitConfig', '~/.gitconfig'],
                 \ ['Hosts', has('win32') ?
                     \ 'C:\Windows\System32\drivers\etc\hosts': '/etc/hosts'],
                 \ ['OniConfig', has('win32') ?

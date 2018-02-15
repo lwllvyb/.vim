@@ -43,7 +43,7 @@ map <c-g> <Plug>(easymotion-s)
 
 " Completion {{{
 inoremap <expr><c-q> pumvisible() ? "\<c-e>": "\<c-q>"
-inoremap <expr><silent><cr> km#on_enter()
+inoremap <expr><silent><cr> km#enter_insert()
 inoremap <expr><silent><c-j> pumvisible() ? "\<c-n>": deoplete#manual_complete()
 inoremap <m-/> <c-n>
 " }}}
@@ -103,8 +103,7 @@ vnoremap <c-j> zf
 inoremap <m-o> <esc>
 nnoremap Q gQ
 nnoremap <esc> <c-o>
-" noremap <expr><cr> km#enter()
-noremap <expr><cr> empty(&bt)?'%':"\<cr>"
+noremap <expr><cr> km#enter_normal()
 
 nnoremap <silent><m-m><m-m> :BookmarkToggle<cr>
 nnoremap <silent><m-m><m-n> :BookmarkNext<cr>
@@ -132,6 +131,8 @@ imap <silent><F5> <esc><F5>
 " Select && Edit {{{
 map <m-v> <Plug>(expand_region_expand)
 map <m-V> <Plug>(expand_region_shrink)
+nmap <expr>dq km#delete_quote()
+nmap <expr>cq km#change_quote()
 " Indent
 xnoremap <tab> >gv
 xnoremap <s-tab> <gv
@@ -187,6 +188,10 @@ if exists(':tnoremap')
     endif
 endif
 " }}}
+
+" Visual Search
+xnoremap <c-s> y/\V<c-r>"
+xnoremap <c-w> y/\V\<<c-r>"\>
 
 " Abbreviations {{{
 cabbrev baf breakadd func

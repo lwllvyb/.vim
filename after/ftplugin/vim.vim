@@ -12,6 +12,10 @@ imap <buffer><F5> <esc><F5>
 
 nnoremap <expr><buffer><c-j> (foldlevel('.') ? 'za': 'V}zfzc')
 
+if has_key(g:, 'textobj#delimited#default_patterns')
+    let b:textobj_delimited_patterns = g:textobj#delimited#default_patterns
+endif
+
 if exists('g:popup')
     call popup#reg('common#goto', pmenu#new('Goto',
         \ ['f:', 'Function', 'call vmode#goto_define()'],

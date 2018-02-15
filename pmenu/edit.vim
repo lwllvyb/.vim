@@ -23,9 +23,9 @@ let s:subs = ['s!', 'Substitute', s:subs]
 
 call popup#reg('edit#n', pmenu#new('Edit',
     \ ['f', 'Line-format', [
-         \ ['d:', 'DOS', 'set ff=dos'],
-         \ ['u:', 'UNIX', 'set ff=unix'],
-         \ ['m:', 'MAC', 'set ff=mac']]],
+        \ ['d:', 'DOS', 'set ff=dos'],
+        \ ['u:', 'UNIX', 'set ff=unix'],
+        \ ['m:', 'MAC', 'set ff=mac']]],
     \ ['h', 'Hex-edit', [
         \ ['b:', 'Start' , 'set bin|%!xxd'],
         \ ['e:', 'End' , '%!xxd -r']]],
@@ -71,8 +71,10 @@ fun! SelectChar(str)
 endf
 
 call popup#reg('edit#i', pmenu#new('Edit',
-    \ ['l', 'Dump line', "\<esc>yypA"],
-    \ ['d', 'Delete line', "\<c-o>dd"],
+    \ [',!', 'Decrease indent', "\<c-d>"],
+    \ ['.!', 'Increase indent', "\<c-t>"],
+    \ ['l!', 'Dump line', "\<esc>yypA"],
+    \ ['d!', 'Delete line', "\<c-o>dd"],
     \ ['i', 'Insert char', [
         \ ['a', 'Arrow', "\<c-r>=SelectChar('↑↓←→↖↗↘↙↔↕')\<cr>"],
         \ ['e', 'Emoji', "\<c-r>=SelectChar('🔺🔻💠🔲')\<cr>"]
