@@ -55,9 +55,19 @@ fun! km#paste(text)
     return a:text
 endf
 
+fun! km#_match_cursor()
+    if has_key(b:, 'match_words')
+        let word = expand('<cword>')
+        for pat in split(b:match_words, '[:,]')
+            if word =~# pat | return 1 | endif
+        endfo
+    endif
+endf
+
 fun! km#enter_normal()
     let cc = matchstr(getline('.'), '.', col('.')-1, 1)
-    return index(split(&matchpairs, '[:,]'), cc) < 0 ? "\<cr>": '%'
+    let ispair = index(split(&matchpairs, '[:,]'), cc) >= 0
+    return ispair || km#_match_cursor() ? '%': "\<cr>"
 endf
 
 let s:surround_char = {
@@ -80,6 +90,15 @@ fun! km#change_quote()
     return has_key(s:surround_char, cc) ? 'cs' . s:surround_char[cc]: ''
 endf
 
+fun! km#run()
+    if exists('g:xmproj')
+        XMake run
+    else
+        call qrun#()
+    endif
+endf
+
+" commandline-edit {{{
 fun! km#cmd_del2wordend()
     let begin = getcmdpos()
     " Calculate the count of chars to delete after move to word right
@@ -116,3 +135,4 @@ fun! km#cmd_backward_word()
     call setcmdpos(pos + 2)
     return ''
 endf
+" }}}

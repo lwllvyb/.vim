@@ -73,21 +73,22 @@ fun! bufline#files()
     " return map(tabpagebuflist(), {i,v->empty(getbufvar(v, '&bt'))})
 endf
 
+fun! s:gotobufwin(nr)
+    let wid = bufwinid(a:nr)
+endf
+
 " Select a buffer {{{
 fun! bufline#goto(...)
-    let n = (a:0 ? a:1 : nr2char(getchar())) - 1
-    if n < len(s:files) && n >= 0
-        " split window
-        if a:0 > 1
+    let nr = get(s:files, (a:0 ? a:1 : nr2char(getchar())) - 1)
+    if nr && !win_gotoid(bufwinid(nr))  " goto exists window
+        if a:0 > 1                      " split window
             let split = 'winc s'
             let direction = 'aboveleft'
             if index(a:000, 'right') > 0
-                let split = 'winc v'
-                let direction = 'belowright'
+                let [split, direction] = ['winc v', 'belowright']
             endif
             if index(a:000, 'left') > 0
-                let split = 'winc v'
-                let direction = 'aboveleft'
+                let [split, direction] = ['winc v', 'aboveleft']
             endif
             if index(a:000, 'below') > 0
                 let direction = 'belowright'
@@ -98,7 +99,7 @@ fun! bufline#goto(...)
             exe direction split
         endif
         " switch buffer
-        exe s:files[n] 'b!'
+        exe nr 'b!'
     endif
 endf
 " }}}
@@ -106,15 +107,20 @@ endf
 fun! bufline#next()
     let i = index(s:files, bufnr('%'))
     if i >= 0
-        let n = s:files[(i + 1) % len(s:files)]
-        exe n 'b!'
+        let nr = s:files[(i + 1) % len(s:files)]
+        if !win_gotoid(bufwinid(nr))
+            exe nr 'b!'
+        endif
     endif
 endf
 
 fun! bufline#prev()
     let i = index(s:files, bufnr('%'))
     if i >= 0
-        exe s:files[i - 1] 'b!'
+        let nr = s:files[i - 1]
+        if !win_gotoid(bufwinid(nr))
+            exe nr 'b!'
+        endif
     endif
 endf
 
