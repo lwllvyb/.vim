@@ -5,16 +5,16 @@ fun! hexcalc#init()
     set nonumber modifiable
     setf vim
 
-    inoremap <buffer><silent><m-=> <c-o>:call hexcalc#calc('=')<cr><end>
-    inoremap <buffer><silent><m-;> <c-o>:call hexcalc#calc('e')<cr>
-    inoremap <buffer><silent><m-.> <c-o>:call hexcalc#calc('n')<cr><down><end>
-    inoremap <buffer><silent><m-x> <c-o>:call hexcalc#hex()<cr><end>
+    inoremap <buffer><silent><m-;> <c-o>:call hexcalc#calc('=')<cr><end>
+    inoremap <buffer><silent><m-e> <c-o>:call hexcalc#calc('e')<cr>
+    inoremap <buffer><silent><m-cr> <c-o>:call hexcalc#calc('n')<cr><down><end>
+    inoremap <buffer><silent><tab> <c-o>:call hexcalc#hex()<cr><end>
 
     call append(0, '"--------------------------------------------------------')
-    call append(1, '" <m-=>  ----- EXPR = VAL')
-    call append(2, '" <m-;>  ----- echo VAL')
-    call append(3, '" <m-.>  ----- EXPR \n VAL')
-    call append(4, '" <m-x>  ----- Toggle Hex')
+    call append(1, '" <m-;>  ----- EXPR = VAL')
+    call append(2, '" <m-e>  ----- echo VAL')
+    call append(3, '" <m-cr>  ----- EXPR \n VAL')
+    call append(4, '" <tab>  ----- Toggle Hex')
     call append(5, '"--------------------------------------------------------')
     call append(6, '')
 

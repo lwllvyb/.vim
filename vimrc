@@ -30,6 +30,7 @@ fun! s:load_local()
 endf
 
 call s:load_local()
+Source default.vim
 " }}}
 
 " load the plugins
