@@ -11,7 +11,8 @@ xmap <C-\>  <Plug>(neosnippet_expand_target)
 " Note: It must be "imap" and "smap".  It uses <Plug> mappings.
 fun! s:expand()
     if pumvisible()
-        return "\<down>"
+        call feedkeys("\<c-n>", 'n')
+        return ''
     elseif neosnippet#expandable_or_jumpable()
         return "\<Plug>(neosnippet_expand_or_jump)"
     else

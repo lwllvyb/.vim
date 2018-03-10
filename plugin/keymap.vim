@@ -36,6 +36,10 @@ xnoremap <expr><c-e> col('.') == col('$') ? 'g_': '$'
 nnoremap <expr><c-e> col('.') + 1 == col('$') ? 'g_': '$'
 nnoremap <expr><c-l> km#redraw()
 
+nmap <end> <c-e>
+xmap <end> <c-e>
+imap <home> <c-a>
+
 map <c-h> <Plug>(easymotion-bd-wl)
 map <c-k> <Plug>(easymotion-bd-jk)
 map <c-g> <Plug>(easymotion-s)
@@ -100,10 +104,9 @@ vnoremap <c-j> zf
 " }}}
 
 " Various {{{
-inoremap <m-o> <esc>
 nnoremap Q gQ
-nnoremap <esc> <c-o>
-noremap <expr><cr> km#enter_normal()
+" nnoremap <esc> <c-o>
+map <expr><cr> km#enter_normal()
 
 nnoremap <silent><m-m><m-m> :BookmarkToggle<cr>
 nnoremap <silent><m-m><m-n> :BookmarkNext<cr>
@@ -113,24 +116,18 @@ nnoremap <silent><m-m><m-c> :BookmarkClear<cr>
 cnoremap ( ()<left>
 cnoremap { {}<left>
 cnoremap [ []<left>
+
+inoremap <m-:> <c-r>=execute(input(':','','command'))?'':''<cr>
 " }}}
 
 " F5 -- Run {{{
-fun! MyRun()
-    if exists('g:xmproj')
-        XMake run
-    else
-        call qrun#()
-    endif
-endf
-
-noremap <silent><F5> :<c-u>call MyRun()<cr>
-imap <silent><F5> <esc><F5>
+noremap <silent><F5> :<c-u>call km#run()<cr>
+noremap <silent><m-f5> :<c-u>call qrun#()<cr>
 " }}}
 
 " Select && Edit {{{
-map <m-v> <Plug>(expand_region_expand)
-map <m-V> <Plug>(expand_region_shrink)
+map <c-d> <Plug>(expand_region_expand)
+xmap <m-d> <Plug>(expand_region_shrink)
 nmap <expr>dq km#delete_quote()
 nmap <expr>cq km#change_quote()
 " Indent
@@ -161,6 +158,8 @@ inoremap <silent><c-s> <c-r>=execute('update')?'':''<cr>
 nnoremap <silent><c-c><c-c> :conf qa<cr>
 nnoremap + <c-a>
 nnoremap - <c-x>
+inoremap <s-home> <esc>v0<c-g>
+inoremap <s-end> <c-o>vg_<c-g>
 " noremap <c-a> gggH<c-o>G
 nnoremap <c-a> ggVG
 " }}}
@@ -189,9 +188,10 @@ if exists(':tnoremap')
 endif
 " }}}
 
-" Visual Search
+" Visual Search {{{
 xnoremap <c-s> y/\V<c-r>"
 xnoremap <c-w> y/\V\<<c-r>"\>
+" }}}
 
 " Abbreviations {{{
 cabbrev baf breakadd func
@@ -202,4 +202,15 @@ cnoreabbrev enr echo bufnr('%')
 cnoreabbrev lc let @+ =
 
 cnoreabbrev chd [一二三四五六七八九十]
-"}}} 
+" }}} 
+
+if has('nvim')
+    fun! s:doimap()
+        for km in nvim_get_keymap('n')
+            if km.lhs =~? '<f\d\+>\|<m-.\+>' && empty(maparg(km.lhs, 'i'))
+                exe 'imap' km['lhs'] '<esc>' . km['lhs']
+            endif
+        endfor
+    endf
+    au VimEnter * call <sid>doimap()
+endif
