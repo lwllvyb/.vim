@@ -9,29 +9,10 @@ com! -nargs=+ Source so <sfile>:h/<args>
 
 " load the options
 Source option.vim
-
-" load the local config {{{
-fun! s:load_envs(file)
-    let f = a:file
-    let cont = readfile(f)
-    let envs = json_decode(join(cont))
-    for [k, v] in items(envs)
-        let g:{k} = v
-    endfo
-endf
-
-fun! s:load_local()
-    let confdir = glob('~/.config/envs.vim')
-    if isdirectory(confdir)
-        call map(split(glob(confdir . '/*.json'), "\n"), {i,v->s:load_envs(v)})
-        " the init.vim of envs: for local configuration
-        sil! exe 'so' confdir.'/init.vim'
-    endif
-endf
-
-call s:load_local()
+" load the default configs
 Source default.vim
-" }}}
+" load the local configs
+exe 'so' glob('~/.config/local.vim')
 
 " load the plugins
 Source plugs.vim

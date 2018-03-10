@@ -105,10 +105,13 @@ nnoremap Q gQ
 nnoremap <esc> <c-o>
 noremap <expr><cr> km#enter_normal()
 
-nnoremap <silent><m-m><m-m> :BookmarkToggle<cr>
-nnoremap <silent><m-m><m-n> :BookmarkNext<cr>
-nnoremap <silent><m-m><m-p> :BookmarkPrev<cr>
-nnoremap <silent><m-m><m-c> :BookmarkClear<cr>
+" nnoremap <silent><m-m><m-m> :BookmarkToggle<cr>
+" nnoremap <silent><m-m><m-n> :BookmarkNext<cr>
+" nnoremap <silent><m-m><m-p> :BookmarkPrev<cr>
+" nnoremap <silent><m-m><m-c> :BookmarkClear<cr>
+
+nnoremap <silent>gx :call open#url_under_cursor()<cr>
+nnoremap <silent>g. :echo synIDattr(synID(line('.'), col('.'), 1), 'name')<cr>
 
 cnoremap ( ()<left>
 cnoremap { {}<left>
@@ -153,6 +156,8 @@ noremap! <expr><c-g>f     km#paste(@%)
 noremap! <expr><c-g><c-f> km#paste(expand('%:p'))
 noremap! <expr><c-g>d     km#paste(expand('%:h'))
 noremap! <expr><c-g><c-d> km#paste(expand('%:p:h'))
+noremap! <expr><c-g><c-l> km#paste(expand('%:p:h'))
+noremap! <expr><c-g><c-j> km#paste(expand('%:p:h'))
 " Toggle comment
 noremap  <silent><m-/> :Commentary<cr>
 " Save && Exit

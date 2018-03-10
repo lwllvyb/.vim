@@ -5,6 +5,7 @@ call popup#reg('util#n', pmenu#new('Util',
         \ ["\r:", 'NERDTreeFind', 'NERDTreeFind'],
         \ [' !', 'No hilight', ":noh\<cr>"],
         \ ['.!', 'Do last command', '@:'],
+        \ ['l', 'Open URL', 'gx'],
     \ ]],
     \ ["\t:", 'Tools', [
         \ ['c', 'cmd.exe', "call open#cmd()"],

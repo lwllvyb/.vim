@@ -8,13 +8,11 @@ else
 endif
 
 fun! open#(f)
-    let f = shellescape(a:f)
-    if s:env == 'windows'
-        sil exe '!rundll32 url.dll,FileProtocolHandler' f
-    elseif s:env == 'wsl'
-        sil exe '!rundll32.exe url.dll,FileProtocolHandler' f
+    let f = a:f =~ '^\(https\?\)' ? a:f: shellescape(a:f)
+    if s:env == 'windows' || s:env == 'wsl'
+        call system(join(['rundll32.exe', 'url.dll,FileProtocolHandler', f]))
     else
-        sil exe '!xdg-open' f
+        call system(join(['!xdg-open', f]))
     endif
 endf
 
@@ -101,4 +99,14 @@ fun! s:restart_task(cmd)
     else
         call job_start(['cmd', '/c', 'call', tf], {'stoponexit': ''})
     endif
+endf
+
+fun! open#url_under_cursor()
+    let i = col('.')
+    let line = getline('.')
+    while i > 0
+        let url = matchstr(line, 'https\?:\/\/\(\w\+\(:\w\+\)\?@\)\?\([A-Za-z0-9][-_0-9A-Za-z]*\.\)\{1,}\(\w\{2,}\.\?\)\{1,}\(:[0-9]\{1,5}\)\?\S*', i)
+        if !empty(url) | return open#(url) | endif
+        let i -= 1
+    endw
 endf

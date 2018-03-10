@@ -51,3 +51,11 @@ fun! hexcalc#hex()
     if type(v) != v:t_number | return | endif
     call setline('.', l =~ '^0x' ? printf('%d', v) : printf('0x%x',v))
 endf
+
+" TODO:
+fun! hexcalc#add() range
+    " When normal and exists many number in a line, calc line
+    " When normal and exists only one number in a line, calc the next line
+    " When range,
+    " When insert
+endf

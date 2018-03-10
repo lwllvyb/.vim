@@ -17,12 +17,10 @@ if has_key(g:, 'textobj#delimited#default_patterns')
 endif
 
 if exists('g:popup')
-    call popup#reg('common#goto', pmenu#new('Goto',
-        \ ['f:', 'Function', 'call vmode#goto_define()'],
-        \ ['v:', 'Variable', 'call vmode#search_var()'],
-    \ ), &ft)
     call popup#reg('util#n', pmenu#new('Util',
         \ ['e!', 'Echo ...', "viwyoechom \<c-r>\" | call getchar()\<esc>"],
         \ ['b:', 'Breakadd', 'breakadd here'],
+        \ ['f:', 'Function', 'call vmode#goto_define()'],
+        \ ['v!', 'Variable', "call vmode#search_var('\<c-r>\<c-w>')"],
     \ ), &ft)
 endif

@@ -58,6 +58,7 @@
 ### Binary
 
 * https://github.com/universal-ctags/ctags-win32/releases
+* http://releases.llvm.org/download.html
 
 ### Python3
 
