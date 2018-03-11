@@ -53,8 +53,8 @@ inoremap <m-/> <c-n>
 " }}}
 
 " Powerful line move {{{
-inoremap <silent><m-s-up> <c-r>=km#normal('ddkP')<cr>
-inoremap <silent><m-s-down> <c-r>=km#normal('ddp')<cr>
+inoremap <silent><m-s-k> <c-r>=km#normal('ddkP')<cr>
+inoremap <silent><m-s-j> <c-r>=km#normal('ddp')<cr>
 inoremap <c-up> <c-x><c-e>
 inoremap <c-down> <c-x><c-y>
 " }}}
@@ -168,6 +168,8 @@ inoremap <s-home> <esc>v0<c-g>
 inoremap <s-end> <c-o>vg_<c-g>
 " noremap <c-a> gggH<c-o>G
 nnoremap <c-a> ggVG
+
+imap <expr><silent><tab> km#tab_insert()
 " }}}
 
 " Terminal operation {{{

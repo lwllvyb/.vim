@@ -1,4 +1,8 @@
 
+fun! km#feedkeys(...)
+    call call('feedkeys', a:000) | return ''
+endf
+
 fun! km#normal(ks, ...)
     let result = col('.') == col('$') ? "\<end>" : ''
     exe a:0 ? 'norm!': 'norm' a:ks
@@ -70,6 +74,18 @@ fun! km#enter_normal()
     return ispair || km#_match_cursor() ? '%': "\<cr>"
 endf
 
+fun! km#tab_insert()
+    if pumvisible()
+        return km#feedkeys("\<c-n>", 'n')
+    endif
+    try
+        if neosnippet#expandable_or_jumpable()
+            return km#feedkeys("\<Plug>(neosnippet_expand_or_jump)")
+        endif
+    catch | endt
+    return km#feedkeys("\<tab>", 'n')
+endf
+
 let s:surround_char = {
     \ '{': '}', '}': '}',
     \ '(': ')', ')': ')',
@@ -100,10 +116,15 @@ endf
 
 " commandline-edit {{{
 fun! km#cmd_del2wordend()
-    let begin = getcmdpos()
-    " Calculate the count of chars to delete after move to word right
-    call timer_start(1, {->feedkeys(repeat("\<bs>", getcmdpos() - begin), 'n')})
-    return "\<c-right>"
+    let pos = getcmdpos()
+    let text = getcmdline()[pos-1:]
+    let blank = matchstr(text, '^\s\+')
+    if len(blank)
+        return repeat("\<del>", len(blank))
+    else
+        call timer_start(1, {->feedkeys(repeat("\<bs>", getcmdpos()-pos), 'n')})
+        return "\<c-right>"
+    endif
 endf
 
 fun! km#cmd_forward_word()

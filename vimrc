@@ -43,3 +43,10 @@ else
         Source alt-mapping.vim
     endif
 endif " }}}
+
+let g:_init_list = ['global']
+try
+    call env#init(g:_init_list)
+catch
+    au VimEnter * call env#init(g:_init_list)
+endtry

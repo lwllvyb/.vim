@@ -1,6 +1,5 @@
 
 import platform, os
-import glob, json
 from subprocess import Popen, PIPE
 
 def QuerySoftware(key, val = ''):
@@ -74,48 +73,6 @@ def gen_msvc():
     config = { a: get_vs_envs(a) for a in ['x86', 'x64'] }
     return config
 
-def Glob(d):
-    config = {}
-    for k, v in d.items():
-        l = glob.glob(v)
-        if l:
-            config[k] = l[0]
-            print(k, ':', l[0])
-    return config
-
-def gen_clang():
-    if platform.system() == 'Windows':
-        llvm = QuerySoftware('LLVM\\LLVM')
-        if not llvm:
-            print('Can not find the directory of LLVM')
-            return
-
-        print('LLVM path:', llvm)
-
-        return Glob({
-            'clang_library_path': os.path.join(llvm, 'bin\\libclang.dll'),
-            'clang_format_py': os.path.join(llvm, 'share\\clang\\clang-format.py'),
-            'clang_rename_py': os.path.join(llvm, 'share\\clang\\clang-rename.py')
-            })
-    else:
-        libclang = '/usr/lib/llvm-*/lib/libclang.so.1'
-        return Glob({
-            'clang_format_py': '/usr/share/clang/clang-format-*/clang-format.py',
-            'clang_rename_py': '/usr/share/clang/clang-rename-*/clang-rename.py',
-            # 'clang_library_path': libclang,
-            'deoplete#sources#clang#libclang_path': libclang,
-            'deoplete#sources#clang#clang_header': '/usr/include/clang/*/include'
-            })
-
-def write_conf(fname, conf):
-    if not conf: return
-    confdir = os.path.expanduser(os.path.join('~', '.config', 'envs.vim'))
-    if not os.path.isdir(confdir):
-        os.makedirs(confdir)
-    f = os.path.join(confdir, fname)
-    with open(f, 'w+') as f:
-        json.dump(conf, f)
-
 def main():
     print('Operating system:', platform.system(),
             platform.architecture()[0], platform.version(), platform.node())
@@ -124,15 +81,11 @@ def main():
         print()
         print('------------------- Searching MSVC ... -------------------')
         msvc = gen_msvc()
-        print('Write INCLUDE Path to .clang_complete')
-        with open('.clang_complete', 'w') as f:
-            f.write('\n'.join(['-DDEBUG', '-I.'] + ['-I"%s"' % path for path in msvc['x86']['INCLUDE']]))
-        print('Write config to msvc.json')
-        write_conf('msvc.json', msvc)
+        # print('Write INCLUDE Path to .clang_complete')
+        # with open('.clang_complete', 'w') as f:
+        #     f.write('\n'.join(['-DDEBUG', '-I.'] + ['-I"%s"' % path for path in msvc['x86']['INCLUDE']]))
+        return msvc
 
-    print()
-    print('------------------- Searching LLVM and clang ... -------------------')
-    write_conf('clang.json', gen_clang())
-
-if __name__ == '__main__':
-    main()
+import vim
+_ = main()
+vim.command('let g:_ = py3eval("_")')
