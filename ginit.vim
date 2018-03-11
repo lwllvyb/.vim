@@ -15,6 +15,7 @@ let s:fontstr = s:font . (exists('s:fontsize') ? ':h' . s:fontsize: '')
 
 fun! s:gvim_init()
     let &guifont = s:fontstr
+    set guifontwide=黑体:h11
 
     if exists('s:linespace')
         let &linespace = s:linespace

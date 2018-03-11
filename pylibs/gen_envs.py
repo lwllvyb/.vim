@@ -14,8 +14,6 @@ def QuerySoftware(key, val = ''):
         return wr.QueryValueEx(k, val)[0] if val else wr.QueryValue(k, val)
     except Exception:
         return ''
-    finally:
-        wr.CloseKey(k)
 
 def gen_msvc():
     def find_vcvarsall(version = None):
@@ -125,7 +123,12 @@ def main():
     if platform.system() == 'Windows':
         print()
         print('------------------- Searching MSVC ... -------------------')
-        write_conf('msvc.json', {'envs#vs': gen_msvc()})
+        msvc = gen_msvc()
+        print('Write INCLUDE Path to .clang_complete')
+        with open('.clang_complete', 'w') as f:
+            f.write('\n'.join(['-DDEBUG', '-I.'] + ['-I"%s"' % path for path in msvc['x86']['INCLUDE']]))
+        print('Write config to msvc.json')
+        write_conf('msvc.json', msvc)
 
     print()
     print('------------------- Searching LLVM and clang ... -------------------')

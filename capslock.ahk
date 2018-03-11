@@ -15,6 +15,13 @@ CapsLock & a:: Send % GetKeyState("RAlt") ? GetKeyState("LCtrl") ? "^+{home}": "
 CapsLock & d:: Send % GetKeyState("RAlt") ? "^{delete}": "{delete}"
 CapsLock & w:: Send % GetKeyState("RAlt") ? "^{BS}": "^w"
 
+;======================================
+; Ctrl + Alt + [hjkl] => Alt + [{left}{down}{up}{right}]
+; Ctrl + h => {BS}
+; Ctrl + k => Delete to end
+; Ctrl + u => Delete to home
+;======================================
+
 CapsLock & h:: Send % GetKeyState("LAlt") ? "!{left}": "{BS}"
 CapsLock & l:: Send % GetKeyState("LAlt") ? "!{right}": "^l"
 CapsLock & j:: Send % GetKeyState("LAlt") ? "!{down}": "^j"
@@ -83,4 +90,48 @@ CapsLock & Right::  Send ^{Right}
 CapsLock & Down::   Send ^{Down}
 CapsLock & Up::     Send ^{Up}
 
+;=======================================
+; CapsLock ====> ESC
+;=======================================
+
 CapsLock:: Send {ESC}
+
+;=======================================
+; Maximize/Minimize/Close Window
+;=======================================
+
+RAlt & x::
+    WinGet, IsMax, MinMax, A
+    if IsMax = 1
+        WinRestore, A
+    else
+        WinMaximize, A
+    return
+
+RAlt & z:: WinMinimize, A
+RAlt & c:: WinClose, A
+
+;=======================================
+; RAlt [+ Shift] + fbdwae => ...
+;=======================================
+
+>!f:: Send % GetKeyState("shift") ? "^+{right}": "^{right}"
+>!b:: Send % GetKeyState("shift") ? "^+{left}": "^{left}"
+>!d:: Send % GetKeyState("shift") ? "^+{delete}": "^{delete}"
+>!w:: Send % GetKeyState("shift") ? "^+{BS}": "^{BS}"
+>!a:: Send % GetKeyState("shift") ? "^+{home}": "^{home}"
+>!e:: Send % GetKeyState("shift") ? "^+{end}": "^{end}"
+>!r:: Send #r
+
+RCtrl:: Send {AppsKey}
+
+;=======================================
+; Mouse Control
+;=======================================
+
+^!h:: MouseMove -30, 0, 0, R
+^!l:: MouseMove 30, 0, 0, R
+^!j:: MouseMove 0, 30, 0, R
+^!k:: MouseMove 0, -30, 0, R
+^!i:: MouseClick Left
+^!o:: MouseClick Right

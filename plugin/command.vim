@@ -11,11 +11,6 @@ com! EchoRuntimePath call echo#(split(&rtp, ','))
 com! EchoPATH call echo#(split($PATH, has('win32')?';': ':'))
 com! -nargs=+ -complete=expression Dump call vmode#dump(<args>)
 
-" Show syntax attribute
-com! SynAttr echo synIDattr(synID(line('.'), col('.'), 1), 'name')
-
-com! HexCalc call hexcalc#init()
-
 fun! s:checktime()
     let wid = win_getid()
     windo checktime

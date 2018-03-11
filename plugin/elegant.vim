@@ -7,10 +7,10 @@
 
 fun! s:hi(item, opt)
     let args = values(map(a:opt, {k,v->empty(v) ? '': printf('%s=%s', k, v)}))
-    if len(args)
-        " echo join(args)
-        exe 'hi!' a:item join(args)
-    endif
+    let args = join(args)
+    if args =~ '^\s*$' | return | endif
+    " echo join(args) args
+    exe 'hi!' a:item args
 endf
 
 fun! s:setcolor()

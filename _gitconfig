@@ -1,0 +1,28 @@
+
+[core]
+	quotepath = false
+
+[alias]
+	co = checkout
+	cm = commit
+	st = status
+	sh = stash
+	sa = stash apply
+	sp = stash pop
+	ap = add -p
+	br = branch
+	cp = checkout -p
+	cv = commit -v
+	dc = diff --cached
+	d  = diff
+	pr = pull --rebase
+	ps = push
+	pl = push
+	l  = log --graph --pretty         = format:'%C(yellow)%h%Creset %C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date = short --all
+	lg = log --color --graph --pretty = format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --all
+
+[user]
+	email = luzhlon@outlook.com
+	name = luzhlon
+
+# vim: filetype=gitconfig

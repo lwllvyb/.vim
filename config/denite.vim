@@ -27,7 +27,7 @@ fun! s:config()
         \ 'myfiles': {
             \ 'description': 'My files',
             \ 'file_candidates': [
-                \ ['EnvInit', '~/.config/envs.vim/init.vim'],
+                \ ['LocalConfig', '~/.config/local.vim'],
                 \ ['GitConfig', '~/.gitconfig'],
                 \ ['Hosts', has('win32') ?
                     \ 'C:\Windows\System32\drivers\etc\hosts': '/etc/hosts'],
