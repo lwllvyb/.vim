@@ -2,8 +2,8 @@
 let g:deoplete#enable_at_startup = 0
 let g:deoplete#enable_profile = 0
 let g:deoplete#enable_smart_case = 1
-let g:deoplete#auto_complete_delay = 50
-let g:deoplete#auto_refresh_delay = 100
+" let g:deoplete#auto_complete_delay = 50
+" let g:deoplete#auto_refresh_delay = 100
 let g:deoplete#auto_complete_start_length = 1
 
 if !has('nvim')
@@ -12,8 +12,8 @@ endif
 
 " Sources
 let s:default_sources = ['buffer', 'around', 'file', 'tag', 'member', 'neosnippet', 'ultisnips', 'dictionary']
-let s:cxx_sources = ['clang_complete'] + s:default_sources
-let s:python_sources = ['LanguageClient'] + s:default_sources
+let s:cxx_sources = ['clangx'] + s:default_sources
+let s:python_sources = ['jedi'] + s:default_sources
 let g:deoplete#sources = {
     \ '_': s:default_sources,
     \ 'c': s:cxx_sources, 'cpp': s:cxx_sources,

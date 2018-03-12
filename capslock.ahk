@@ -115,12 +115,13 @@ RAlt & c:: WinClose, A
 ; RAlt [+ Shift] + fbdwae => ...
 ;=======================================
 
-RAlt & f:: Send % GetKeyState("shift") ? "^+{right}": "^{right}"
-RAlt & b:: Send % GetKeyState("shift") ? "^+{left}": "^{left}"
-RAlt & d:: Send % GetKeyState("shift") ? "^+{delete}": "^{delete}"
-RAlt & w:: Send % GetKeyState("shift") ? "^+{BS}": "^{BS}"
-RAlt & a:: Send % GetKeyState("shift") ? "^+{home}": "^{home}"
-RAlt & e:: Send % GetKeyState("shift") ? "^+{end}": "^{end}"
+>!f:: Send % GetKeyState("shift") ? "^+{right}": "^{right}"
+>!b:: Send % GetKeyState("shift") ? "^+{left}": "^{left}"
+>!d:: Send % GetKeyState("shift") ? "^+{delete}": "^{delete}"
+>!w:: Send % GetKeyState("shift") ? "^+{BS}": "^{BS}"
+>!a:: Send % GetKeyState("shift") ? "^+{home}": "^{home}"
+>!e:: Send % GetKeyState("shift") ? "^+{end}": "^{end}"
+>!r:: Send #r
 
 RCtrl:: Send {AppsKey}
 

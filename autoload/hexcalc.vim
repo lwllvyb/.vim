@@ -8,18 +8,21 @@ fun! hexcalc#init()
     inoremap <buffer><silent><m-;> <c-o>:call hexcalc#calc('=')<cr><end>
     inoremap <buffer><silent><m-e> <c-o>:call hexcalc#calc('e')<cr>
     inoremap <buffer><silent><m-cr> <c-o>:call hexcalc#calc('n')<cr><down><end>
-    inoremap <buffer><silent><tab> <c-o>:call hexcalc#hex()<cr><end>
+    inoremap <buffer><silent><m-.> <esc>bciw<c-r>=hexcalc#toggle_hex(@@)<cr>
+    inoremap <buffer><c-v> <c-r>+
+    inoremap <buffer><m-v> 0x<c-r>+
 
-    call append(0, '"--------------------------------------------------------')
-    call append(1, '" <m-;>  ----- EXPR = VAL')
-    call append(2, '" <m-e>  ----- echo VAL')
-    call append(3, '" <m-cr>  ----- EXPR \n VAL')
-    call append(4, '" <tab>  ----- Toggle Hex')
-    call append(5, '"--------------------------------------------------------')
-    call append(6, '')
+    syn match vimString /\%<5l<[^>]\+>/ containedin=vimLineComment
 
-    norm! G
-    startinsert
+insert
+" --------------------------------------------------------
+"  <m-;> ==> EXPR = VAL  <m-cr> ==> EXPR \n VAL
+"  <m-e> ==> echo VAL    <m-.>  ==> Toggle Hex/Dec
+"  <c-v> ==> <paste>     <m-v>  ==> 0x<paste>
+" --------------------------------------------------------
+.
+
+    call feedkeys("Go\<c-u>\<cr>", 'n')
 endf
 
 fun! hexcalc#calc(...)
@@ -45,17 +48,7 @@ fun! hexcalc#calc(...)
     endt
 endf
 
-fun! hexcalc#hex()
-    let l = getline('.')
-    let v = eval(l)
-    if type(v) != v:t_number | return | endif
-    call setline('.', l =~ '^0x' ? printf('%d', v) : printf('0x%x',v))
-endf
-
-" TODO:
-fun! hexcalc#add() range
-    " When normal and exists many number in a line, calc line
-    " When normal and exists only one number in a line, calc the next line
-    " When range,
-    " When insert
+fun! hexcalc#toggle_hex(numstr)
+    let v = eval(a:numstr)
+    return a:numstr =~? '^0x' ? printf('%d', v) : printf('0x%x',v)
 endf

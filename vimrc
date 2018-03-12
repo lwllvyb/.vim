@@ -12,7 +12,7 @@ Source option.vim
 " load the default configs
 Source default.vim
 " load the local configs
-exe 'so' glob('~/.config/local.vim')
+sil! so ~/.config/local.vim
 
 " load the plugins
 Source plugs.vim
@@ -43,3 +43,10 @@ else
         Source alt-mapping.vim
     endif
 endif " }}}
+
+let g:_init_list = ['global']
+try
+    call env#init(g:_init_list)
+catch
+    au VimEnter * call env#init(g:_init_list)
+endtry

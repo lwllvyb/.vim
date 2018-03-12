@@ -17,6 +17,7 @@ fun! s:add_pmenu()
         \ ['m:', 'GenIncMacro', 'call cmode#genIncMacro()'],
         \ ['h:', 'ToggleHeader', 'call cmode#toggleHeader()'],
         \ ['r', 'Integer -> str', "viw\"-s\<c-r>=ida#int2str(@-)\<cr>"],
+        \ ['o', 'Print', "yiwcout << <c-r>\" << endl;"]
     \ )
     if &ft == 'objc'
         call menu.add_item('o:', 'Objective-C', [
