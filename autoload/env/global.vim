@@ -18,7 +18,7 @@ fun! env#global#gen()
                 echoe 'There is no python3 available'
             endif
         endif
-        let global.variable.python3_prog_path = py3path
+        let global.variable.python3_host_prog = py3path
         echo 'Python3:' py3path
         let py3dll = glob(fnamemodify(py3path, ':h') . '/python3?.dll')
         if len(py3dll)
@@ -31,7 +31,7 @@ fun! env#global#gen()
             echoe 'There is no python3 available'
         else
             echo 'Python3:' py3path
-            let global.variable.python3_prog_path = py3path
+            let global.variable.python3_host_prog = py3path
         endif
     endif
     return global
