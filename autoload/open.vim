@@ -110,3 +110,13 @@ fun! open#url_under_cursor()
         let i -= 1
     endw
 endf
+
+fun! open#with_admin(files)
+    let cmd = [v:progpath]
+    if type(a:files) == v:t_list
+        let cmd += a:files
+    else
+        call add(cmd, a:files)
+    endif
+    return call(function('sys#sh#admin'), cmd)
+endf

@@ -13,6 +13,7 @@ nnoremap <buffer><silent><c-p> :call <sid>search_file()<cr>
 
 fun! s:open()
     let curNode = g:NERDTreeFileNode.GetSelected()
+    echom curNode.path.str()
     call open#(curNode.path.str())
     return ''
 endf

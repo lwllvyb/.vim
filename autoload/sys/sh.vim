@@ -1,13 +1,10 @@
 
+let s:path = expand('<sfile>:p:h')
+
 " Run command line {...} with administrator privilige
 fun! sys#sh#admin(...)
-    let cmdline = join(map(copy(a:000), {i,v->shellescape(v)}))
-    let tf = tempname() . '.vbs'
-    call writefile([
-        \ 'set uac = CreateObject("Shell.Application")',
-        \ 'WScript.StdOut.Write "Input command: "',
-        \ 'uac.ShellExecute WScript.StdIn.ReadLine(), "", "", "runas", 1',
-        \ 'WScript.Quit'
-    \ ], tf)
-    call system('cscript ' . shellescape(tf) . "\n", cmdline)
+    call assert_true(len(a:000))
+    let params = join(map(a:000[1:], {i,v->shellescape(v)}))
+    let input = a:1 . "\n" . params . "\n"
+    call system('cscript ' . shellescape(s:path . '\admin-exec.vbs'), input)
 endf
